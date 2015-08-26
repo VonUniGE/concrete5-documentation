@@ -1,0 +1,6 @@
+= concrete5 Documentation
+
+In this repository we'll the source of two books for concrete5 5.7:
+
+- Editor's Guide (currently available at link:http://www.concrete5.org/documentation/using-concrete5-7/[www.concrete5.org/documentation/using-concrete5-7/])
+- Developer Documentation (currently available at link:http://www.concrete5.org/documentation/developers/5.7/[www.concrete5.org/documentation/developers/5.7/])
