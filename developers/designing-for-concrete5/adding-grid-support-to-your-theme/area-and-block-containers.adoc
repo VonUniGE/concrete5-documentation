@@ -1,0 +1,39 @@
+= Area & Block Containers
+
+We just learned how to enable grid support for areas in your theme. While doing so, you may have noticed and wondered about this line:
+
+[source,php]
+----
+$area->enableGridContainer();
+----
+
+This method is only available to Area objects on pages using a theme that has a grid framework enabled. Each grid framework must define HTML that corresponds to the "container" class available for that grid framework. For example, the bootstrap grid framework defines its container with this:
+
+[source,php]
+----
+public function getPageThemeGridFrameworkContainerStartHTML()
+{
+    return '<div class="container">';
+}
+public function getPageThemeGridFrameworkContainerEndHTML()
+{
+    return '</div>';
+}
+----
+
+Any time the Bootstrap 3 grid is used on a site, and an area in that site enables the grid container via the method above, certain blocks added to that area will have the container added around them. Which blocks? All of them – **except** those that explicitly opt out by declaring the following line in their Controller class:
+
+[source,php]
+----
+protected $btIgnorePageThemeGridFrameworkContainer = false;
+----
+
+You can find this line of code in the controller.php file for the HTML block, the Horizontal Rule block and the Image Slider block.
+
+== Why?
+
+This makes advanced page layout available to theme and site developers. For example – the built-in Elemental theme makes it easy to add blocks to the main content area and have that area show up properly aligned in the middle of a Bootstrap 3 layout. It's responsive and lines up nicely with any grids that are used. However, what if you want a block that happens to span the entire width of that area? There's never been a way to "break out" of an area in Concrete5 – until now. The Image Slider, Horizontal Rule and HTML blocks will do just that – they'll be full width, since they have no container class around them.
+
+== Opt-In & Overridable
+
+It's important to note again that this is opt-in. First, your theme has to explicitly enable a Grid Framework – and *then* the theme has to explicitly enable the grid container on a particular area. Don't want this behavior? Don't include enableGridContainer() on your Area.

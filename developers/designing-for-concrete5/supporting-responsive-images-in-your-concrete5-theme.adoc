@@ -1,0 +1,68 @@
+= Supporting Responsive Images in your Concrete5 Theme
+
+Concrete5 provides an extendable image thumbnailing system that creates multiple thumbnails of different sizes for particular images. These thumbnails can then be used for different purposes. For example, they could display in a particular image gallery, or they can be rendered in place of the source image on smaller screens, to save bandwidth. This latter example is easy to implement, but does require some coding in your themes.
+
+== Create Thumbnail Types
+
+The Elemental Theme automatically creates three different thumbnail types on installation. You can see these thumbnail types on Dashboard > System & Settings > Files > Thumbnails:
+
+image:http://www.concrete5.org/files/2714/1539/6510/thumbnails_types.png[Thumbnail Types]
+
+Small, Medium and Large are the types added by Elemental. You can see them listed here, along with their maximum width (height for these is not set – meaning the images that are sized down to match these maximum widths will not have their content cropped to achieve a specific aspect ratio.)
+
+You can add more thumbnail types here, but it's probably smarter to add them in your installation process, if you're installing your theme via a package. From within your install() method of a theme package controller, the following code will create a particular thumbnail type, checking first if the object already exists:
+
+[source,php]
+----
+$small = \Concrete\Core\File\Image\Thumbnail\Type\Type::getByHandle('small');
+if (!is_object($small)) {
+    $type = new \Concrete\Core\File\Image\Thumbnail\Type\Type();
+    $type->setName('Small');
+    $type->setHandle('small');
+    $type->setWidth(740);
+    $type->save();
+}
+----
+
+Now that you have a thumbnail type with the handle "small," you can repeat that process for all the other image breakpoints you want to use in your theme. Elemental creates two more, "Medium" and "Large."
+
+== Decide How to Use Them
+
+Now we have three thumbnail types. For any large image uploaded to Concrete5, the Small thumbnail type will be a maximum of 740 pixels wide, the Medium a maximum of 940, and Large a maximum of 1140. Remember – this is regardless of how large the source image is.
+
+Let's use the thumbnail types in the following way: if a browser is greater than 900 pixels wide, let's use the Large thumbnail type. If the browser is greater than 768 pixels wide but less than 900, let's use the Medium type. Otherwise, if the browser is small than 768 pixels, let's use the small.
+
+== Map Screen Widths to Thumbnail Types
+
+Now that we've decided how to use our responsive images, we can implement this by adding the following method and implementation to our PageTheme class:
+
+[source,php]
+----
+public function getThemeResponsiveImageMap()
+{
+    return array(
+        'large' => '900px',
+        'medium' => '768px',
+        'small' => '0'
+    );
+}
+----
+
+The thumbnail types are the keys in the array, and the CSS minimum pixel widths are the values.
+
+Now, any time an core image block is used in your theme or an image is placed in Redactor, your theme will use the Responsive HTML element to ensure that it is responsive. This will work with images inserted into Redactor, as well.
+
+How does it work? In both of these examples, we're using the \Concrete\Core\Html\Image class to build the image tag for a particular file object. Check out the following code. *Note: in this code, $file is an object that we have specified in some way, that corresponds to a large image that's been uploaded to the file manager. It has multiple thumbnails now, one for each of the types we've already defined. These get created automatically on upload.*
+
+[source,php]
+----
+// $file, our file object.
+$image = \Core::make('html/image', array($file));
+$tag = $image->getTag();
+----
+
+API documentation for the Image class http://concrete5.org/api/class-Concrete.Core.Html.Image.html[is available here]. This class inspects the current theme, determines whether it supports a responsive image map, and if so, returns a picture tag rather than a simple image tag.
+
+*Note: It's highly recommended that theme developers include the picturefill JAvaScript asset in their theme if they're going to create a responsive image map, since many browsers don't support the picture tag. Picturefill takes care of supporting it via JavaScript for those such browsers.*
+
+That's all there is to it! We've only scratched the surface of what's possible using the new Image thumbnailing system in 5.7, but hopefully this will make it easier to build efficient, beautiful Responsive websites.

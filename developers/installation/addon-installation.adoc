@@ -1,0 +1,61 @@
+= Add-on Installation
+
+Installing add-ons to concrete5 is easy.
+
+== Connect to the Community
+
+First, connect your site to a project page on concrete5.org, and everything should work automatically. Watch this video to learn more:
+
+video::GV77-8_LLog[youtube, width=853, height=480]
+
+== Auto-Install
+
+If your webserver is properly configured, you should be able to automatically install add-ons directly from your dashboard. Click Dashboard in the upper right of your concrete5 toolbar, then at the bottom of the Dashboard, click the link titled **Extend concrete5**. You should see a page like this:
+
+image:howto-install.jpg[How to install]
+
+You should see a green button labeled "Connect to Community". Click that and use the account you made on _this_ site to make a project page for your site. At this point you are connecting your own website to concrete5.org. The user account and password you used to login to your own website has nothing to do with the user account and password you made here to shop in the marketplace. Mildly confusing, but that's what it is.
+
+On the project page you've made you should now have the ability to assign licenses to your project. Pick whichever add-ons & themes are for this site. When you look again at your Dashboard > Add Functionality page the list of add-ons on the right should update to reflect everything on your project page. 
+
+First click "Download", and then you'll see the listing show up in the New tab again with an "Install" button. Click Install and you should now see it on the left, in your currently installed add-on list. You're done!
+
+== Moving a Site
+
+If you develop your site in one place, and you're going to move it to another to launch - have no fear! Feel free to connect your site to the community as soon as you want. When you're ready, simply move the site following any of the handy how-tos in our documentation area. As long as you're moving the database (as supposed to creating a new blank one) all you have to do is go to your site's dashboard and try to connect to the community again. Concrete5.org will detect that this is the same site database trying to connect, and we will simply add a record to the existing project page's "found locations" area for the new URL this site is at. You will have to have access to that original project page with a concrete5.org user. 
+
+See also: link:/documentation/developers/5.6/installation/moving_a_site/[Moving a Site]
+
+== By Hand (Installing Manually)
+
+If your webserver doesn't have CURL installed, you may not be able to do this automatic install. In that case download the file you get here to your local computer. UnZIP the file and upload the whole directory it makes to the /packages folder in your concrete5 setup on your webserver. Once you've done that, it should show up in the New window above.
+
+== Refreshing an Add-on
+
+If you've got something misbehaving on your add-on, you may need to try re-installing it. Here's how to do that by hand:
+
+1.  Release the add-on license from your project by visiting your site's http://www.concrete5.org/profile/projects/[project page].
+2.  Visit your http://www.concrete5.org/profile/orders/[licenses page] to see a list of all the licenses owned by your account. If an unassigned copy of a license is available, a "Download Archive" link will appear to the right side of the addon's row. Click this link to download a zip archive of the add-on's files.
+3.  When your download is complete, upload the zip archive to (your_site_root)/packages on your webserver. You can do this through an FTP client, or a web-based utility like cPanel.
+4.  Locate the old package folder. This may look something like (your_site_root)/packages/document_library +
+    Move the document_library folder to a safe location.
+5.  Using cPanel, FTP, etc, unzip the zip archive file into the packages/ folder. This puts a "fresh" copy of your add-on's code in place for concrete5 to use.
+6.  Go to Dashboard > Extend concrete5, and find the add-on on the list of installed add-ons and themes. If you see a message telling you that an update for your add-on is available, click the Update Add-ons button.
+7.  Return to your http://www.concrete5.org/profile/orders/[licenses page] and link:/documentation/how-tos/designers/assign-a-license-to-a-project/[re-assign the license] to your site.
+
+For more detailed instructions, see: link:/documentation/how-tos/editors/download-manual-install-addon/[Download and Manually Install an Add-on]
+
+== Adding Licenses From Different Users
+
+_Do you have more than one account here on concrete5.org that you're buying licenses with?_ +
+_Do you have a team of developers who are working on one project?_
+
+Use the management team section of your project page to let different concrete5.org individuals all contribute to your site. 
+
+. Login as the owner of your Project page
+. Goto the Project page, and look for the Management Team section about half way down.
+. Add the other accounts in question to that list.
+. Login with your other account to concrete5.org
+. Now your second account should be able to see the project page and assign licenses which will be automatically available for install on your site through Add Functionality.
+
+See also: link:/documentation/how-tos/designers/add-licenses-from-multiple-user-accounts-to-a-single-project/[Add Licenses from Multiple User Accounts to a Single Project]

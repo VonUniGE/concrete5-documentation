@@ -1,0 +1,91 @@
+= PHP
+
+== Coding Style
+
+From version 5.7 and onward, concrete5 is adopting the PHP Framework Interoperability Group's http://www.php-fig.org/psr/psr-2/[PSR-2] coding standard. This standard dictates a number of things, including spaces vs. tabs, brace placement, method naming, and more. Please read it and adhere to it.
+
+=== Tough Decision
+
+Like a lot in life, coding standards are deeply personal. I myself strongly disagree with several decisions in this standard (and, to spare myself the inevitable arguments, I'll leave which these are to your imagination.) That said, there is a lot of good in here, and I think it can only help the ecosystem. So I, too, will bite the bullet.
+
+We're in the same boat, people. Let's set sail!
+
+== File Naming and Location
+
+From version 5.7 and onward, concrete5 is adopting a modified naming standard based on PHP Framework Interoperability Group's http://www.php-fig.org/psr/psr-4/[PSR-4]. Our built-in autoloader will automatically find classes that adhere to this system.
+
+All core libraries adhere to PSR-4 with *no* modifications. What does that mean? That means that our namespaced core libraries like the Page class
+
+[source,php]
+----
+\Concrete\Core\Page\Page
+----
+
+Can be found at
+
+[source,php]
+----
+concrete/src/Page/Page.php
+----
+
+PSR-4 basically states that projects can map different namespace prefixes to arbitrary starting directories. That's what we're doing.
+
+If you are writing code that belongs in the core source directory, you *must* adhere to PSR-4 as is. Classes must be capitalized, etc...
+
+=== Modifications
+
+For classes that do not exist within the src/ directory (such as block controllers, attribute controllers, etc...) We ask that you name your controllers with the same capitalization that PSR-4 requires, but you name your files with concrete5's classic lowercase + underscore method. These files will be converted by camelcasing those filenames on the fly.
+
+What does that mean? The blocks directory and its contents still looks the same as concrete5 before 5.7. For example, the Page List block's controller is still located at
+
+[source,php]
+----
+concrete/blocks/page_list/controller.php
+----
+
+If you were strictly following PSR-4, you would need to name your class
+
+[source,php]
+----
+controller
+----
+
+inside the name space
+
+[source,php]
+----
+\Concrete\Block\page_list
+----
+
+This is ugly and causes other problems. So instead, when we request the class
+
+[source,php]
+----
+\Concrete\Block\PageList\Controller
+----
+
+We *first* check to see if
+
+[source,php]
+----
+concrete/blocks/PageList/Controller.php
+----
+
+exists (since that is the default PSR-4 autoloading behavior.)
+
+If it does not (and it won't, for blocks, attributes, single page controllers, etc...) – then we uncamelcase using our own methods, starting at the item after blocks. Backslashes become directory separatores, and camelcasing becomes underscores.
+
+[source,php]
+----
+concrete/blocks/page_list/controller.php
+----
+
+And that's how we handle non-library classes in concrete5 5.7.
+
+== Existing Code
+
+We have already taken care of moving files to support these updated naming and directory standards. For coding style (including spaces vs. tabs, braces, etc...) we will be modifying existing core code to support this code base as needed. This is not a high priority, but we will accept pull requests quickly that modify this code for us.
+
+=== Important Note
+
+If you submit a pull request for this type of cleanup, please keep each request to one file – for the sake of vetting your pull request. Please *do not* run the entire concrete5 source through a cleanup tool and send that to us. We could do that ourselves ;-)

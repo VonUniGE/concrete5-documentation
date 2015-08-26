@@ -1,0 +1,9 @@
+= Packaging Your Theme
+
+:leveloffset: +1
+
+include::packaging-your-theme/overview-and-full-screencast.adoc[]
+
+include::packaging-your-theme/enabling-full-content-swap.adoc[]
+
+:leveloffset: -1

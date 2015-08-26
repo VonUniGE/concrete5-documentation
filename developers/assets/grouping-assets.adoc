@@ -1,0 +1,17 @@
+= Grouping Assets
+
+An Asset Group groups assets that have to do with each other, so that all the assets can be included at one time, and in a specific order (position in page notwithstanding.) For example, there won't ever be a time when we'll want to use our Mediaelement.js JavaScript and CSS files apart from each other. So lets group them together, and give that group the handle "mediaelement":
+
+[source,php]
+----
+$al = \Concrete\Core\Asset\AssetList::getInstance();
+$al->registerGroup('mediaelement', array(
+    array('css', 'mediaelement'),
+    array('javascript', 'jquery'),
+    array('javascript', 'mediaelement')
+));
+----
+
+This group is pretty easy to understand. It is comprises of the Mediaelement CSS asset, the Mediaelement JavaScript asset, and jQuery (which has already been fined by concrete5.) registerGroup() simply takes two parameters. The first is the group handle (which *must* be unique). The second is an array of asset arrays. Each entry in the asset array is just an array with two items. The first is the asset type, as it was registered, and the second is the asset handle as it was registered.
+
+Now that we have our asset group registered, we can make sure it's included in the page any time we need it. Read on to learn how.

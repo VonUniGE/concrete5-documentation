@@ -1,0 +1,70 @@
+= Request Lifecycle
+
+A Concrete5 request starts by hitting the index.php in the web directory. This simply includes concrete/dispatcher.php, which is where the real action begins.
+
+== Load Internal Configuration
+
+First, configuration values are loaded by including concrete/bootstrap/configure.php. These are all constants for things like internal file paths, names of various files and icons, etc… **Nothing in this file is meant to be overridden at a previous level**. These are internal constants, including the C5_EXECUTE constants, which is a constant we use to check to see whether the file in question is being executed within a valid Concrete5 environment.
+
+== Load and Initialize Autoloaders
+
+Next, we set up our PHP autoloader by including concrete/bootstrap/autoload.php. This file is slightly more interesting than configure.php. It does the following:
+
+. Loads the contents of application/bootstrap/autoload.php. This file takes care of loading all third party libraries (found in concrete/vendor/) that have been delivered by Composer. This file can also be modified by the custom application to handle autoloading.
+. Loads the Concrete5 class loader (found at src/Foundation/Classloader.php) and intializes it.
+
+Once these two items are complete, all classes should be able to be loaded automatically – no including or Loader calls required.
+
+== Create a Concrete5 Application
+
+At this point, the bootstrap/start.php procedure takes over, beginning with the creation of a Concrete5 application instance. This application instance is an instance of the \Concrete\Core\Application\Application class, which extends the Laravel Container object. The Application instance is capable of detecting its environment, and loading different configuration values based on that.
+
+== Load Configuration Data
+
+Configuration data is loaded in the following order:
+
+. Configuration loaders and savers are created.
+. Time zone information is set in Config from date_default_timezone_get (if it is not already present.)
+. Class aliases are loaded from concrete/config/app.php.
+. Class facades are loaded from concrete/config/app.php.
+. The database loader and saver config library is created.
+. Service providers and services are registered from the 'providers' array in concrete/config/app.php.
+. Assets, asset groups, routes, theme paths, file types and importer attributes are loaded from concrete/config/app.php.
+
+For all of these items, any app.php file that lives in application/config/app.php will have its values supersede that of the values in concrete/config/app.php.
+
+== Load application app.php
+
+The file application/bootstrap/app.php is loaded. This file ships blank (with commented examples) by default, but is meant to house any custom code that should be run every time your application boots. This includes event registries, custom service rebindings, custom routes and more.
+
+== Install Check
+
+At this point, Concrete5 checks the file system to see if it can find application/config/database.php. If it can't, it's assumed to not yet be installed, and renders the /install route, exiting after it does. Otherwise, it continues.
+
+== Check Page Cache
+
+Next, we check the page cache based on the current HTTP Request, to see if a file exists in the cache for the current request, and whether we can deliver this file instead of opening up a database connection. If we can, we deliver the page cache results and exit, otherwise we continue.
+
+== Preprocess
+
+Next, we run items in concrete/bootstrap/preprocess.php – which currently consists solely of a function meant to undo the harmful affects of enabling magic_quotes_gpc.
+
+== Localization
+
+Next, we set the active language for the site, based either on the site locale, or the current user record. Then we start localization library.
+
+== URL Redirection
+
+Next, we redirect user based on their trailing or non-trailing slash, as well as whether there is a base url set and the preference to redirect to the base URL is set to true.
+
+== Handle Automatic Updates
+
+Next, we check the configuration for whether transparent, automatic background updating is enabled. If so, and the version of Concrete5 in the file system is greater than the one stored in configuration, we run the upgrade routine silently in the background.
+
+== Run Package on_start() events.
+
+A Package may define an on_start() method in its controller.php file. All installed Packages will have their on_start() methods run now.
+
+== Dispatch Request
+
+Finally, we take the current Request object and dispatch it through the Application object we created earlier. This takes care of inspecting the URL, matching the URL against our registered routes, or loading up pages.

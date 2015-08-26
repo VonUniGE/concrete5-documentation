@@ -1,0 +1,17 @@
+= Installation
+
+:leveloffset: +1
+
+include::installation/system-requirements.adoc[]
+
+include::installation/installation.adoc[]
+
+include::installation/hosting-on-specific-web-hosts.adoc[]
+
+include::installation/moving-a-site.adoc[]
+
+include::installation/addon-installation.adoc[]
+
+include::installation/upgrading-concrete5.adoc[]
+
+:leveloffset: -1

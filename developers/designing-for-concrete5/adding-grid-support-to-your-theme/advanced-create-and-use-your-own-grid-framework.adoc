@@ -1,0 +1,333 @@
+= Advanced: Create & Use Your Own Grid Framework
+
+== Notes
+
+This requires Concrete5 5.7.2.1 due to some bug fixes and some improvements in the Grid Framework system.
+
+== Screencast
+
+video::F0lwOYbcvcE[youtube, width=560, height=315]
+
+== Overview
+
+Concrete5 5.7.0 included Grid Frameworks for Bootstrap 2, 960 and Bootstrap 3 (and we recommend the use of Bootstrap 3, due to its mobile first nature.) But these aren't the only grid frameworks out there, and Bootstrap 3 isn't even the only mobile first framework. http://foundation.zurb.com/[Foundation] is another popular front-end framework, and its http://foundation.zurb.com/docs/components/grid.html[grid component] is responsive and mobile-first as well. If I want to create a good Concrete5 theme based on the Zurb Foundation, I should include support for the Zurb Foundation grid as well.
+
+== Theme Package
+
+I have a zurb_foundation theme package. This theme is in the package format – which is important, because it's not just the theme that I want to install. I want to package the theme together, with my custom code – my Grid Framework PHP class file. This Grid Framework file will tell Concrete5 how the grid framework is structured – how many columns it has, how to name the columns using CSS classes, how to name the offset columns using CSS classes, etc...
+
+The theme itself is pretty simple. I haven't done much beyond creating a quick theme and a default page template. There's definitely much more one could do to create a really good Zurb Foundation-based theme. I just wanted to get started quickly.
+
+If any of this is unfamiliar, you probably should watch link:#[How to Package a Theme] first.
+
+== First, Install the Package
+
+First, I'm going to install the Package on my empty Concrete5 site.
+
+== Now, Activate the Theme
+
+My theme is now available for activation on Dashboard > Pages & Themes > Themes. Let's activate it so it's in use on every page of my site.
+
+== Home Page
+
+Now, you can see I have a very simple default page template in use on the home page. It has a left sidebar and a right main area. The template, **default.php**, is also very simple. Here is the relevant portion.
+
+[source,php]
+----
+<div class="row">
+    <div class="large-3 columns">
+    <?php
+        $a = new Area('Sidebar');
+        $a->display($c);
+    ?>
+    </div>
+    <div class="large-9 columns">
+    <?php
+        $a = new Area('Main');
+        $a->display($c);
+    ?>
+    </div>
+</div>
+----
+
+The structure of this HTML should be familiar to anyone who has used Zurb Foundation before. But what if I want to add support for the Foundation grid to the Main area? Following the documentation for link:#[Enabling Grid Support in a Theme] (without adding a container), I would do this:
+
+[source,php]
+----
+<?php
+    $a = new Area('Main');
+    $a->setAreaGridMaximumColumns(12);
+    $a->display($c);
+?>
+----
+
+Why 12? Because the Zurb Foundation grid takes 12 columns max.
+
+== Add Foundation Grid
+
+If you put the page in edit mode and try and add a layout, you'll notice you only have access to the free-form grid. That's because we haven't specified what kind of Grid Framework to use. Since the Foundation grid doesn't ship in the core, I'm going to have to add it to my package, and specify its use in my PageTheme class.
+
+=== First, Add it to PageTheme
+
+We'll add this line of code to our Zurb Foundation PageTheme class:
+
+[source,php]
+----
+protected $pThemeGridFrameworkHandle = 'foundation';
+----
+
+If we reload the page, we'll get this error:
+
+----
+Driver [foundation] not supported
+----
+
+This is expected. We've told Concrete5 to load a grid framework named "foundation" but we haven't told it where to grab that framework – or even specified how that framework works yet.
+
+=== Create a Grid Framework PHP Class
+
+Now, we're going to create a PHP Class that represents the Grid Framework for Foundation.
+
+First, create the file in your package directory at `packages/zurb_foundation/src/FoundationGridFramework.php`.
+
+Let's create the PHP class in this file as well.
+
+[source,php]
+----
+namespace Concrete\Package\ZurbFoundation\Src;
+ 
+use Concrete\Core\Page\Theme\GridFramework\GridFramework;
+ 
+defined('C5_EXECUTE') or die('Access Denied.');
+ 
+class FoundationGridFramework extends GridFramework
+{
+ 
+}
+----
+
+We can name this class anything, as long as it extends the \Concrete\Core\Page\Theme\GridFramework\GridFramework class. This class is an abstract that defines a number of required methods that describe how a particular grid framework functions. We need to implement those methods.
+
+[source,php]
+----
+    abstract public function getPageThemeGridFrameworkName();
+    abstract public function getPageThemeGridFrameworkRowStartHTML();
+    abstract public function getPageThemeGridFrameworkRowEndHTML();
+    abstract public function getPageThemeGridFrameworkContainerStartHTML();
+    abstract public function getPageThemeGridFrameworkContainerEndHTML();
+    abstract public function getPageThemeGridFrameworkColumnClasses();
+    abstract public function getPageThemeGridFrameworkColumnOffsetClasses();
+    abstract public function getPageThemeGridFrameworkColumnAdditionalClasses();
+    abstract public function getPageThemeGridFrameworkColumnOffsetAdditionalClasses();
+----
+
+These names should be somewhat self explanatory. Every grid framework specifies how its classes work, what those classes are, its name, container and row classes, offset classes (if they exist), and additional css classes to apply to columns or offset columns, if they exist. Here is the example of the Zurb Foundation Grid as it is actually implemented in this system:
+
+[source,php]
+----
+public function getPageThemeGridFrameworkName()
+{
+    return t('Foundation');
+}
+ 
+public function getPageThemeGridFrameworkRowStartHTML()
+{
+    return '<div class="row">';
+}
+ 
+public function getPageThemeGridFrameworkRowEndHTML()
+{
+    return '</div>';
+}
+ 
+public function getPageThemeGridFrameworkContainerStartHTML()
+{
+    return '';
+}
+ 
+public function getPageThemeGridFrameworkContainerEndHTML()
+{
+    return '';
+}
+ 
+public function getPageThemeGridFrameworkColumnClasses()
+{
+    $columns = array(
+        'small-1 ',
+        'small-2 ',
+        'small-3',
+        'small-4',
+        'small-5',
+        'small-6',
+        'small-7',
+        'small-8',
+        'small-9',
+        'small-10',
+        'small-11',
+        'small-12',
+    );
+
+    return $columns;
+}
+ 
+public function getPageThemeGridFrameworkColumnOffsetClasses()
+{
+    $offsets = array(
+        'small-offset-1',
+        'small-offset-2',
+        'small-offset-3',
+        'small-offset-4',
+        'small-offset-5',
+        'small-offset-6',
+        'small-offset-7',
+        'small-offset-8',
+        'small-offset-9',
+        'small-offset-10',
+        'small-offset-11',
+        'small-offset-12',
+    );
+
+    return $offsets;
+}
+ 
+public function getPageThemeGridFrameworkColumnAdditionalClasses()
+{
+    return 'columns';
+}
+ 
+public function getPageThemeGridFrameworkColumnOffsetAdditionalClasses()
+{
+    return 'columns';
+}
+----
+
+The name is self-explanatory. Each Foundation grid row starts with a DIV with the class of row. Since there is no container in the Zurb Foundation grid framework, those methods return empty strings. The getPageThemeGridFrameworkColumnClasses and getPageThemeGridFrameworkColumnOffsetClasses return an array of their relevant classes. And finally, the getPageThemeGridFrameworkColumnAdditionalClasses and getPageThemeGridFrameworkColumnOffsetAdditionalClasses returns the "columns" string – because offset columns and regular grid columns require the class "columns" in addition to whatever specific grid or offset class they're using.
+
+This is our final file, packages/zurb_foundation/src/FoundationGridFramework.php:
+
+[source,php]
+----
+<?php 
+namespace Concrete\Package\ZurbFoundation\Src;
+ 
+use Concrete\Core\Page\Theme\GridFramework\GridFramework;
+ 
+defined('C5_EXECUTE') or die('Access Denied.');
+ 
+class FoundationGridFramework extends GridFramework
+{
+ 
+    public function getPageThemeGridFrameworkName()
+    {
+        return t('Foundation');
+    }
+ 
+    public function getPageThemeGridFrameworkRowStartHTML()
+    {
+        return '<div class="row">';
+    }
+ 
+    public function getPageThemeGridFrameworkRowEndHTML()
+    {
+        return '</div>';
+    }
+ 
+    public function getPageThemeGridFrameworkContainerStartHTML()
+    {
+        return '';
+    }
+ 
+    public function getPageThemeGridFrameworkContainerEndHTML()
+    {
+        return '';
+    }
+ 
+    public function getPageThemeGridFrameworkColumnClasses()
+    {
+        $columns = array(
+            'small-1 ',
+            'small-2 ',
+            'small-3',
+            'small-4',
+            'small-5',
+            'small-6',
+            'small-7',
+            'small-8',
+            'small-9',
+            'small-10',
+            'small-11',
+            'small-12',
+        );
+
+        return $columns;
+    }
+ 
+    public function getPageThemeGridFrameworkColumnOffsetClasses()
+    {
+        $offsets = array(
+            'small-offset-1',
+            'small-offset-2',
+            'small-offset-3',
+            'small-offset-4',
+            'small-offset-5',
+            'small-offset-6',
+            'small-offset-7',
+            'small-offset-8',
+            'small-offset-9',
+            'small-offset-10',
+            'small-offset-11',
+            'small-offset-12',
+        );
+
+        return $offsets;
+    }
+ 
+    public function getPageThemeGridFrameworkColumnAdditionalClasses()
+    {
+        return 'columns';
+    }
+ 
+    public function getPageThemeGridFrameworkColumnOffsetAdditionalClasses()
+    {
+        return 'columns';
+    }
+ 
+}
+----
+
+=== Register the Grid Framework in the Package
+
+Now that we have a grid framework in place, we still need to tell the Foundation PageTheme class how to load it. This can be done by registering this Grid Framework, and the perfect place to perform this is in our package's on_start() method. on_start() is an optional method that, when present in a package that is installed, will automatically run on every page load.
+
+Open packages/zurb_foundation/controller.php, and add these two lines to the section directory below the namespace call. These are classes we're going to use in our modified controller:
+
+[source,php]
+----
+use Concrete\Package\ZurbFoundation\Src\FoundationGridFramework;
+use Core;
+----
+
+The first is the class we just created. The second is the global Core object, which is used to create objects in Concrete5 5.7.
+
+Now let's add this method to our package:
+
+[source,php]
+----
+public function on_start()
+{
+    $manager = Core::make('manager/grid_framework');
+    $manager->extend('foundation', function($app) {
+        return new FoundationGridFramework();
+    });
+}
+----
+
+There's a lot going on in this little bit of code, but it's not that complicated. First, we create an instance of the Grid Framework Manager. In Concrete5 5.7, Manager classes are a way to provide an extensible framework that Packages and custom classes can utilize on the fly. Once we have an instance of the Grid Framework Manager, we can register an extension named "foundation". The second parameter of the extend function is simply a PHP Closure that returns us an Object. Whenever the Grid Framework manager asks for the "foundation" class, this object will be returned.
+
+== That's It
+
+Now, when we put our page in edit mode, we'll see Foundation as available, and we'll be able to use the grid!
+
+== Foundation Going Forward
+
+This entire tutorial has been about adding support for the Foundation grid via a Package, and should help you move forward creating your own Grid Framework classes for your own themes. Fortunately – if you want to use Foundation, you don't actually have to go through of all of this. As of 5.7.2.1, it's included with the core as well.

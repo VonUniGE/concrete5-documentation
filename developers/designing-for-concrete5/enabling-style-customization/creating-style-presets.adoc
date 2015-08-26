@@ -1,0 +1,57 @@
+= Creating Style Presets
+
+Concrete5's style customizer allows theme developers to group their theme's LESS variable combinations into theme presets. We're already ahead of the game here: presets/defaults.less is actually our first preset! We just need to some information about the preset to the LESS file:
+
+* Preset Name
+* Preset Icon
+* Preset Fonts File
+
+Specifying this information about a preset is as easy as adding a couple additional variables to the LESS variables file. The easiest way to understand these variables is to view an example of them:
+
+[source,css]
+----
+@preset-name: "Urbanic Regular";
+@preset-icon: concrete-icon(#ffffff, #ff7600, #333333);
+@preset-fonts-file: "fonts/defaults.less";
+----
+
+The first variable is simple: @preset-name describes the name of the preset. @preset-icon is a special Concrete5 LESS function that defines three colors. These colors actually dynamically set the color of the preset icon that displays in the style customizer for the preset. Finally, the @preset-fonts-file variable points to a font file that contains all the fonts that this preset uses.
+
+Let's paste this information into the presets file. Then let's create the preset fonts file, and move the Open Sans font from within the HTML of the theme itself into this fonts file. Finally, in order to get this font preset file to work, we need to include it in our theme's LESS file:
+
+[source,css]
+----
+@import ~"@{preset-fonts-file}";
+----
+
+Now let's create a second preset. First, we duplicate the defaults.less file. We're going to call this preset "Forest Green". We change some of the various parameters:
+
+[source,css]
+----
+@preset-name: "Forest Green";
+@preset-icon: concrete-icon(#ffffff, #36FF3C, #154600);
+@preset-fonts-file: "fonts/forest-greenreen.less";
+ 
+@primary-action-color: #36FF3C;
+@primary-spacing-size: 100px;
+ 
+// Body
+@body-type-font-family: 'Oswald';
+@body-type-font-size: 14px;
+@body-type-font-weight: 300;
+@body-type-font-style: normal;
+@body-type-color: #154600;
+ 
+// Team
+@team-background-color: #5A795C;
+@team-background-image: '../images/spacer.png';
+----
+
+And let's change the fonts file as well:
+
+[source,css]
+----
+@import url(//fonts.googleapis.com/css?family=Oswald:300,300italic);
+----
+
+It's just that easy! The second preset shows up in the list, and switching between it and Urbanic Regular changes the various parameters, and loads the new font.

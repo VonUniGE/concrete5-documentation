@@ -1,0 +1,79 @@
+= Including LESS Stylesheets in your Theme
+
+I'm currently working with the Urbanic theme I've used in several screencasts.
+
+== Determine Which Variables to Make Customizable.
+
+First, you should figure out which variables you want to make customizable. Pick a few – you can add more later, but you're going to need something to begin with.
+
+Taking a look at my theme, I'm leaning toward making the main the omnipresent orange color, the main typography (font and color) and the Team background color and image customizable. This will be a good start.
+
+== Convert Stylesheets into LESS Files
+
+Urbanic's main stylesheet is currently a CSS file, templatemo_style.css. We're going to need to convert this into a LESS file, and separate out the variables that we want to make customizable.
+
+=== Rename the File.
+
+Rename the file to `templatemo_style.less`
+
+=== Create a Variables File
+
+We need to create the file that's going to store the default values for all the items we want to have in our customizer.
+Let's create that at `css/presets/defaults.less`.
+*The name of this file and its location are important.*
+The presets directory contains any preset batches of variables.
+You can ship multiple presets for attractive color and font combinations.
+Even if you don't ship presets, you'll want to place these file here and use it as your variables file.
+
+=== Make One CSS Value Powered by a Variable
+
+Before we start on making everything customizable, lets make sure everything works with one, simple variable. How about the orange color we see everywhere. This color is #ff7600. Let's add a variable for this color in the `defaults.less` file.
+
+Choose a good variable name here.
+*Important: This variable must end with -color.*
+There are multiple different variable types present in Concrete5's style customizer, and their types and the special parameters available to those types dictate how they have to be suffixed.
+You'll learn much more about this later – but for now make sure that any color variable ends with `-color`.
+
+[source,css]
+----
+@primary-action-color: #ff7600;
+----
+
+Next, import the variables file that we just created in our LESS file.
+If we don't do this, we'll get an error that "variable @primary-action-color is undefined" – because our LESS doesn't define it, `defaults.less` does. Add this line to the top of `templatemo_style.less`:
+
+Now, swap out all instances of that color in the `templatemo_style.less` file with this variable.
+For example, a background-color to the button class will look like this:
+
+[source,css]
+----
+.btn-orange {
+    background-color: @primary-action-color;
+    border-bottom:2px solid #d35400;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    color:#ffffff;
+}
+----
+
+Finally, we have to change how we include this file in our theme.
+Remember, we changed the name of it – and even if we hadn't, LESS files have to be included in a slightly special way.
+
+Opening our page template file and you'll see
+
+[source,php]
+----
+<link href="<?=$view->getThemePath()?>/css/templatemo_style.css"  rel='stylesheet' type='text/css'>
+----
+
+Swap that out with this:
+
+[source,php]
+----
+    <link href="<?=$view->getStylesheet('templatemo_style.less')?>" rel='stylesheet' type='text/css'>
+----
+
+=== Reload the Page
+
+If all goes well, when you reload the page, you'll see...exactly the same thing as before! Not that exciting, but this is the first step toward customization. Expect to continue this process frequently as you make more CSS properties in your theme customizable.

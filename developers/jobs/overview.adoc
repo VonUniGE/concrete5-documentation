@@ -1,0 +1,9 @@
+= Overview
+
+Jobs are simple, self-contained scripts that can be run from within the Optimization sections of the System & Settings area of the Dashboard.
+
+image:job-list.png[Job List]
+
+Each one of these item is an installed Job. Clicking the play button runs the job. Jobs can also be easily run via an external scheduling interface (like cron), or scheduled to run at certain points when someone visits a page in your concrete5 site. Jobs are great for processes that may be intensive, only run periodically, and don't need any user interface to complete. It's easy for developers to create their own jobs and to include them packages.
+
+<<jobs_creating-a-job>>[Creating a Job »]

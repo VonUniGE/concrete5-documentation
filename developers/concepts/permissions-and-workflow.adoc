@@ -1,0 +1,17 @@
+= Permissions & Workflow
+
+Concrete5 contains a powerful permissions system. By default, much of this complexity is hidden, but advanced users can enable advanced features from the Advanced Permissions page in the Dashboard.
+
+At its core, Concrete5 uses a Permissions *Checker* class (the "Permissions" class that is seen in the code frequently) and developers pass objects into this checker class.
+
+[source,php]
+----
+$c = Page::getByPath('/path/to/page');
+$pc = new Permissions($c);
+----
+
+In this example, the Page object is my **Permission Category**. Developers can register new categories for different business requirements. The permissions checker class "Permissions" is simply a proxy class that lets developers access the values of the **Permissions Response**, which is essentially the object that tells us whether we have access to a particular permission. Any time a permission is queried, that *Permission Key* is retrieved from the database, and the system retrieves a *Permission Assignment* object for that permission key and that particular permission object (which is an instance of an object of that particular permission category.) This permission assignment object gives us access to an *Access* object, which actually tells us what kind of access we have to this permission, as well as an optional *Duration* object, which tells us when that access begins and ends.
+
+Additionally, when granting access to a particular permission to someone, an administrator is actually granting access to a particular **Access Entity**. While most of the time these entities will be specific users or Groups, they might be something more abstract, like giving view access to a page only to "The user who created this page." or a particular combination of groups.
+
+Permissions go hand in hand with **Workflow**. In Concrete5, any permission key may be marked as one that can trigger a Workflow. Administrators can then choose one or more particular workflow to start when that permission is acted upon. Once a workflow starts, the actual *Workflow Request* that was initially desired is stored and not immediately acted upon, until the workflow is complete. Workflows can be of different types (examples include basic one-step workflow, which is included in Concrete5 core, and multiple step workflow, which is an Enterprise-level add-on.) While a workflow is in progress, *Workflow Progress* object is used to calculate its progress and join the specific Workflow instance and type to the particular object of workflow, and the resulting Request object.

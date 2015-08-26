@@ -1,0 +1,21 @@
+= Bundling Code into Packages for Reuse and Marketplace Distribution
+
+== <<packages_overview>>[Overview]
+
+== <<packages_directory-icon-controller>>[Directory, Icon and Controller]
+
+== <<packages_installation>>[Installation]
+
+== <<packages_modifying-startup-routine-from-package>>[Modifying the Concrete5 Startup Routine from a Package]
+
+== <<packages_handling-package-upgrades>>[Handling Package Upgrades]
+
+== <<packages_handling-uninstallation>>[Handling Uninstallation]
+
+== <<packages_implementing-a-centralized-help-registry-for-a-package>>[Implementing a Centralized Help Registry for a Package]
+
+== <<packages_adding-custom-code-to-packages>>[Advanced: Adding Custom Code Libraries in a Package]
+
+== <<packages>>advanced-including-third-party-libraries-in-a-package/[Advanced: Including Third Party Libraries in a Package]
+
+== <<packages_custom-database-tables-in-packages>>[Advanced: Custom Database Tables]

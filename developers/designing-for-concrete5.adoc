@@ -1,0 +1,29 @@
+= Designing for Concrete5
+
+This is a comprehensive guide to building a great Concrete5 theme.
+
+:leveloffset: +1
+
+include::designing-for-concrete5/building-a-concrete5-theme.adoc[]
+
+include::designing-for-concrete5/enabling-style-customization.adoc[]
+
+include::designing-for-concrete5/adding-grid-support-to-your-theme.adoc[]
+
+include::designing-for-concrete5/packaging-your-theme.adoc[]
+
+include::designing-for-concrete5/adding-complex-custom-layout-presets-in-your-theme.adoc[]
+
+include::designing-for-concrete5/advanced-css-and-javascript-usage.adoc[]
+
+include::designing-for-concrete5/advanced-area-operations.adoc[]
+
+include::designing-for-concrete5/applying-your-theme-to-single-pages-with-theme-paths.adoc[]
+
+include::designing-for-concrete5/theme-caching-and-configuration.adoc[]
+
+include::designing-for-concrete5/supporting-responsive-images-in-your-concrete5-theme.adoc[]
+
+include::designing-for-concrete5/simplesite-theming-guidelines.adoc[]
+
+:leveloffset: -1
