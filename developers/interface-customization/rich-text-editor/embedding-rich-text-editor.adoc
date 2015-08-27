@@ -1,0 +1,65 @@
+= Embedding the Rich Text Editor
+
+NOTE: This requires version 5.7.4 or greater
+
+When building custom blocks types or single page editing interfaces, it's easy for developers to include an instance of the custom Concrete5 rich text editor.
+This editor is built on http://imperavi.com/redactor[Redactor], an attractive, mobile-friendly, easy-to-use and easy-to-extend web editor.
+In the past, you might have had to include the necessary JavaScript and CSS assets yourself, and use the Redactor API to activate your text areas.
+In 5.7.4, however, a simple PHP class makes it easy to include Redactor in your editing interfaces, with all of the custom plugins and Concrete5 integration handled for you automatically.
+
+Let's say you have this form in your block or page template, that you'd like to swap out with Redactor:
+
+[source,php]
+----
+<div class="form-group">
+    <label class="control-label">Notes</label>
+    <textarea name="notes" class="form-control"><?php echo $notes; ?></textarea>
+</div>
+----
+
+Swapping this out with Concrete5's Redactor editor is as simple as changing the textarea line to this:
+
+[source,php]
+----
+<div class="form-group">
+    <label class="control-label">Notes</label>
+    <?php
+        $editor = Core::make('editor');
+        echo $editor->outputStandardEditor('notes', 'My Notes');
+    ?>
+</div>
+----
+
+That's it! `Core::make()` returns the active editor object, and `outputStandardEditor` takes two parameters.
+The first is the name of the form element, and the second optional parameter is any content you want to appear in the text area.
+
+== Customization
+
+By default, `outputStandardEditor()` enables access to the concrete5 file manager and sitemap (if the current user has such access).
+It also uses any plugins that are enabled in the rich text editor section of the dashboard.
+If you want a more tailored rich text editor experience, you can customize the editor object.
+
+Let's disable access to the file manager and the sitemap.
+
+[source,php]
+----
+$editor = Core::make('editor');
+$editor->setAllowFileManager(false);
+$editor->setAllowSitemap(false);
+----
+
+In 5.7.4.2 and greater, we can also only include a subset of plugins:
+
+[source,php]
+----
+$editor->getPluginManager()->deselect(array('table', 'underline, 'specialcharacters'));
+$editor->getPluginManager()->select('fontsize');
+----
+
+Then, just run `$editor->outputStandardEditor()` and your current object's settings will be used.
+
+== API Documentation
+
+You can get more information about the RedactorEditor object in the API documentation:
+
+http://www.concrete5.org/api/class-Concrete.Core.Editor.RedactorEditor.html[\Concrete\Core\Editor\RedactorEditor API Reference]

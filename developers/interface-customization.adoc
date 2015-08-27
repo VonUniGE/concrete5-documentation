@@ -2,6 +2,10 @@
 
 There're many ways to customize the concrete5 interface in order to provide custom help, additional rich text editor functionality and more. Read on for more information.
 
-== <<interface-customization_rich-text-editor>>[Rich Text Editor]
+:leveloffset: +1
 
-== <<interface-customization_help-system-and-guides>>[Help System & Guides]
+include::interface-customization/rich-text-editor.adoc[]
+
+include::interface-customization/help-system-and-guides.adoc[]
+
+:leveloffset: -1

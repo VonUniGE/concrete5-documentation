@@ -1,0 +1,9 @@
+= Help System & Guides
+
+:leveloffset: +1
+
+include::help-system-and-guides/adding-guides-to-dashboard-pages.adoc[]
+
+include::help-system-and-guides/customizing-the-behavior-of-the-help-message-display.adoc[]
+
+:leveloffset: -1
