@@ -1,0 +1,118 @@
+= Asset List
+
+== Asset Groups
+
+Wherever possible, you should use `requireAsset()` with a single asset group, rather than individual assets.
+There are certain exceptions (like requiring the jQuery JavaScript library) but in general most concrete5 functionality has already been separated into semantic groups, which will include all the CSS and JavaScript necessary.
+
+* `jquery/ui`
+* `jquery/visualize`
+* `select2`
+* `ace`
+* `core/colorpicker`
+* `font-awesome`
+* `core/rating`
+* `core/style-customizer`
+* `jquery/fileupload`
+* `swfobject`
+* `redactor`
+* `dynatree`
+* `core/app`
+* `core/app/editable-fields`
+* `core/imageeditor`
+* `dashboard`
+* `core/file-manager`
+* `core/sitemap`
+* `core/topics`
+* `core/groups`
+* `core/gathering`
+* `core/conversation`
+* `core/lightbox`
+* `core/account`
+* `core/legacy`
+
+== Individual Assets
+
+=== Individual JavaScript Files
+
+* `jquery`
+* `jquery/ui`
+* `jquery/visualize`
+* `jquery/touch-punch`
+* `select2`
+* `select2_locale`
+* `underscore`
+* `dropzone`
+* `jquery/form`
+* `picturefill`
+* `core/events`
+* `core/style-customizer`
+* `core/locale`
+* `awesome-rating`
+* `jquery/fileupload`
+* `swfobject`
+* `redactor`
+* `redactor_locale`
+* `ace`
+* `backstretch`
+* `dynatree`
+* `dynatree_locale`
+* `bootstrap/dropdown`
+* `bootstrap/tooltip`
+* `bootstrap/popover`
+* `bootstrap/alert`
+* `bootstrap/button`
+* `bootstrap/transition`
+* `core/app`
+* `bootstrap-editable`
+* `kinetic`
+* `core/imageeditor`
+* `core/imageeditor_locale`
+* `dashboard`
+* `core/file-manager`
+* `core/sitemap`
+* `core/topics`
+* `core/groups`
+* `core/gathering`
+* `core/conversation`
+* `core/lightbox`
+* `core/lightbox/launcher`
+* `core/account`
+* `core/legacy`
+
+=== Individual CSS Files
+
+* `jquery/ui`
+* `jquery/visualize`
+* `select2`
+* `spectrum`
+* `font-awesome`
+* `core/style-customizer`
+* `awesome-rating`
+* `redactor`
+* `dynatree`
+* `bootstrap/dropdown`
+* `bootstrap/tooltip`
+* `bootstrap/popover`
+* `bootstrap/alert`
+* `bootstrap/button`
+* `bootstrap/transition`
+* `bootstrap`
+* `core/app`
+* `core/app/editable-fields`
+* `core/imageeditor`
+* `core/frontend/captcha`
+* `core/frontend/pagination`
+* `core/frontend/errors`
+* `core/frontend/captcha`
+* `core/frontend/captcha`
+* `core/frontend/captcha`
+* `core/file-manager`
+* `core/sitemap`
+* `core/topics`
+* `core/gathering/base`
+* `core/gathering/display`
+* `core/conversation`
+* `core/lightbox`
+* `core/account`
+* `core/legacy`
