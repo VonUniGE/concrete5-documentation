@@ -2,15 +2,15 @@
 
 == Miscellaneous Improvements
 
-* Form submissions “today” now respects user’s local time zone (thanks mlocati).
+* Form submissions "today" now respects user's local time zone (thanks mlocati).
 * Fixed some untranslated strings and dates (thanks mlocati)
-* Added detail error message when attempting to use grid methods on areas in themes that don’t support them.
+* Added detail error message when attempting to use grid methods on areas in themes that don't support them.
 * Fallback to GD if Imagemagick is older than version 6.2.9 (which previously triggered errors.)
-* Context menu on sitemap, file manager and more moves to the right if there isn’t enough room to display top or bottom.
+* Context menu on sitemap, file manager and more moves to the right if there isn't enough room to display top or bottom.
 
 == Bug Fixes
 
-* Fixed “Invalid argument supplied for foreach()” showing up when attempting to add a page in the sitemap and using the blank starting point.
+* Fixed "Invalid argument supplied for foreach()" showing up when attempting to add a page in the sitemap and using the blank starting point.
 * Fixed inability to complete installation on a machine not connected to the internet.
 * Fixed inability to load theme class from within a package.
 * Fixed issue where deleting a version of the file would delete files and images perhaps shared by other versions, leading to content loss.

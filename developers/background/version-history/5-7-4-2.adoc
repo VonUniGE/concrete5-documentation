@@ -10,14 +10,14 @@
 * Improvements to new update functionality to make it more resilient with failures, but error messaging.
 * Adding attributes to a page will ask for it be checked back/approved when clicking the green icon.
 * Theme name and description can now be translated (thanks mlocati)
-* Added an error notice when deleting a page type that’s in use in your site.
+* Added an error notice when deleting a page type that's in use in your site.
 
 == Bug Fixes
 
 * Some servers would redirect infinitely when activating a theme or attempting to logout. This has been fixed.
 * Fix bug with multiple redactor instances on the same page and in the same composer window causing problems.
 * Better rendering of empty areas in Firefox (thanks JeramyNS)
-* Fixed problems with “concrete.seo.trailing_slash” set to true leading to an inability to login, other problems.
+* Fixed problems with "concrete.seo.trailing_slash" set to true leading to an inability to login, other problems.
 * Attributes that had already been filled out were being shown as still required in page check-in panel.
 * Fixed bug where full URLs were incorrectly parsed if asset caching was enabled (thanks mlocati)
 * Fix download file script leading to 404 errors after you go to the dashboard and hit the back button

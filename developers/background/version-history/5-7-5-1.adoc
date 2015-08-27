@@ -10,7 +10,7 @@
 
 * IP Blacklist functionality now works correctly
 * Fixed non-functioning image editor when editing image thumbnails.
-* Fixed error “PHP Fatal error: Can't inherit abstract function” on PHP 5.3.9 and earlier
+* Fixed error "PHP Fatal error: Can't inherit abstract function" on PHP 5.3.9 and earlier
 * Fixed errors installing and working with concrete5 on MySQL setups with strict tables enabled.
 * Fixing tree topic error in flat filter custom template when you have removed the topic tree its linked to
 * Fixed misnamed header grid classes in Elemental theme (thanks hdk0016)

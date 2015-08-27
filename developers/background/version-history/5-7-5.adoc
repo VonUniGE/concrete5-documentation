@@ -4,7 +4,7 @@
 
 * Page Theme classes can specify layout presets, which can use classes contained in grid frameworks or use their own custom classes.
 * Layouts now have design controls available to them, including custom templates and custom CSS classes.
-* Added a new custom template “Parallax Image” available to layouts that employ a background image.
+* Added a new custom template "Parallax Image" available to layouts that employ a background image.
 * Grid frameworks can now specify hiding classes for responsive breakpoints, which can be controlled through block and area design settings.
 * Grid containers that wrap around blocks based on their type can now be disabled or enabled on a per-block basis through the block design palette.
 * Added nested support to grid frameworks.
@@ -16,7 +16,7 @@
 == Multilingual Improvements
 
 * Global areas and stacks are now multilingual: if you have multiple language areas in your site, stacks and global areas you add will have separate instances for each language, and the appropriate stack contents will be displayed on the appropriate pages with no hacks.
-* You can scan a multilingual section for all links and references to multilingual pages, and if those pages exist outside the current tree, they will be remapped into the current tree. (i.e after you copy a multilingual tree, you can rescan its links so they don’t point to the original tree.)
+* You can scan a multilingual section for all links and references to multilingual pages, and if those pages exist outside the current tree, they will be remapped into the current tree. (i.e after you copy a multilingual tree, you can rescan its links so they don't point to the original tree.)
 
 == Other Feature Updates
 
@@ -45,7 +45,7 @@
 * Improved performance of full page caching (thanks EC-Chris)
 * Improvements to session handling when the session directory exists outside of an open_basedir restriction (thanks acohin and mlocati)
 * Page attributes are now grouped in sets on the page type defaults attributes screen (thanks EC-Joe)
-* Form block now highlights errors on specific fields when they aren’t filled in properly (thanks timdix)
+* Form block now highlights errors on specific fields when they aren't filled in properly (thanks timdix)
 * Fixed bug that caused areas to have problems if they were converted in code from GlobalArea to Area and vice versa (thanks joe-meyer)
 * Fix: can't override install options by config file (thanks mlocati and hissy)
 * Better dialog message when the user can not select files (thanks hissy)
@@ -67,7 +67,7 @@
 * Lots of miscellaneous bug fixes to community points and badges
 * Removed old unused timezone constants and replaced with proper configuration values (thanks mlocati)
 * Fixed bug where Blocks on global areas don't prevent full page caching with the setting "On - If blocks on the particular page allow it (thanks TimDix)
-* The global configuration value for JPEG compression wasn’t being accessed properly, was ignored. This is fixed (thanks mlocati)
+* The global configuration value for JPEG compression wasn't being accessed properly, was ignored. This is fixed (thanks mlocati)
 * Email service had been ignoring the default configured name (thanks mlocati)
 * Use \Exception and translate line in BannedWord (thanks mlocati)
 * Fixed error when saving a type with underline option unchecked in theme customization (thanks ojahleto)
@@ -77,13 +77,13 @@
 * External links are properly outputted in page list blocks now (thanks GlennSchmidt)
 * Fixed Fixing ipv4 to ipv6 address bugs (thanks MeyerJL)
 * Fixed error editing testimonial blocks when the image of the testimonial had been removed from the file manager (thanks edbeeny)
-* Fixed error where certain checkbox attributes were being imported as defaulting to checked, when they shouldn’t have been.
+* Fixed error where certain checkbox attributes were being imported as defaulting to checked, when they shouldn't have been.
 * Fixed bug where running \Page::getByID on startup with a page you're currently editing breaks edit mode (thanks EC-Joe)
 * Fixed https://www.concrete5.org/community/forums/5-7-discussion/image-slider-links/#752359
 * Responsive images served by the picture tag now work in IE9 (thanks mitchray)
 * Surveys in global areas are now properly displayed on the survey results dashboard page (thanks EvgeniySpinov)
 * Fixed inability to select topics to create under a new topic tree.
-* Fixed validation incorrectly claiming a file attribute didn’t exist when checking a page in from edit mode (thanks mitchray)
+* Fixed validation incorrectly claiming a file attribute didn't exist when checking a page in from edit mode (thanks mitchray)
 * Fixed bug with broken URL in testimonial block (thanks KarlDilkington)
 * Fixed https://github.com/concrete5/concrete5/issues/2623
 * Fixed pagination in form results (thanks mitchray)
@@ -95,15 +95,15 @@
 * Fixed If you does not have access to group search, you'll get a JSON error message (thanks hissy)
 * Fixed filtering by log status levels on Dashboard page
 * Fixed http://www.concrete5.org/developers/bugs/5-7-4-2/bug-with-tags-attribute-type1/
-* Fixed bug where duplicated pages couldn’t have their block content edited in composer (thanks katzueno)
+* Fixed bug where duplicated pages couldn't have their block content edited in composer (thanks katzueno)
 * Username validation error string fixes (thanks ounziw)
 * Fix class not included in legacy page list (thanks hissy)
 * Fixed bug: Add layout to area. Without refreshing page, edit container layout of new area, then cancel. Layout looks weird
 
 == Developer Updates
 
-* Big thanks to mlocati for delivering a completely new way to specify database XML, built off of the Doctrine DBAL library, including its types and functionality instead of ADODB’s AXMLS. Database XML now has support for foreign keys, comments and more. Doctrine XML is a composer package and can be used by third party projects as well. More information can be found at https://github.com/concrete5/doctrine-xml.
-* $view->action() now works for blocks in add and edit templates. This makes block AJAX routing much easier (simply reference $view->action(‘my_method’) in your block add/edit template, and implement action_my_method) in your block controller.
+* Big thanks to mlocati for delivering a completely new way to specify database XML, built off of the Doctrine DBAL library, including its types and functionality instead of ADODB's AXMLS. Database XML now has support for foreign keys, comments and more. Doctrine XML is a composer package and can be used by third party projects as well. More information can be found at https://github.com/concrete5/doctrine-xml.
+* $view->action() now works for blocks in add and edit templates. This makes block AJAX routing much easier (simply reference $view->action('my_method') in your block add/edit template, and implement action_my_method) in your block controller.
 * Code cleanup and API improvements and better code documentation (thanks mlocati)
 * Configuration and old PHP constants removed and replaced (thanks mlocati)
 * Completely new approach to command line utilities built off of the Symfony command line class; existing utilities ported (thanks mlocati!)
@@ -118,7 +118,7 @@
 * Fixed duplicate success message on cloned form blocks on the same page (thanks bluefractals)
 * Fixed bugs installing concrete5 with strict mysql tables enabled (thanks mlocati)
 * Updated Magnific Popup to 1.0 (thanks mitchray)
-* If you’re running an OpCache like PHP’s Opcache, APC, XCache or something else, when you clear the cache this cache will also be cleared (thanks mlocati)
+* If you're running an OpCache like PHP's Opcache, APC, XCache or something else, when you clear the cache this cache will also be cleared (thanks mlocati)
 * Can compute hash key based on full asset contents if so desired, using the concrete.full_contents_asset_hash config value (thanks mlocati)
 * Page cache adapters can now be loaded from places other than the core namespace (thanks hissy)
 * updateUserAvatar now fires on_user_update event (thanks timdix)

@@ -12,7 +12,7 @@
 * Fixed incorrect message about inadequate RAM when users actually had 64MB allocated to PHP.
 * Fixed exception when deleting a block from a page defaults (thanks Chadstrat).
 * Removed unique constraints in configuration on namespaces.
-* Fixed “Invalid foreach()” error when dealing with page types that allowed different templates than their default.
+* Fixed "Invalid foreach()" error when dealing with page types that allowed different templates than their default.
 
 == Developer Updates
 

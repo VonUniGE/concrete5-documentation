@@ -39,15 +39,15 @@
 == Other Feature Updates
 
 * Better dashboard update process that checks for compatible add-ons, gives more information about upgrades.
-* Uploading files to the file manager now gives you a success dialog in which you can edit the uploaded files’ attributes, assign them to sets, or choose them for an image block, etc...
+* Uploading files to the file manager now gives you a success dialog in which you can edit the uploaded files' attributes, assign them to sets, or choose them for an image block, etc...
 * Improved site interface translation dashboard page. Can see context, comments, search and translate plurals (thanks mlocati)
 * You may now choose multiple files from the file manager if a block or editing interface supports it (thanks olsgreen!)
-* You can now add blocks to an area by clicking on the area and selecting “Add Block”. This will open the side panel and you may click a block, stack or clipboard entry there to add to the selected area.
+* You can now add blocks to an area by clicking on the area and selecting "Add Block". This will open the side panel and you may click a block, stack or clipboard entry there to add to the selected area.
 * You can now filter a page list by a specific topic.
 * Lots of updates to Multilingual system for better translation extraction, better experience with plurals, bug fixes, other improvements (thanks mlocati)
 * Ability to choose a custom canonical URL for the page, instead of always having that canonical URL locked to the URL slugs and absolute site structure.
-* You can once again set a custom template for a block at the area level with $area->setCustomTemplate(‘block_handle’, ‘custom_template’); This should be less buggy than it was in 5.6.x as well.
-* You can now set a custom template in a page type output page for a composer output control block. “ ‘More options’, including the ability to import files from remote URLs and the incoming directory is now available from the file manager in front-end page mode.
+* You can once again set a custom template for a block at the area level with $area->setCustomTemplate('block_handle', 'custom_template'); This should be less buggy than it was in 5.6.x as well.
+* You can now set a custom template in a page type output page for a composer output control block. " 'More options', including the ability to import files from remote URLs and the incoming directory is now available from the file manager in front-end page mode.
 * Nicer file set administration, including the ability to sort all files in a file set by different criteria for reordering (thanks goutnet at EC-Joe)
 * Much faster installation process for Elemental Full. Much lower memory footprint.
 * More useful Dashboard Package Details screen (thanks goutnet)
@@ -56,8 +56,8 @@
 * You can now specify the name of the form submission button (thanks EC-Joe)
 * Breadcrumb custom template now available for Auto-Nav (thanks hissy)
 * You can now specify what kind of HTML tag you want to use in the Page Title block (thanks dclmedia)
-* Maintenance mode now is permission controlled. Those who have the “View site in maintenance mode” permission can edit and access the site even while maintenance mode is turned on (thanks ExchangeCore)
-* You can now specify the “canonical host”, “canonical port” and https:// settings of your site in the URLs dashboard page. You can also control whether your site is forced to render at this exact combination (for SEO purposes.) This setting will also be used by the Domain Mapper and other add-ons.
+* Maintenance mode now is permission controlled. Those who have the "View site in maintenance mode" permission can edit and access the site even while maintenance mode is turned on (thanks ExchangeCore)
+* You can now specify the "canonical host", "canonical port" and https:// settings of your site in the URLs dashboard page. You can also control whether your site is forced to render at this exact combination (for SEO purposes.) This setting will also be used by the Domain Mapper and other add-ons.
 
 == Behavioral Improvements
 
@@ -70,7 +70,7 @@
 * Some style improvements to panels (thanks hissy)
 * File manager now keeps the same file types when creating thumbnails (keeping pngs transparent, etc..) (thanks mitchray!)
 * Style improvements to Auto-Nav and Page List block forms.
-* We no longer attempt to retrieve packages from the marketplace if you’re not connected, improves performance (thanks goutnet)
+* We no longer attempt to retrieve packages from the marketplace if you're not connected, improves performance (thanks goutnet)
 * Bug fixes to antispam settings page and system in general (thanks EC-Chris)
 * Form block now redirects you to the proper spot on the page for success message (thanks ahukkanen)
 * Better detection of changed cached assets (thanks mlocati)
@@ -89,7 +89,7 @@
 * Content import with block type sets will now use existing sets if they are available.
 * Conversations block now includes its content in the search index (thanks mkly)
 * Significantly improved performance of the on-demand file thumbnailing utility when a cached version is found (thanks ijessup)
-* Custom block design style fixes - don’t output a style tag when just changing a custom template, better style tag support (thanks mlocati)
+* Custom block design style fixes - don't output a style tag when just changing a custom template, better style tag support (thanks mlocati)
 * You can now unmap a page in the multilingual page report.
 * You can now set the minimum and maximum ranges of style customizer sliders by defining concrete.limits.style_customizer.size_max and concrete.limits.style_customizer.size_min (thanks EC-Joe)
 * respond.js and html5-shiv.js are now optionally included by themes, rather than being hard-coded for IE8 and below.
@@ -103,21 +103,21 @@
 * Fixed sorting of FAQ Entries in the FAQ block.
 * Fixed bug that led to selected topics in topic tree not appearing selected on editing.
 * Placing view files in the application/views/ will now work (thanks RuspinaDev)
-* Fixed bug with social links block not displaying properly on sites that didn’t already load Font Awesome. (thanks jaromirdalecky)
+* Fixed bug with social links block not displaying properly on sites that didn't already load Font Awesome. (thanks jaromirdalecky)
 * Facebook authentication should work again (thanks EC-Joe)
 * Fixed bug where If the HTML block is saved without any changes (thus not triggering the on change event), the textarea remains empty and the content is lost (thanks mitchray)
 * Fixed inability to have multiple form blocks or survey blocks or blocks with interactive form submissions on the same page and not have submission affect both of them.
 * Image slider should work properly in composer.
-* Fixed bug in content importer where page types with package attributes weren’t having their packages set properly.
+* Fixed bug in content importer where page types with package attributes weren't having their packages set properly.
 * Choose language on login now functions correctly (thanks mlocati)
 * Interactive blocks like form and survey and now be included in stacks and displayed on pages (thanks nicemaker)
-* Bug fixes to composer editing experiences where blocks couldn’t be loaded in composer.
+* Bug fixes to composer editing experiences where blocks couldn't be loaded in composer.
 * Fix error when searching by approved or unapproved version. Miscellaneous display improvements to search interfaces in the Dashboard.
-* The “addAttachment” method in the Mail Service now works again (thanks SnefIT)
+* The "addAttachment" method in the Mail Service now works again (thanks SnefIT)
 * Miscellaneous fixes to content exporter to make it more resilient.
-* Fixed bug where “Public Date/Time” core property wasn’t being properly displayed or saved in composer.
-* Fixed bug in page attribute display block where complex attribute types couldn’t always be printed out.
-* Fixed bug where jobs couldn’t be scheduled to run through browser visit.
+* Fixed bug where "Public Date/Time" core property wasn't being properly displayed or saved in composer.
+* Fixed bug in page attribute display block where complex attribute types couldn't always be printed out.
+* Fixed bug where jobs couldn't be scheduled to run through browser visit.
 * Fixed HTML block tooltip getting cut off (thanks mitchray)
 * Remove old page versions job now works again.
 * Cookie settings bug fixes (thanks tao-s)
@@ -135,16 +135,16 @@
 * Topics can now contain ampersands and other special characters.
 * Localization bug fixes (thanks mlocati)
 * Fixed http://www.concrete5.org/community/forums/customizing_c5/strange-workflow-error/
-* Feature block link option now works with the hover description custom template”
-* Fixed programmatic filter by checkbox attribute not displaying all appropriitems if passing “false” to the option.
-* Fixed bug where single page controllers in application/ directory weren’t working.
+* Feature block link option now works with the hover description custom template"
+* Fixed programmatic filter by checkbox attribute not displaying all appropriitems if passing "false" to the option.
+* Fixed bug where single page controllers in application/ directory weren't working.
 * Better inheritance of area permissions to blocks in areas when inheriting permissions from page types in advanced permissions mode (thanks hissy)
 * Fixed for file sets for better sanitizing, miscellaneous usage fixes (thanks Mnkras)
 * Fixed broken area styles when using more than one custom class on an area (thanks jordif)
 * Bug fixes to color picker widget when used in a block dialog (thanks olliephillips)
 * Fixed fatal error that would display in area permissions dialog when attempting to use advanced permissions to inherit permissions from an area set in page defaults (Thanks hissy)
 * Fixed potential cross site scripting error in composer detail form.
-* Fixed “"Navigate this page in other languages" - Invalid argument supplied for foreach()” that could happen with unmapped multilingual websites.
+* Fixed ""Navigate this page in other languages" - Invalid argument supplied for foreach()" that could happen with unmapped multilingual websites.
 * Fixed issue where dashboard panel would not stay closed if closing manually.
 * Localization fixes to Page Type Composer Control Name (thanks hissy)
 * Bug fixes and better sanitizing when saving Banned Words in the Dashboard (thanks Mnkras)
@@ -153,7 +153,7 @@
 * Fixed http://www.concrete5.org/developers/bugs/5-7-3-1/multiple-versions-of-a-page-cannot-be-deleted-at-once/
 * Fixed Unable to edit a user when concrete.seo.trailing_slash is enabled (thanks ECJoe)
 * Workflow progress categories are now uninstalled when uninstalling packages (thanks mkly)
-* Fixed bug when removing group or user from “Add SubPage” permissions in advanced permissions mode.
+* Fixed bug when removing group or user from "Add SubPage" permissions in advanced permissions mode.
 * fixed bug with Reply to this email address (thanks MeyerJL)
 * Better display on editing grid layouts when working with layouts that have multiple column classes (thanks ezannelli)
 * Fixed malformed Page Cache Expires header when using full page caching.
@@ -173,7 +173,7 @@
 * Fixed Replacing file throwing erroneous "file is too large" error message
 * Fixed Bulk Editing file properties does not add new File Versions
 * Lots of bug fixes to page aliases, including bug where original page would be deleted if an alias was in the trash and the trash was emptied.
-* Automated groups on login or register will automatically be entered if a custom automation controller doesn’t exist (thanks Mnkras)
+* Automated groups on login or register will automatically be entered if a custom automation controller doesn't exist (thanks Mnkras)
 * Fixed http://www.concrete5.org/developers/bugs/5-7-3-1/user-search-shows-same-user-multiple-times/#732257
 * Fix display order issue of aliased pages (thanks hissy)
 * Fixed Can't create link to file or page from within composer form
@@ -182,7 +182,7 @@
 * Fixed HTML validation error when using built-in Securimage Captcha
 * Fixed preview icon in Feature block (thanks zneek)
 * Fixed bug: After fresh C5 install with no demo content - inserting first image, when uploading to filemanager not visible
-* Fixed invalid error messages when accessing search interfaces in the dashboard when users didn’t have permission to access them.
+* Fixed invalid error messages when accessing search interfaces in the dashboard when users didn't have permission to access them.
 * Copied form blocks now work on their target page.
 * Copied from blocks can now be edited on their target page.
 * Fixed bug where new versions of files incorrectly had the same date added date as old versions.
@@ -192,9 +192,9 @@
 * Fixed typo in user registration notification email (thanks ounziw)
 * Fixed http://www.concrete5.org/developers/bugs/5-7-3-1/authentication-type-renders-only-once/ (thanks companyou)
 * Fixed https://www.concrete5.org/developers/bugs/5-7-3-1/dashboard-system-section/
-* Fixed error when proxy servers send “unknown” instead of an IP address (thanks spainer)
+* Fixed error when proxy servers send "unknown" instead of an IP address (thanks spainer)
 * Fixed bug where an attribute key with the same handle can exist in two categories (thanks Remo)
-* Set view theme using setViewTheme() in a package’s on_before_render method now correctly sets the theme (Thanks goutnet)
+* Set view theme using setViewTheme() in a package's on_before_render method now correctly sets the theme (Thanks goutnet)
 * Fixed potential directory traversal inclusion bug with tools URLs (thanks Egidio Romano of Minded Security)
 * Fixed CSRF vulnerability in Dashboard Registrations page; better sanitization of email addresses as well (thanks Egidio Romano of Minded Security)
 * Fixed miscellaneous XSS bugs (thanks Mnkras)

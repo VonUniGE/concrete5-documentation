@@ -7,11 +7,11 @@ NOTE: This release is so large that we long since gave up categorizing the small
 * A completely new layout engine allows for inline editing of content, layouts and style customization. Blocks can be dragged into the page and easily rearranged.
 * Inline content editing uses the Redactor editor, a beautiful editor with deep integration to concrete5, and full bootstrap 3 interface integration.
 * The Dashboard user interface is completely updated. Navigating it is much easier, and the interface is much more attractive.
-* concrete5’s user interface is now powered by Bootstrap 3.
+* concrete5's user interface is now powered by Bootstrap 3.
 
 == Themes and Blocks
 
-* concrete5 now ships with the Elemental theme, by far the prettiest theme we’ve ever built.
+* concrete5 now ships with the Elemental theme, by far the prettiest theme we've ever built.
 * The concrete5 Dashboard, main toolbar and Elemental theme are all fully responsive.
 * Themes can optionally refer to grid frameworks, and can have full grid support built in. Layouts have been substantially updated to support these grid frameworks (as well as be fully responsive.)
 * Theme controllers can control many aspects of a theme, including its grid framework, custom CSS classes that are available for different block types, which assets a theme supports, and more.
@@ -22,7 +22,7 @@ NOTE: This release is so large that we long since gave up categorizing the small
 == Pages and Architecture
 
 * Page types and page templates are now two separate concepts. Page types refer to pages as objects - Blog Entry, Empty Page, Project, Product - and page templates refer to templates that actually appear in themes. The same page type can be run in multiple themes.
-* concrete5’s Composer is now a very flexible form builder that can route attributes and blocks into different page templates. Each page type has its own custom instance of Composer.
+* concrete5's Composer is now a very flexible form builder that can route attributes and blocks into different page templates. Each page type has its own custom instance of Composer.
 * A Feed Object is available in the Dashboard (and created through the Page List block), giving Page Lists the ability to create RSS feeds that are permalinked.
 
 == Files
@@ -39,7 +39,7 @@ NOTE: This release is so large that we long since gave up categorizing the small
 
 * Our core JavaScript and CSS has been completely rewritten and modernized.
 * We have officially begun to convert our code base to the PSR-2 standard.
-* concrete5’s sitemap is now powered by Dynatree (soon by Fancytree.)
+* concrete5's sitemap is now powered by Dynatree (soon by Fancytree.)
 * Our PHP classes have been substantially reorganized and autoloading is PSR-4 compliant. They are now namespaced.
 * The PageList, FileList and UserList classes have been completely refactored, and should be much easier to extend and work with.
 
@@ -52,7 +52,7 @@ NOTE: This release is so large that we long since gave up categorizing the small
 
 == Architecture
 
-* A completely new file-based configuration option, powered by the Laravel Configuration component, is the standard. concrete5’s inflexible constants are gone.
+* A completely new file-based configuration option, powered by the Laravel Configuration component, is the standard. concrete5's inflexible constants are gone.
 * A completely new assets layer manages JavaScript and CSS dependencies, asset versioning between packages, and inclusion or exclusion of assets based on whether they are provided in themes. This asset framework also handles automatic asset minification and combination.
 * A new taxonomy concept - Topics - is now available. These are managed centrally in the dashboard and can also be attached as attributes to files, users and pages.
 * concrete5 has better localization support than ever, including improvements in locale switching, date and number handling, and multibyte URL handling
@@ -61,9 +61,9 @@ NOTE: This release is so large that we long since gave up categorizing the small
 * An AuthenticationType layer makes it easy to add custom third party authentication libraries.
 * A completely new routing system, Session, Cookie, Request and Response components powers the framework. Model-view-controller setups are completely refactored and much more robust.
 * Autoloading is now automatic.
-* concrete5’s database access is now powered by Doctrine, a popular, robust framework for database access.
+* concrete5's database access is now powered by Doctrine, a popular, robust framework for database access.
 * Many other third party libraries, including Pagerfanta, Monolog, Patchwork, and Imagine are being used, giving developers access to a much richer API.
 * concrete5 now supports IPv6.
-* concrete5’s third party libraries are all delivered by Composer.
+* concrete5's third party libraries are all delivered by Composer.
 
 Thanks to all community members who have tested this release, and especially those in Github who have committed code to this release and help it get out the door. This includes (but is definitely not limited to) mlocati, remo, EC-Joe, EC-Chris, jobbrown, olliephillips, Mnkras, hissy, katzueno, mkly, jprostko, and many more.
