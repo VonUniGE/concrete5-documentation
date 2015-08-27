@@ -9,4 +9,4 @@ def process(which)
 end
 
 process "developers"
-process "editors"
+# process "editors"
