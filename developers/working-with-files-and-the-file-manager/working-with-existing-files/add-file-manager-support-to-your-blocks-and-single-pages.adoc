@@ -24,7 +24,7 @@ Here's what the template might look like.
 
 The form looks like this when rendered in the block.
 
-image:file-manager-add-for-blocks[Rendered form]
+image:file-manager-add-for-blocks.png[Rendered form]
 
 but we want to add a photo as well.
 Rather than adding a URL, or rolling our own, we just add this to the HTML.

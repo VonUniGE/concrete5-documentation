@@ -16,12 +16,12 @@ image:hello-world-block_add-to-page.png[Add Hello World Block to Page]
 
 == Dialog
 
-image:hello-world-block_add-dialog[Add Hello World Block Dialog]
+image:hello-world-block_add-dialog.png[Add Hello World Block Dialog]
 
 == Validation Example
 
-image:hello-world-block_validation-example[Validation Example]
+image:hello-world-block_validation-example.png[Validation Example]
 
 == Output Example
 
-image:hello-world-block_output-example[Output Example]
+image:hello-world-block_output-example.png[Output Example]
