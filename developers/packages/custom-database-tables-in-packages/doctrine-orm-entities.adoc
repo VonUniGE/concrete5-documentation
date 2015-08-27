@@ -1,0 +1,99 @@
+= Doctrine ORM Entities
+
+NOTE: Requires Concrete5 5.7.4 or above
+
+Finally, a completely new way of handling custom database tables is available in Concrete5.
+This is done by not using database tables at ALL! (At least, not directly)
+Instead, create Doctrine entity classes, which are PHP classes marked up by custom comments (hereafter called annotations).
+If these classes are marked up properly, they will automatically generate database tables in the background and can be used with Doctrine ORM as "entities."
+
+== Requirements
+
+This approach requires that a developer be very familiar with http://doctrine-orm.readthedocs.org/en/latest/index.html[Doctrine 2 and its ORM component].
+
+== Example
+
+Let's say I'm creating a statistics package, and I want to create a table to store User Agents – the string of text that identifies a web browser viewing a page.
+Instead of treating this like a database table, I'll treat it like an "entity object" instead.
+An entity object is simply a PHP object containing data about something.
+
+First, create a PHP object storing the thing you want.
+
+=== File: packages/statistics/src/Entity/UserAgent.php
+
+[source,php]
+----
+<?php
+
+namespace Concrete\Package\Statistics\Src\Entity;
+
+class UserAgent
+{
+    protected $id;
+
+    protected $value;
+
+    protected $hash;
+
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+    public function getID()
+    {
+        return $this->$id;
+    }
+
+    public function getHash()
+    {
+        return $this->hash;
+    }
+
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
+    }
+}
+----
+
+To turn this into a Doctrine ORM entity, just add annotations above the relevant class and variables.
+
+[source,php]
+----
+<?php
+
+namespace Concrete\Package\Statistics\Src\Entity;
+
+/**
+ * @Entity
+ * @Table(name="StatisticsUserAgents")
+ */
+class UserAgent
+{
+
+    /**
+     * @Id @Column(type="integer")
+     * @GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @Column(type="string")
+     */
+    protected $value;
+
+    /**
+     * @Column(type="string")
+     */
+    protected $hash;
+----
+
+Now, when my package is installed, the table `StatisticsUserAgents` will automatically be created.
+I can then use Doctrine ORM to persist my data as described within its documentation.
+This approach also seamlessly handles periodic schema changes.

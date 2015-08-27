@@ -1,0 +1,52 @@
+= Handling Uninstallation
+
+Uninstalling packages is as easy as installing them.
+Simply create a method named `uninstall()` in your package, and make sure to run the `parent::uninstall()` method prior to running your custom code.
+For example, this `uninstall()` method takes care of removing some custom database tables (since by default any custom database tables found in your package aren't removed when a package is uninstalled).
+
+[source,php]
+----
+public function uninstall()
+{
+    parent::uninstall();
+    $db = \Database::connection();
+    $db->query('drop table FooBar');
+    $db->query('drop table FooBaz');
+}
+----
+
+NOTE: most packages will not need to implement a custom `uninstall()` method. +
+Core items of functionality that are installed by a particular package like block types, page themes, attributes and more will automatically be uninstalled during the package uninstallation method.
+
+== Adding Custom Options During Uninstallation
+
+The standard Concrete5 package uninstall screen lists all items that will be uninstalled when this package is uninstalled.
+This is automatic.
+If you'd like, you can add custom messaging or a form to this list – for example, an eCommerce package might prompt the user to confirm whether they want front-end store content also deleted from their site.
+To display a custom uninstallation message or form, simply create a file at `packages/package_handle/elements/dashboard/uninstall.php`.
+Anything found in this file will automatically be presented to the user after they choose to uninstall the package, but before they actually confirm that they want to uninstall it.
+
+== Include a Form
+
+Need to include a form as part of this content?
+Just add it like you would anywhere, in the HTML, and check the post from within the `uninstall()` method.
+
+[source,html]
+----
+<input type="checkbox" name="removeFrontendContent" value="1" /> Remove front-end pages beneath /store.
+----
+
+Then, from within the `controller.php` `uninstall()` method
+
+[source,php]
+----
+public function uninstall()
+{
+    $pkg = parent:: uninstall();
+
+    $r = \Request::getInstance();
+    if ($r->request->get('removeFrontendContent')) {
+        // do the deed
+    }
+}
+----

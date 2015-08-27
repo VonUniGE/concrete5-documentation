@@ -1,21 +1,25 @@
 = Bundling Code into Packages for Reuse and Marketplace Distribution
 
-== <<packages_overview>>[Overview]
+:leveloffset: +1
 
-== <<packages_directory-icon-controller>>[Directory, Icon and Controller]
+include::packages/overview.adoc[]
 
-== <<packages_installation>>[Installation]
+include::packages/directory-icon-controller.adoc[]
 
-== <<packages_modifying-startup-routine-from-package>>[Modifying the Concrete5 Startup Routine from a Package]
+include::packages/installation.adoc[]
 
-== <<packages_handling-package-upgrades>>[Handling Package Upgrades]
+include::packages/modifying-startup-routine-from-package.adoc[]
 
-== <<packages_handling-uninstallation>>[Handling Uninstallation]
+include::packages/handling-package-upgrades.adoc[]
 
-== <<packages_implementing-a-centralized-help-registry-for-a-package>>[Implementing a Centralized Help Registry for a Package]
+include::packages/handling-uninstallation.adoc[]
 
-== <<packages_adding-custom-code-to-packages>>[Advanced: Adding Custom Code Libraries in a Package]
+include::packages/implementing-a-centralized-help-registry-for-a-package.adoc[]
 
-== <<packages>>advanced-including-third-party-libraries-in-a-package/[Advanced: Including Third Party Libraries in a Package]
+include::packages/adding-custom-code-to-packages.adoc[]
 
-== <<packages_custom-database-tables-in-packages>>[Advanced: Custom Database Tables]
+include::packages/including-third-party-libraries-in-a-package.adoc[]
+
+include::packages/custom-database-tables-in-packages.adoc[]
+
+:leveloffset: -1
