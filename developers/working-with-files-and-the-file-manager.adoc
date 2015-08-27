@@ -1,21 +1,31 @@
-[[working-with-files-and-the-file-manager]]
-== Working with Files and the File Manager
-:doctype: book
-:source-highlighter: coderay
+= Working with Files and the File Manager
 
-* <<working-with-files-and-the-file-manager_overview>>[Overview]
-* <<working-with-files-and-the-file-manager_working-with-existing-files_retrieving-file-objects-programmatically>>[Working with Existing Files]
-** <<working-with-files-and-the-file-manager_working-with-existing-files_retrieving-file-objects-programmatically>>[Retrieving File Objects Programmatically]
-** <<working-with-files-and-the-file-manager_working-with-existing-files_add-file-manager-support-to-your-blocks-and-single-pages>>[Add File Manager Support to Your Blocks and Single Pages]
-** <<working-with-files-and-the-file-manager_working-with-existing-files_working-with-files-programmatically>>[Working with Files Programmatically]
-* <<working-with-files-and-the-file-manager_importing-new-files>>[Importing New Files]
-* <<working-with-files-and-the-file-manager_accessing-the-physical-file-from-a-file-object>>[Accessing the Physical File from a File Object]
-* <<working-with-files-and-the-file-manager_using-the-imagine-image-library-to-work-with-images>>[Using the Imagine Image Library to Work with Images]
-* <<working-with-files-and-the-file-manager_working-with-image-thumbnails>>[Working with Image Thumbnails]
-* <<working-with-files-and-the-file-manager_automatically-set-attributes-and-more-with-custom-file-type-insp>>[Automatically Set Attributes and More With Custom File Type Inspectors]
-* <<working-with-files-and-the-file-manager_creating-custom-file-type-views-and-edit-interfaces>>[Creating Custom File Type Views and Edit Interfaces]
-* <<working-with-files-and-the-file-manager_grouping-files-with-file-sets>>[Grouping Files with File Sets]
-* <<working-with-files-and-the-file-manager_searching-and-sorting-with-the-filelist-object>>[Searching and Sorting with the FileList Object]
-* <<working-with-files-and-the-file-manager_useful-core-services-for-working-with-files>>[Useful Core Services for Working with Files]
-* <<working-with-files-and-the-file-manager_file-storage-locations>>[File Storage Locations]
-* <<working-with-files-and-the-file-manager_creating-control-sets-and-filters-for-the-image-editor>>[Creating Control Sets and Filters for the Image Editor]
+:leveloffset: +1
+
+include::working-with-files-and-the-file-manager/overview.adoc[]
+
+include::working-with-files-and-the-file-manager/working-with-existing-files.adoc[]
+
+include::working-with-files-and-the-file-manager/importing-new-files.adoc[]
+
+include::working-with-files-and-the-file-manager/accessing-the-physical-file-from-a-file-object.adoc[]
+
+include::working-with-files-and-the-file-manager/using-the-imagine-image-library-to-work-with-images.adoc[]
+
+include::working-with-files-and-the-file-manager/working-with-image-thumbnails.adoc[]
+
+include::working-with-files-and-the-file-manager/automatically-set-attributes-and-more-with-custom-file-type-insp.adoc[]
+
+include::working-with-files-and-the-file-manager/creating-custom-file-type-views-and-edit-interfaces.adoc[]
+
+include::working-with-files-and-the-file-manager/grouping-files-with-file-sets.adoc[]
+
+include::working-with-files-and-the-file-manager/searching-and-sorting-with-the-filelist-object.adoc[]
+
+include::working-with-files-and-the-file-manager/useful-core-services-for-working-with-files.adoc[]
+
+include::working-with-files-and-the-file-manager/file-storage-locations.adoc[]
+
+include::working-with-files-and-the-file-manager/creating-control-sets-and-filters-for-the-image-editor.adoc[]
+
+:leveloffset: -1

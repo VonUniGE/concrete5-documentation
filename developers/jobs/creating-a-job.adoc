@@ -9,22 +9,24 @@ Then, open the file and place a PHP class within this file that matches the name
 [source,php]
 ----
 <?php
+
 namespace Application\Job;
-use \Concrete\Job\Job as AbstractJob;
- 
+
+use Concrete\Job\Job as AbstractJob;
+
 class SummarizeStatistics extends AbstractJob
 {
- 
+
     public function getJobName()
     {
-        return t("Summarize Statistics.");
+        return t('Summarize Statistics.');
     }
- 
+
     public function getJobDescription()
     {
-        return t("Takes all detailed statistics and summarizes them.");
+        return t('Takes all detailed statistics and summarizes them.');
     }
- 
+
     public function run()
     {
     }
@@ -81,7 +83,3 @@ public function install()
 ----
 
 This is, of course, in addition to anything else that your package's install() method currently contains.
-
-<<jobs_creating-and-scheduling-a-queueable-job>>[Creating & Scheduling a Queueable Job »]
-
-<<jobs_overview>>[« Overview]

@@ -1,0 +1,12 @@
+= Working with Existing Files
+
+:leveloffset: +1
+
+include::working-with-existing-files/retrieving-file-objects-programmatically.adoc[]
+
+include::working-with-existing-files/add-file-manager-support-to-your-blocks-and-single-pages.adoc[]
+
+include::working-with-existing-files/working-with-files-programmatically.adoc[]
+
+
+:leveloffset: -1
