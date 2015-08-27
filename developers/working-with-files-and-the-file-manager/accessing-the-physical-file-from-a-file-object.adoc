@@ -49,7 +49,7 @@ Core::make('helper/file')->forceDownload('/path/to/file.zip');
 
 Why do you need to jump through these hoops to work with the physical file? Why not just get the absolute path to the file? Because in concrete5 there's no guarantee that the File object you're working with actually has a physical file present on the web server.
 Remember, every File object in Concrete5 has its physical file stored in a File StorageLocation object.
-These StorageLocation objects are usually directories on the same web server – but not always.
+These StorageLocation objects are usually directories on the same web server - but not always.
 They course reference an Amazon S3 storage bucket, for example.
 In this case, there'd be no absolute path on the server to get the file.
 So instead we use the file resource abstraction, and it will ensure that you can always work with a physical file, even if it's not on the same server.

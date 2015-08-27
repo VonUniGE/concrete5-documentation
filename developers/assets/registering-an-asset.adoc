@@ -8,7 +8,7 @@ $al = \Concrete\Core\Asset\AssetList::getInstance();
 $al->register('javascript', 'jquery', 'js/jquery.js');
 ----
 
-First, we get our Asset List class. This class is a singleton – a single asset list class is available in every part of Concrete5, and you can add to or modify it from anywhere. We use getInstance() to get that single instance, rather than create a new one. Our register() call takes three arguments
+First, we get our Asset List class. This class is a singleton - a single asset list class is available in every part of Concrete5, and you can add to or modify it from anywhere. We use getInstance() to get that single instance, rather than create a new one. Our register() call takes three arguments
 
 * The asset type ('javascript' or 'css')
 * The handle we'd like to refer to this asset by ('jquery' in this case.)
@@ -40,7 +40,7 @@ A handle should be unique across type and handle. This means that if you're regi
 
 == Calling register()
 
-You can register an asset from anywhere – your application's custom startup file (application/bootstrap/app.php), a package's on_start() method, a block type's on_start() method, etc…
+You can register an asset from anywhere - your application's custom startup file (application/bootstrap/app.php), a package's on_start() method, a block type's on_start() method, etc...
 
 == Registering an asset in a block
 
@@ -62,7 +62,7 @@ public function on_start()
 
 == Registering an asset in a package.
 
-Registering an asset in a package is very similar – add it to the package controller's on_start() method. Let's say our package handle was "audio_player" and we wanted to register MediaElement.js within it. Add this method to the package controller.php file:
+Registering an asset in a package is very similar - add it to the package controller's on_start() method. Let's say our package handle was "audio_player" and we wanted to register MediaElement.js within it. Add this method to the package controller.php file:
 
 [source,php]
 ----

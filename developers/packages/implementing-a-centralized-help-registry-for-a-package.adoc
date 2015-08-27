@@ -2,7 +2,7 @@
 
 NOTE: This requires concrete5 5.7.4 or greater.
 
-Sometimes it's handy to store all the help for a particular application in one spot – for example, if you have one person tasked with managing the help for multiple block types and Dashboard pages.
+Sometimes it's handy to store all the help for a particular application in one spot - for example, if you have one person tasked with managing the help for multiple block types and Dashboard pages.
 In this case, you'll want to create a Help Service Provider your Package, and access the various help message registries from within this service provider
 
 == Package-Based
@@ -22,7 +22,7 @@ First, we'll enable advanced autoloading by adding this protected variable to ou
 protected $pkgAutoloaderMapCoreExtensions = true;
 ----
 
-This automatically maps anything within the `\Concrete\Package` namespace (that doesn't automatically fall into it already, like blocks, controllers, etc…) to `src/Concrete`.
+This automatically maps anything within the `\Concrete\Package` namespace (that doesn't automatically fall into it already, like blocks, controllers, etc...) to `src/Concrete`.
 We're going to create a package named `\Concrete\Package\AcmeWidgets\Help\HelpServiceProvider`.
 So that means we need to create an empty file in `packages/acme_widgets/src/Concrete/Help/HelpServiceProvider.php`
 
@@ -41,7 +41,7 @@ class HelpServiceProvider extends Provider
 
 This class is incomplete.
 Any class that extends the core `\Concrete\Core\Foundation\Service\Provider` must implement a `register()` method, in which the class registers all the various classes it uses.
-We're actually not going to bind any classes to the class container – instead we're going to use this `register()` method to declare all our various help messages.
+We're actually not going to bind any classes to the class container - instead we're going to use this `register()` method to declare all our various help messages.
 
 [source,php]
 ----
@@ -50,7 +50,7 @@ We're actually not going to bind any classes to the class container – instead 
 namespace Concrete\Package\Calendar\Help;
 
 use Concrete\Core\Foundation\Service\Provider;
- 
+
 class HelpServiceProvider extends Provider
 {
     public function register()

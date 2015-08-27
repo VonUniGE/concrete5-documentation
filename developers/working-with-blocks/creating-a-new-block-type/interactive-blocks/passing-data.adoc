@@ -122,7 +122,7 @@ public function isValidControllerTask($method, $parameters = array())
     if (!$this->enableExternalFiltering) {
         return false;
     }
- 
+
     return parent::isValidControllerTask($method, $parameters);
 }
 ----
@@ -140,7 +140,7 @@ http://www.mysite.com/index.php/path/to/page/date/2015/01/01
 http://www.mysite.com/index.php/path/to/page/tags/hats
 ----
 
-The core team didn't want to create methods named `action_tag`, `action_date`, `action_topic` – just because amidst all the other methods some of the purpose of these methods might be lost.
+The core team didn't want to create methods named `action_tag`, `action_date`, `action_topic` - just because amidst all the other methods some of the purpose of these methods might be lost.
 We wanted to name the methods
 
 * action_filter_by_tag
@@ -168,7 +168,7 @@ public function getPassThruActionAndParameters($parameters)
             $parameters[1] = intval($parameters[1]);
         }
     }
- 
+
     return array($method, $parameters);
 }
 ----

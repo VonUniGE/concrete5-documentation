@@ -2,7 +2,7 @@
 
 == Configuration
 
-Configuration in Concrete5.7 can use different locations to store their data. This is done using different Config loaders and savers. Most configuration values are stored and loaded in the filesystem, using the *FileLoader* and **FileSaver**, but a database loader and saver is also available. The *ConfigRepository* object handles getting and saving values – through the use of the generic *Config* facade class.
+Configuration in Concrete5.7 can use different locations to store their data. This is done using different Config loaders and savers. Most configuration values are stored and loaded in the filesystem, using the *FileLoader* and **FileSaver**, but a database loader and saver is also available. The *ConfigRepository* object handles getting and saving values - through the use of the generic *Config* facade class.
 
 == Assets
 
@@ -22,7 +22,7 @@ Service providers are PHP classes that don't really belong to specific objects i
 
 == Tools
 
-Deprecated in 5.7, tools refer to files in the tools directory. These files are automatically viewable in a web browser at http://www.yoursite.com/index.php/tools/required/whatever – this will automatically load concrete5 and include concrete/tools/whatever.php. Tools are deprecated because routes, views and controllers are a much better and more flexible way to accomplish the same thing.
+Deprecated in 5.7, tools refer to files in the tools directory. These files are automatically viewable in a web browser at http://www.yoursite.com/index.php/tools/required/whatever - this will automatically load concrete5 and include concrete/tools/whatever.php. Tools are deprecated because routes, views and controllers are a much better and more flexible way to accomplish the same thing.
 
 == Routing
 

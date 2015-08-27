@@ -98,7 +98,7 @@ When block caching is enabled and output caching is enabled for a block, this is
 `**$btCacheBlockOutputOnPost**` +
 Defaults to false.
 This determines whether a block will cache its output on POST.
-Some blocks can cache their output but must serve uncached output on POST in order to show error messages, etc…
+Some blocks can cache their output but must serve uncached output on POST in order to show error messages, etc...
 
 `**$btCacheBlockOutputForRegisteredUsers**` +
 Defaults to false.

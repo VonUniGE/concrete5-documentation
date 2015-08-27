@@ -4,7 +4,7 @@ A Concrete5 request starts by hitting the index.php in the web directory. This s
 
 == Load Internal Configuration
 
-First, configuration values are loaded by including concrete/bootstrap/configure.php. These are all constants for things like internal file paths, names of various files and icons, etc… **Nothing in this file is meant to be overridden at a previous level**. These are internal constants, including the C5_EXECUTE constants, which is a constant we use to check to see whether the file in question is being executed within a valid Concrete5 environment.
+First, configuration values are loaded by including concrete/bootstrap/configure.php. These are all constants for things like internal file paths, names of various files and icons, etc... **Nothing in this file is meant to be overridden at a previous level**. These are internal constants, including the C5_EXECUTE constants, which is a constant we use to check to see whether the file in question is being executed within a valid Concrete5 environment.
 
 == Load and Initialize Autoloaders
 
@@ -13,7 +13,7 @@ Next, we set up our PHP autoloader by including concrete/bootstrap/autoload.php.
 . Loads the contents of application/bootstrap/autoload.php. This file takes care of loading all third party libraries (found in concrete/vendor/) that have been delivered by Composer. This file can also be modified by the custom application to handle autoloading.
 . Loads the Concrete5 class loader (found at src/Foundation/Classloader.php) and intializes it.
 
-Once these two items are complete, all classes should be able to be loaded automatically – no including or Loader calls required.
+Once these two items are complete, all classes should be able to be loaded automatically - no including or Loader calls required.
 
 == Create a Concrete5 Application
 
@@ -47,7 +47,7 @@ Next, we check the page cache based on the current HTTP Request, to see if a fil
 
 == Preprocess
 
-Next, we run items in concrete/bootstrap/preprocess.php – which currently consists solely of a function meant to undo the harmful affects of enabling magic_quotes_gpc.
+Next, we run items in concrete/bootstrap/preprocess.php - which currently consists solely of a function meant to undo the harmful affects of enabling magic_quotes_gpc.
 
 == Localization
 

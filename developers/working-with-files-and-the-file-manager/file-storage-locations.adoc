@@ -113,10 +113,10 @@ Here's an empty version of the class you'll need to create:
 <?php
 
 namespace Concrete\Package\CustomStorage\File\StorageLocation\Configuration;
- 
+
 use Concrete\Core\File\StorageLocation\Configuration\ConfigurationInterface;
 use Concrete\Core\File\StorageLocation\Configuration\Configuration;
- 
+
 class TypeFooConfiguration extends Configuration implements ConfigurationInterface
 {
 }
@@ -181,7 +181,7 @@ In our case the $configuration object would be an instance of the `\Concrete\Pac
 === That's It
 
 Add your custom file storage location type, create a configuration object that it uses, and then create a custom options page that shows the configured file storage location types in the Dashboard.
-You can use composer and other third party libraries to actually facilitate the interactions with your storage location type – this code is simply the glue that sticks these third party libraries and their functionality to concrete5.
+You can use composer and other third party libraries to actually facilitate the interactions with your storage location type - this code is simply the glue that sticks these third party libraries and their functionality to concrete5.
 (For example, the Amazon S3 plugin the marketplace uses the official Amazon S3 PHP SDK to handle actually delivering files, authenticating, and more.)
 
 Since this might still be a little opaque, it might be helpful to check out the built in LocalConfiguration object to see how it works.

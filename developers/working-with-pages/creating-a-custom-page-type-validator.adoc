@@ -9,11 +9,11 @@ This works really well for strongly typed pages, like the Portfolio Project or B
 
 As a developer, you'll frequently use page types to solve certain specific, particular problems.
 In the core, we have a Job Posting custom page type, in order to show off some of the attribute functionality.
-We add custom attributes that are relevant to job postings to the Job Posting composer form – attributes like "Department" and "Location." These are very important to the concept of a Job Posting.
-We also add the concept of a Job Open Date – the date when a job becomes available.
+We add custom attributes that are relevant to job postings to the Job Posting composer form - attributes like "Department" and "Location." These are very important to the concept of a Job Posting.
+We also add the concept of a Job Open Date - the date when a job becomes available.
 But what if we wanted to add some custom validation to this page type concept?
 For example, let's say our Employment department won't let us post jobs that are more than 30 days in the future.
-We can't just mark the job open date attribute as required – because any date that's filled in will satisfy that requirement.
+We can't just mark the job open date attribute as required - because any date that's filled in will satisfy that requirement.
 We need to add custom code to check the date, and fail if the date is too far in the future.
 This is where we can employ a custom page type validator.
 
@@ -45,14 +45,14 @@ Then, we'll put this code inside it.
 [source,php]
 ----
 <?php
- 
+
 namespace Application\Src\Page\Type\Validator;
- 
+
 use Concrete\Core\Page\Page;
 use Concrete\Core\Page\Type\Composer\Control\Control;
 use Concrete\Core\Page\Type\Composer\Control\CorePageProperty\DateTimeCorePageProperty;
 use Concrete\Core\Page\Type\Validator\StandardValidator;
- 
+
 class JobPostingValidator extends StandardValidator
 {
     public function validatePublishDraftRequest(Page $page = null)
@@ -65,7 +65,7 @@ class JobPostingValidator extends StandardValidator
                 break;
             }
         }
- 
+
         $property->setPageObject($page);
         $date = $property->getRequestValue();
         if (!$date) {
@@ -76,27 +76,27 @@ class JobPostingValidator extends StandardValidator
         } else {
             $datetime = strtotime($date);
         }
- 
+
         if ($datetime - time() > 2592000) {
             $e->add(t('A job cannot be posted more than 30 days in the future.'));
         }
         return $e;
     }
- 
+
 }
 ----
 
 While this might look complicated at first, it really isn't too bad.
-First, we namespace our class properly – anything in the application/src directory needs to be namespaced Application\Src.
+First, we namespace our class properly - anything in the application/src directory needs to be namespaced Application\Src.
 Next, we extend the StandardValidator class.
 This class itself implements the ValidatorInterface.
 
 NOTE: the StandardValidator takes care of validating all the various properties marked as required in the page type, as well as ensuring the proper templates are selected, etc...
-It's usually a good idea to extend this class – but as long as your class implements the ValidatorInterface it's not strictly required to extend this class.
+It's usually a good idea to extend this class - but as long as your class implements the ValidatorInterface it's not strictly required to extend this class.
 
 Next, our validatePublishDraftRequest takes care of our custom logic.
 We grab all the composer controls in the Page Type, and find the core datetime property.
-Next, we grab the value from either the page or – if the composer form is being published – the form itself, and we turn it into a timestamp.
+Next, we grab the value from either the page or - if the composer form is being published - the form itself, and we turn it into a timestamp.
 Finally, we check to see if that timestamp is 30 days from now.
 If it's greater than that, we add another error to our error object, and return the error object.
 And with that our Job Posting page type will keep the standard validation functionality, while adding our own important logic.

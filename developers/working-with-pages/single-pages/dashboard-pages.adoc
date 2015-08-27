@@ -12,11 +12,11 @@ Here's an example of a Dashboard page controller for a page that will be located
 [source,php]
 ----
 <?php
- 
+
 namespace Application\Controller\SinglePage\Dashboard\System;
 
 use Concrete\Core\Page\Controller\DashboardPageController;
- 
+
 class Game extends DashboardPageController
 {
     public function view()

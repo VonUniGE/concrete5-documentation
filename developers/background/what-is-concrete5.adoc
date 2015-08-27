@@ -20,4 +20,4 @@ Concrete5 is a member of the http://www.php-fig.org/[PHP Framework Interoperabil
 
 We certainly designed concrete5 as a toolbox for agencies to use in building great sites they wanted to put in the hands of clients.
 That being said we've been pleasantly surprised over the years to see many thousands of individuals with little to no technical background have great success building a small site with concrete5 on their own - no coding required.
-Version 7 improves the fluidity, feedback and appearance of the interface significantly, to the point where Concrete5 can compete with incredibly easy to use web builders like Squarespace or Wix – without sacrificing power under the hood.
+Version 7 improves the fluidity, feedback and appearance of the interface significantly, to the point where Concrete5 can compete with incredibly easy to use web builders like Squarespace or Wix - without sacrificing power under the hood.

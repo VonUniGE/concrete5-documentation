@@ -145,6 +145,6 @@ If present in a controller, on_before_render() will be run after any URL-based m
 NOTE: If defining on_start() or on_before_render() within a dashboard page controller, make sure to call parent::on_start() and parent::on_before_render().
 
 Apart from the bootstrapping process and the automatic loading, Concrete5 controllers are just regular PHP code.
-Anything you can run in the page template can be run in the controller, and vice versa – they're just a nice way of separating code from content.
+Anything you can run in the page template can be run in the controller, and vice versa - they're just a nice way of separating code from content.
 This is made possible by the ability to send data from the controller into the page view.
 Read on for more information.

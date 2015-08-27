@@ -78,7 +78,7 @@ public function submit()
     } elseif (isset($_FILES['photo'])) {
         $error = $_FILES['photo']['error'];
     }
- 
+
     $this->set('errorMessage', \Concrete\Core\File\Importer::getErrorMessage($error));                
 }
 ----
@@ -122,7 +122,7 @@ public function submit()
         } elseif (isset($_FILES['photo'])) {
             $error = $_FILES['photo']['error'];
         }
-        $this->set('errorMessage', \Concrete\Core\File\Importer::getErrorMessage($error));                
+        $this->set('errorMessage', \Concrete\Core\File\Importer::getErrorMessage($error));                
     } else {
         $this->set('errorMessage', 'You do not have access to add files to the file manager.');
     }

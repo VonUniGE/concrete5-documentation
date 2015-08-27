@@ -1,7 +1,7 @@
 = License
 
 Concrete5 is released under the MIT License.
-Third party libraries (found in the concrete/vendor directory and in the js/ and css/ directories) are released under their own license – which are compatible with the MIT license.
+Third party libraries (found in the concrete/vendor directory and in the js/ and css/ directories) are released under their own license - which are compatible with the MIT license.
 
 == The MIT License
 

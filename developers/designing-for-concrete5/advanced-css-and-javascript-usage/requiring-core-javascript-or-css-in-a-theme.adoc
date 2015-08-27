@@ -59,4 +59,4 @@ public function registerAssets()
 }
 ----
 
-The \Concrete\Core\Page\Theme\Theme class that all PageTheme classes extend provides a method named requireAsset that can be extremely useful here. With those lines of code above we know that our theme will always load jQuery and Font Awesome – and we also know that they'll never be loaded twice (since the Core uses the same asset system.)
+The \Concrete\Core\Page\Theme\Theme class that all PageTheme classes extend provides a method named requireAsset that can be extremely useful here. With those lines of code above we know that our theme will always load jQuery and Font Awesome - and we also know that they'll never be loaded twice (since the Core uses the same asset system.)

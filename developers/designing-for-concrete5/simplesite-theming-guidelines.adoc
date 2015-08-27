@@ -49,7 +49,7 @@ This means careful CSS scoping within your theme.
 
 All block types *must* also look decent without the requirement of custom templates when viewed in the SimpleSite theme.
 Templates could be provided to further enhance functionality of core blocks.
-We do not mandate the use of certain block types in SimpleSite sample content – but in case an end user swaps out content with a different core block type, that block type should look good.
+We do not mandate the use of certain block types in SimpleSite sample content - but in case an end user swaps out content with a different core block type, that block type should look good.
 
 == Blocks
 

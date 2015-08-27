@@ -1,6 +1,6 @@
 = Attributes
 
-We've already spent a bit of time talking about attributes in the context of Pages, Users and Files. Each of these objects can use Attributes – but attributes aren't specific to each object. Instead, Attributes are their own, general system, and Concrete5 registers an *Attribute Category* object for Page, User and File. This tells the attribute system how to join attribute data to the particular target object type.
+We've already spent a bit of time talking about attributes in the context of Pages, Users and Files. Each of these objects can use Attributes - but attributes aren't specific to each object. Instead, Attributes are their own, general system, and Concrete5 registers an *Attribute Category* object for Page, User and File. This tells the attribute system how to join attribute data to the particular target object type.
 
 *Attribute Keys* are the actual items we want to track about a particular target object. Examples of attribute keys include things like a page's "Meta Name" or "Exclude from Nav", or a file's "Width" and "Height." When using the Dashboard to create additional attributes, an administator is creating a new attribute key.
 

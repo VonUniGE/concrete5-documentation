@@ -1,7 +1,7 @@
 = Useful Core Services for Working with Files
 
 There are a number of useful core services available for working with files.
-Typically these don't involve concrete5 – they're general purpose helper methods.
+Typically these don't involve concrete5 - they're general purpose helper methods.
 
 == Getting the Service
 

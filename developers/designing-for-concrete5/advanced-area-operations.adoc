@@ -34,7 +34,7 @@ This can be especially useful when combined with the current page's `isEditMode(
 $as = new GlobalArea('Header Search');
 $blocks = $as->getTotalBlocksInArea();
 $displayThirdColumn = $blocks > 0 || $c->isEditMode();
- 
+
 if ($displayThirdColumn) {
     ?>
     <div class="search-column">

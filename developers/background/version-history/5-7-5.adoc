@@ -20,7 +20,7 @@
 
 == Other Feature Updates
 
-* Elemental now provides two layout presets – Left Sidebar and Right Sidebar.
+* Elemental now provides two layout presets - Left Sidebar and Right Sidebar.
 * You can now set an RSS feed to be filtered by a particular topic
 * You can now add an image to an RSS feed
 * If you register a site that requires approval before logging in, you will receive an email letting you know this is the case (thanks ounziw)

@@ -31,4 +31,4 @@ The names of our CSS files definitely don't currently support these standards. *
 
 === Important Note
 
-Again, if you submit a pull request for this type of cleanup, please keep each request to one or just a few files – for the sake of vetting your pull request.
+Again, if you submit a pull request for this type of cleanup, please keep each request to one or just a few files - for the sake of vetting your pull request.

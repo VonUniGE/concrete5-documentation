@@ -66,13 +66,13 @@ Using the Sample Content Generator add-on to create content.xml files for full c
 . Do a clean install of the *Blank* starting point into the Concrete5 site.
 . Install the Theme Package and the Sample Content Generator add-on.
 . Activate The Theme.
-. Build out Page Types, Install Page Templates, create entire pages of content. Basically – do everything necessary to make the exact sample site you want. You can even upload images.
+. Build out Page Types, Install Page Templates, create entire pages of content. Basically - do everything necessary to make the exact sample site you want. You can even upload images.
 . When ready, use the "Generate Install Data" link in the Dashboard panel.
-. First, download all images into one archive using the Go button under "Archive Files." This will give you a zip archive of all files you've uploaded. Make sure to keep these files with the same filenames – as that's how they'll be referenced in the content.xml file. Place these files in a directory named "content_files" in your package directory.
+. First, download all images into one archive using the Go button under "Archive Files." This will give you a zip archive of all files you've uploaded. Make sure to keep these files with the same filenames - as that's how they'll be referenced in the content.xml file. Place these files in a directory named "content_files" in your package directory.
 . Next, click the Go button under "Generate content.xml from current website." This will give you a complete XML representation of your website in the Content Import Format. Copy this text into an empty text document and save it somewhere.
 . Create a new, empty content.xml file in your package directory. Copy the relevant portions of sample content from step 8 into the empty content file created in step 9.
 
-Step 9 above is by far the most difficult. The XML created in the step before is the entire representation of the website – but not all of this should be copied into the new content.xml file, because much of is managed by the core. For example, step 8's XML contains the entire Dashboard content XML. You don't want to include this in your content.xml file. In general the content import routine attempts to skip duplicate content, but it can't always. Plus, the larger the content.xml file, the slower the installation routine.
+Step 9 above is by far the most difficult. The XML created in the step before is the entire representation of the website - but not all of this should be copied into the new content.xml file, because much of is managed by the core. For example, step 8's XML contains the entire Dashboard content XML. You don't want to include this in your content.xml file. In general the content import routine attempts to skip duplicate content, but it can't always. Plus, the larger the content.xml file, the slower the installation routine.
 
 == Prepare Package
 
@@ -83,7 +83,7 @@ Once you have your files in the content_files directory and a content.xml file i
 protected $pkgAllowsFullContentSwap = true;
 ----
 
-Next, you'll need to create a file at a specific location. Any time a package enables full content swap, it attempts to load a specific file to give the user more information, above the standard full content swap error. If you don't provide a file – even a blank one – you'll get an include error. So, create a file at packages/your_package/elements/dashboard/install.php. You can also put important information about this process in this file as well. It will be displayed to users right before they confirm whether to commit to full content swap.
+Next, you'll need to create a file at a specific location. Any time a package enables full content swap, it attempts to load a specific file to give the user more information, above the standard full content swap error. If you don't provide a file - even a blank one - you'll get an include error. So, create a file at packages/your_package/elements/dashboard/install.php. You can also put important information about this process in this file as well. It will be displayed to users right before they confirm whether to commit to full content swap.
 
 == Install Theme Package on Blank Site
 

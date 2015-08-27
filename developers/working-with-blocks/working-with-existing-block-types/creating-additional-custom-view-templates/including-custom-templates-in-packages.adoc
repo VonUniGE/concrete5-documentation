@@ -2,7 +2,7 @@
 
 Concrete5 theme developers can easily http://www.concrete5.org/documentation/developers/5.7/designing-for-concrete5/packaging-your-theme/overview-and-full-screencast/[release their themes in the Concrete5 package format.] The Concrete5 Package format is the format used by the Concrete5 marketplace, as well by any developer who wants to keep certain bits of Concrete5 functionality bundled together, for easy updating or deployment.
 Packages can contain lots of different types of Concrete5 functionality, including themes, blocks, single pages and their controllers, custom code and more.
-This list of items that can be included in packages also includes custom block templates – and this is very useful when combined with a theme.
+This list of items that can be included in packages also includes custom block templates - and this is very useful when combined with a theme.
 
 Many packaged Concrete5 themes contain not just the theme, but also custom view templates for core block types.
 Sometimes themes are built using different markup than core blocks, and its easier to change the view markup of a block type in a custom template than it is to make the theme's CSS conform to Concrete5's built-in markup.

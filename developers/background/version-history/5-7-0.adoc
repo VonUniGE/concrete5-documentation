@@ -21,7 +21,7 @@ NOTE: This release is so large that we long since gave up categorizing the small
 
 == Pages and Architecture
 
-* Page types and page templates are now two separate concepts. Page types refer to pages as objects – Blog Entry, Empty Page, Project, Product – and page templates refer to templates that actually appear in themes. The same page type can be run in multiple themes.
+* Page types and page templates are now two separate concepts. Page types refer to pages as objects - Blog Entry, Empty Page, Project, Product - and page templates refer to templates that actually appear in themes. The same page type can be run in multiple themes.
 * concrete5’s Composer is now a very flexible form builder that can route attributes and blocks into different page templates. Each page type has its own custom instance of Composer.
 * A Feed Object is available in the Dashboard (and created through the Page List block), giving Page Lists the ability to create RSS feeds that are permalinked.
 
@@ -54,7 +54,7 @@ NOTE: This release is so large that we long since gave up categorizing the small
 
 * A completely new file-based configuration option, powered by the Laravel Configuration component, is the standard. concrete5’s inflexible constants are gone.
 * A completely new assets layer manages JavaScript and CSS dependencies, asset versioning between packages, and inclusion or exclusion of assets based on whether they are provided in themes. This asset framework also handles automatic asset minification and combination.
-* A new taxonomy concept – Topics – is now available. These are managed centrally in the dashboard and can also be attached as attributes to files, users and pages.
+* A new taxonomy concept - Topics - is now available. These are managed centrally in the dashboard and can also be attached as attributes to files, users and pages.
 * concrete5 has better localization support than ever, including improvements in locale switching, date and number handling, and multibyte URL handling
 * A completely new and more flexible cache layer is present, replacing Zend Cache.
 * The events system has been completely overhauled and is now powered by the Symfony2 EventDispatcher component.

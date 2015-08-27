@@ -1,6 +1,6 @@
 = Enabling Basic Customization
 
-We've made a variable in our theme run through a LESS file – but that's just the first step toward making it customizable through Concrete5.
+We've made a variable in our theme run through a LESS file - but that's just the first step toward making it customizable through Concrete5.
 If you open the Design panel on the page, you still won't get the Customize link. That's because we need to define a *styles.xml* file for this theme.
 
 A styles.xml file lives within the css directory of a theme, and it is responsible for defining the layout of the style customizer panel.
@@ -25,7 +25,7 @@ Next, we create an inner node for the style set. Style sets group styles togethe
 <?xml version="1.0"?>
 <styles version="1.0">
     <set name="Full Page">
- 
+
     </set>
 </styles>
 ----

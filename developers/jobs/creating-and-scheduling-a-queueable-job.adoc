@@ -18,12 +18,12 @@ class TestJob extends \Concrete\Core\Job\Job
     {
         return t("Test Job");
     }
- 
+
     public function getJobDescription()
     {
         return t("We will make this job queueable for better performance.");
     }
- 
+
     public function run()
     {
         $list = new \Concrete\Core\Page\PageList();
@@ -89,7 +89,7 @@ public function processQueueItem(\ZendQueue\Message $msg)
 
 This should be pretty straightforward. For every item in the queue (represented by the $msg object), we loop through and retrieve the full body of the Message object. Whatever you send into the queue in the start() method using $q->send() will automatically populate the $msg->body property that's accessible through processQueueItem. This is a serialized object in the database, meaning you can store more than simple scalar values. However, since all we have to do is store page IDs as part of this operation, we can get away with sending the page ID as the full message data. We build a page object from the page ID in the $msg object, and we set the attribute on the page.
 
-Finally, we implement our finish() method. Since the finish() method doesn't necessarily know anything about the queue, sometimes it can be a little difficult to get real data about how many items were processed – but many times you don't need to pass this data back anyway.
+Finally, we implement our finish() method. Since the finish() method doesn't necessarily know anything about the queue, sometimes it can be a little difficult to get real data about how many items were processed - but many times you don't need to pass this data back anyway.
 
 [source,php]
 ----
@@ -128,5 +128,3 @@ http://www.yoursite.com/index.php/ccm/system/jobs/check_queue?auth=authenticatio
 Schedule this to run frequently. This process simply checks any queues in the system and processes the next X items in the queue. If the queue is empty the process exits quietly. Got multiple jobs you'd like to Queue? Schedule them as above, and schedule a single run of the check_queue script. It will work for multiple Queueable Jobs.
 
 That's it! Now you can have the benefits of Queueable Jobs in a scheduled, headless environment.
-
-<<jobs_creating-a-job>>[« Creating a Job]

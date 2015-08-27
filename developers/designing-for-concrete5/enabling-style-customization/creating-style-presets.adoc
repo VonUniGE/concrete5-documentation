@@ -31,17 +31,17 @@ Now let's create a second preset. First, we duplicate the defaults.less file. We
 @preset-name: "Forest Green";
 @preset-icon: concrete-icon(#ffffff, #36FF3C, #154600);
 @preset-fonts-file: "fonts/forest-greenreen.less";
- 
+
 @primary-action-color: #36FF3C;
 @primary-spacing-size: 100px;
- 
+
 // Body
 @body-type-font-family: 'Oswald';
 @body-type-font-size: 14px;
 @body-type-font-weight: 300;
 @body-type-font-style: normal;
 @body-type-color: #154600;
- 
+
 // Team
 @team-background-color: #5A795C;
 @team-background-image: '../images/spacer.png';

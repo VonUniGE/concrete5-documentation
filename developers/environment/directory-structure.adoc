@@ -72,11 +72,11 @@ The default installation of Concrete5 is setup in the following manner. (The roo
 == Application Directory
 
 * **application/attributes** +
-  This directory contains attributes used just by this Concrete5 installation – or overrides of Concrete5 core attribute files.
+  This directory contains attributes used just by this Concrete5 installation - or overrides of Concrete5 core attribute files.
 * **application/authentication** +
-  This directory contains authentication types used just by this Concrete5 installation – or overrides of Concrete5 core authentication type files.
+  This directory contains authentication types used just by this Concrete5 installation - or overrides of Concrete5 core authentication type files.
 * **application/blocks** +
-  This directory contains block type code files used just by this Concrete5 installation – or overrides of Concrete5 core block type files.
+  This directory contains block type code files used just by this Concrete5 installation - or overrides of Concrete5 core block type files.
 * **application/bootstrap/app.php** +
   This file is an optional file that developers can use to register events, rebind PHP classes, and more. This file is automatically loaded during the Concrete5 bootstrap routine.
 * **application/bootstrap/autoload.php** +
@@ -84,11 +84,11 @@ The default installation of Concrete5 is setup in the following manner. (The roo
 * **application/bootstrap/start.php** +
   This file is loaded during the Concrete5 bootstrap routine. This file enables environment detection and custom application environments.
 * **application/controllers** +
-  This directory contains controllers used just by this Concrete5 installation – or overrides of Concrete5 core controller files.
+  This directory contains controllers used just by this Concrete5 installation - or overrides of Concrete5 core controller files.
 * **application/controllers** +
-  This directory contains controllers used just by this Concrete5 installation – or overrides of Concrete5 core controller files.
+  This directory contains controllers used just by this Concrete5 installation - or overrides of Concrete5 core controller files.
 * **application/elements** +
-  This directory contains elements used just by this Concrete5 installation – or overrides of Concrete5 core elements.
+  This directory contains elements used just by this Concrete5 installation - or overrides of Concrete5 core elements.
 * **application/files** +
   This directory contains files uploaded to this Concrete5 installation. Concrete5's file importer class manages this directory.
   ** **application/files/thumbnails** +
@@ -98,13 +98,13 @@ The default installation of Concrete5 is setup in the following manner. (The roo
   ** **application/files/cache** +
      Internal Concrete5 cache files are written here. Generally, it is safe to delete this directory entirely if troubleshooting a problem in a Concrete5 installation.
 * **application/jobs** +
-  This directory contains job classes used just by this Concrete5 installation – or overrides of Concrete5 core job classes.
+  This directory contains job classes used just by this Concrete5 installation - or overrides of Concrete5 core job classes.
 * **application/languages** +
   This directory contains language files used by Concrete5. These are populated during the build of Concrete5.
 * **application/mail** +
-  This directory contains email templates used just by this Concrete5 installation – or overrides of Concrete5 email templates.
+  This directory contains email templates used just by this Concrete5 installation - or overrides of Concrete5 email templates.
 * **application/single_pages** +
-  This directory contains single page views used just by this Concrete5 installation – or overrides of Concrete5 single page views.
+  This directory contains single page views used just by this Concrete5 installation - or overrides of Concrete5 single page views.
 * **application/src** +
   This directory contains custom PHP classes used by this application, or (in some limited cases) overrides of core Concrete5 PHP classes. **Note: this directory obeys the same casing rules as the concrete/src directory**.
 * **application/themes** +

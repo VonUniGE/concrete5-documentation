@@ -45,7 +45,7 @@ $version->updateDescription('New Description');
 
 Concrete5 version 7 introduces a new object for storage locations.
 Storage locations can be defined in the Dashboard.
-Most of the time a storage location will be a particular directory on your web server (in or out of the web root) – but additional storage locations like Amazon S3 or Dropbox are also possible.
+Most of the time a storage location will be a particular directory on your web server (in or out of the web root) - but additional storage locations like Amazon S3 or Dropbox are also possible.
 Let's say we have a file in the default storage location, and we want to move it to Amazon S3.
 Our Amazon S3 storage location has the ID of 2.
 
@@ -79,7 +79,7 @@ This returns an array of http://concrete5.org/api/class-Concrete.Core.File.Set.S
 [source,php]
 ----
 $file = \File::getByID(3);
-$version = $file->getVersion(1); // Gets the first version – make sure this isn't approved!
+$version = $file->getVersion(1); // Gets the first version - make sure this isn't approved!
 $version->delete();
 ----
 

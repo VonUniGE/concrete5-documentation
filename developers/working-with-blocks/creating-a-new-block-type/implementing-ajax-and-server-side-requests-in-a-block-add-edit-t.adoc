@@ -63,7 +63,7 @@ Unfortunately, 5.7 lost this functionality: you can run this type of action from
 While this was a valid way for us to get something ready to ship, it's got some significant downsides:
 
 . It requires your block implement some additional custom code outside of the controller.
-. It requires that your block AJAX methods check permissions themselves – which many won't do.
+. It requires that your block AJAX methods check permissions themselves - which many won't do.
 . It's just not as intuitive or as easy as 99% of the rest of concrete5 block development.
 
 So, we might have encouraged a developer to replace '/path/to/serverside/script' with a custom route:
@@ -80,7 +80,7 @@ What a pain.
 == 5.7.5 to the Rescue
 
 Thankfully, this has been fixed in 5.7.5, by reimplementing the $view->action() functionality that we had in 5.6 and earlier.
-Now, any time you use $view->action() from within a block add or edit template, it'll Just Work – and route that request to a method that begins with action_ in the Block Controller.
+Now, any time you use $view->action() from within a block add or edit template, it'll Just Work - and route that request to a method that begins with action_ in the Block Controller.
 That's it: it takes care of passing the current page, block and area into the controller, and checking whether you have permissions to add a block of that type (if you're adding a block) or edit this particular block if you're editing it.
 
 Let's implement our page list check in this new way.
@@ -150,4 +150,4 @@ And that's it! We have AJAXified our select2 box!
 
 image:custom-blocks-ajax-2.png[Ajax with Custom Blocks]
 
-Obviously, there's more to do to make this work in the context of a block – but if you ever find yourself wanting some server-side processing while working in a block's add or edit template, 5.7.5 will make your life much, much easier.
+Obviously, there's more to do to make this work in the context of a block - but if you ever find yourself wanting some server-side processing while working in a block's add or edit template, 5.7.5 will make your life much, much easier.

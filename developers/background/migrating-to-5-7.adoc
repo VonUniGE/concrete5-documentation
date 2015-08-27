@@ -53,7 +53,7 @@ Concrete5 no longer uses constants for its configuration options. In its place w
 4.  Configuration options can be nested and therefore namespaced.
 5.  Different configuration files can be loaded based on environment.
 
-While there are some great benefits to this approach, it is completely new and will be foreign to Concrete5 developers. *If you are looking for config/site.php – it is gone!* Instead, database settings for an installed Concrete5 site can be found in **application/config/database.php**.
+While there are some great benefits to this approach, it is completely new and will be foreign to Concrete5 developers. *If you are looking for config/site.php - it is gone!* Instead, database settings for an installed Concrete5 site can be found in **application/config/database.php**.
 
 == Completely new Application Flow
 
@@ -79,7 +79,7 @@ On the plus side, Concrete5's core code base is much easier to understand and to
 
 == Alias Classes
 
-While all of Concrete5's code is namespaced, that doesn't mean you have to use full namespaces for every single call you ever make. We define class aliases for some of the most commonly used classes in the global scope. That means "Page::getByID()" continues to work – as Page is an alias of **\Concrete\Core\Page\Page**. You can view all built-in aliases in **concrete/config/app.php**.
+While all of Concrete5's code is namespaced, that doesn't mean you have to use full namespaces for every single call you ever make. We define class aliases for some of the most commonly used classes in the global scope. That means "Page::getByID()" continues to work - as Page is an alias of **\Concrete\Core\Page\Page**. You can view all built-in aliases in **concrete/config/app.php**.
 
 == Helpers Deprecated for Service Providers
 
@@ -106,7 +106,7 @@ Loader::helper() is simply a shorthand for running Core::make('helper/$class') w
 $this->app->bind('helper/mail', 'Concrete\Core\Mail\Service');
 ----
 
-How does Concrete5 know to call the register() method within this class that actually does the binding? It's a registered service provide found within – you guessed it – **concrete/config/app.php**:
+How does Concrete5 know to call the register() method within this class that actually does the binding? It's a registered service provide found within - you guessed it - **concrete/config/app.php**:
 
 [source,php]
 ----
@@ -119,7 +119,7 @@ How does Concrete5 know to call the register() method within this class that act
 
 Anything within this key automatically has its register() method run.
 
-Why do we do this? Well, any service can easily be rebound. This is much more flexible than the old Concrete5 way of overriding classes based on location in the filesystem. For example, a package in its on_start() method can rebind 'helper/mail' to a particular class that lives wherever it wants – it just needs to make sure it either extends or otherwise fulfills the duties of \Concrete\Core\Mail\Service.
+Why do we do this? Well, any service can easily be rebound. This is much more flexible than the old Concrete5 way of overriding classes based on location in the filesystem. For example, a package in its on_start() method can rebind 'helper/mail' to a particular class that lives wherever it wants - it just needs to make sure it either extends or otherwise fulfills the duties of \Concrete\Core\Mail\Service.
 
 === Are these really helpers?
 
@@ -143,4 +143,4 @@ Check out the http://concrete5.org/api/[API Documentation]. There are so many ne
 
 This will likely be a shock to long-time Concrete5 developers. We hope you give it a chance and ask questions. We've embraced new development models used by popular PHP frameworks, much as we did when we first launched Concrete5 in 2008. Please, let us know what you think, as well as what more you'd like to see explained in this document.
 
-Happy Developing! –Andrew.
+Happy Developing! -Andrew.

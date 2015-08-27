@@ -29,11 +29,11 @@ Make sure it has the proper namespace (NOT beginning with Application)
 [source,php]
 ----
 <?
- 
+
 namespace Concrete\Package\GameSystem\Controller\SinglePage\Dashboard\System;
 
 use Concrete\Core\Page\Controller\DashboardPageController;
- 
+
 class Game extends DashboardPageController
 {
 }

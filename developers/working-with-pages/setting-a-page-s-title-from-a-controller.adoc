@@ -30,7 +30,7 @@ public function view_album($albumID = null)
 }
 ----
 
-While this method will work to render the albums list – the name of the page will be unchanged.
+While this method will work to render the albums list - the name of the page will be unchanged.
 Why not change the page's name as well?
 
 [source,php]

@@ -71,7 +71,7 @@ First, we set up the steps array.
 The options available in this array are all documented http://easelinc.github.io/tourist/[in the Tourist documentation].
 Next, we create a new tour object.
 Since we want the help launcher to close the moment we start the tour, we bind the `ConcreteHelpLauncher.close()` method to the start event of our tour (note: this is optional).
-Finally, we register this tour object to `add-widget` – which is the name of the guide as referenced in `registerMessageString` above.
+Finally, we register this tour object to `add-widget` - which is the name of the guide as referenced in `registerMessageString` above.
 
 And that's it! Clicking the button launches our guide:
 

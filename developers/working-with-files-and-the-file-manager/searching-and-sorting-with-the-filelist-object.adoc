@@ -130,7 +130,7 @@ $query = $list->getQueryObject();
 == Subclassing
 
 It's easy to subclass the FileList object.
-http://www.concrete5.org/documentation/developers/5.7/working-with-pages/searching-and-sorting-with-the-pagelist-object/[Check out the PageList documentation for subclassing information – the principles are the same]
+http://www.concrete5.org/documentation/developers/5.7/working-with-pages/searching-and-sorting-with-the-pagelist-object/[Check out the PageList documentation for subclassing information - the principles are the same]
 
 == Pagination
 
@@ -189,7 +189,7 @@ Common pagination output HTML is supported, including Bootstrap 2, Bootstrap 3, 
 
 [source,php]
 ----
-echo $pagination->renderDefaultView(); // Outputs HTML for Bootstrap 3, useful in the Dashboard, etc…
+echo $pagination->renderDefaultView(); // Outputs HTML for Bootstrap 3, useful in the Dashboard, etc...
 ----
 
 You can also render any pagination view supported by Pagerfanta from your Pagination object.

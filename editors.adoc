@@ -15,13 +15,13 @@ Most of the work you'll need to do with concrete5 happens right on the pages you
 This "In-Context Editing" is very intuitive.
 See a typo? Fix it right there.
 Want to add a page? Just go where you want it to show up and click Add Page.
-In-context editing makes content management a breeze. 
+In-context editing makes content management a breeze.
 
 For more administrative duties (like adding users, customizing themes, getting reporting data, etc) there is a more traditional Dashboard.
 You can get to Dashboard pages from the Dashboard drop down in the main toolbar, or by typing part of the Dashboard page name you're looking for into the Intelligent Search field.
-You know you're on a Dashboard page because there's a big photo in the background that changes every day. 
+You know you're on a Dashboard page because there's a big photo in the background that changes every day.
 
-You can learn more about the whole system below. We suggest starting with the In-Context side and then moving on to the Dashboard. 
+You can learn more about the whole system below. We suggest starting with the In-Context side and then moving on to the Dashboard.
 
 == <<in-page-editing>>[In-Context Editing]
 
@@ -82,7 +82,7 @@ You can learn more about the whole system below. We suggest starting with the In
 
 <<in-page-editing_sign-out>>[Sign Out]
 
- 
+
 
 == <<dashboard>>[The Dashboard]
 

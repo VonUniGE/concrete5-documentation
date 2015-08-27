@@ -71,35 +71,35 @@ If we open up their HTML, it's pretty easy to find the image slider code:
                 <div class="animated_item text_1_2" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">Mountains in Switzerland</div>
                 <div class="animated_item text_1_3" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown"><a href="#" class="general_button_type_1">Read More</a></div>
             </li>
- 
+
             <li>
                 <img src="images/pic_slider_1_2.jpg" alt="">
                 <div class="animated_item text_1_1" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">Travel, PHOTOGRAPHY</div>
                 <div class="animated_item text_1_2" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">My Love - New York</div>
                 <div class="animated_item text_1_3" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown"><a href="#" class="general_button_type_1">Read More</a></div>
             </li>
- 
+
             <li>
                 <img src="images/pic_slider_1_3.jpg" alt="">
                 <div class="animated_item text_1_1" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">Life, PHOTOGRAPHY</div>
                 <div class="animated_item text_1_2" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">My Awesome workplace</div>
                 <div class="animated_item text_1_3" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown"><a href="#" class="general_button_type_1">Read More</a></div>
             </li>
- 
+
             <li>
                 <img src="images/pic_slider_1_4.jpg" alt="">
                 <div class="animated_item text_1_1" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">Life, PHOTOGRAPHY</div>
                 <div class="animated_item text_1_2" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">Flying over the mountains</div>
                 <div class="animated_item text_1_3" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown"><a href="#" class="general_button_type_1">Read More</a></div>
             </li>
- 
+
             <li>
                 <img src="images/pic_slider_1_5.jpg" alt="">
                 <div class="animated_item text_1_1" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">People, Fashion</div>
                 <div class="animated_item text_1_2" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">Young Businessman</div>
                 <div class="animated_item text_1_3" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown"><a href="#" class="general_button_type_1">Read More</a></div>
             </li>
- 
+
             <li>
                 <img src="images/pic_slider_1_6.jpg" alt="">
                 <div class="animated_item text_1_1" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">People, Life</div>
@@ -108,7 +108,7 @@ If we open up their HTML, it's pretty easy to find the image slider code:
             </li>
         </ul>
     </div>
- 
+
     <script type="text/javascript">
         jQuery(function() {
             init_slider_1('#slider');
@@ -155,7 +155,7 @@ $(document).ready(function(){
     });
 });
 </script>
- 
+
 <div class="ccm-image-slider-container ccm-block-image-slider-<?php echo $navigationTypeText; ?>" >
     <div class="ccm-image-slider">
         <div class="ccm-image-slider-inner">
@@ -187,7 +187,7 @@ $(document).ready(function(){
                 </div>
             <?php } ?>
         </div>
-     </div>
+    </div>
 </div>
 ----
 
@@ -200,7 +200,7 @@ To use the Enterprise HTML:
         init_slider_1('#slider<?php echo $bID; ?>');
     });
 </script>
- 
+
 <div class="block_slider_type_1 general_not_loaded">
     <div id="slider<?php echo $bID; ?>" class="slider flexslider">
         <?php if (count($rows) > 0) { ?>

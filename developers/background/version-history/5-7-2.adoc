@@ -14,7 +14,7 @@
 * We now detect InnoDB table support on installation.
 * Added a search button to the marketplace themes and add-ons pages.
 * Added stack name to the stack detail page (thanks akodde).
-* Default administrative route actions are now protected by canAccess – not just the view and submit actions.
+* Default administrative route actions are now protected by canAccess - not just the view and submit actions.
 * Improved Image Block. Cleaned up edit mode, removed old unused options, made constrain image by width/height work again, and fixed the behavior where link type couldn’t be switched more than once in an edit session until a page was reloaded.
 
 == Bug Fixes

@@ -27,7 +27,7 @@
 * The local storage location type can now serve files from a different URL (thanks Mnkras)
 * Storage location types can be uninstalled when a package is uninstalled (thanks Mnkras)
 * Improved installation checks for required components (multibyte, iconv, all the options required for GD library).
-* No longer show “Approve Version” blue box on page drafts – instead show a notice that this is an un-published draft.
+* No longer show “Approve Version” blue box on page drafts - instead show a notice that this is an un-published draft.
 * Less intrusive stacking of the page alert blue box.
 * Topic trees now support multibyte characters (thanks hissy!)
 * Fix to remove the closing link tag that was causing pages to fail HTML5 W3C validation (thanks olsgreen)
@@ -60,7 +60,7 @@
 * External forms are now properly overridable.
 * Fixed bug: Editing image thumbnails / Saving does not work with alternate file storage location (thanks ahukkanen).
 * Fixed bug where “apply to site” or “reset site customizations” in the theme customizer wouldn’t reset or override custom page styles.
-* Better checking for URL icons (favicon, etc…) that may have been deleted before trying to output them (thanks Mnkras)
+* Better checking for URL icons (favicon, etc...) that may have been deleted before trying to output them (thanks Mnkras)
 * “Reply to email address” now will be properly checked when editing form options (thanks hissy)
 * Fixed bug that lead to Page Owner permission access entity not working in advanced permission mode.
 * Miscellaneous bug fixes when using badges (thanks hissy)

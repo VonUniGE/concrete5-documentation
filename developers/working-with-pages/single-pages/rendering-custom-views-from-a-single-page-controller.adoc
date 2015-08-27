@@ -8,7 +8,7 @@ The easy way to render a different view based on a single page controller is to 
 ----
 <?php
 if ($view->controller->getTask() == 'view_album') {
-    echo t('The selected album is %s', $albumID);
+    echo t('The selected album is %s', $albumID);
 } else {
     ?>
     <ul>
@@ -16,7 +16,7 @@ if ($view->controller->getTask() == 'view_album') {
         <li><a href="<?php echo URL::to('/media', 'view_album', $album->getAlbumID()); ?>">
             <?php echo $album->getAlbumName()?>
         </a></li>
-    <?php } ?>
+    <?php } ?>
     </ul>
 <?php
 }

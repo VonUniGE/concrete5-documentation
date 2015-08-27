@@ -140,26 +140,26 @@ Here, take a look at a custom class that only displays pages of a certain type, 
 [source,php]
 ----
 <?php
- 
+
 namespace PortlandLabs\ClassifiedList;
- 
+
 use Concrete\Core\Page\PageList;
- 
+
 class ClassifiedList extends PageList
 {
     /** @var bool */
     protected $includeInactive = false;
- 
+
     public function __construct()
     {
         parent::__construct();
- 
+
         $this->ignorePermissions();
         $this->filterByPageTypeHandle('classified');
         $this->setItemsPerPage(10);
         $this->sortByPublicDateDescending();
     }
- 
+
     public function deliverQueryObject()
     {
         if (!$this->includeInactive) {
@@ -168,12 +168,12 @@ class ClassifiedList extends PageList
 
         return parent::deliverQueryObject();
     }
- 
+
     public function includeInactive()
     {
         $this->includeInactive = true;
     }
- 
+
     public function filterByActive($start, $end = null)
     {
         if (!$end) {
@@ -242,7 +242,7 @@ Common pagination output HTML is supported, including Bootstrap 2, Bootstrap 3, 
 
 [source,php]
 ----
-echo $pagination->renderDefaultView(); // Outputs HTML for Bootstrap 3, useful in the Dashboard, etc…
+echo $pagination->renderDefaultView(); // Outputs HTML for Bootstrap 3, useful in the Dashboard, etc...
 ----
 
 You can also render any pagination view supported by Pagerfanta from your Pagination object.

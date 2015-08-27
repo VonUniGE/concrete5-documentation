@@ -23,7 +23,7 @@ use Concrete\Core\Page\Theme\Theme;
 
 class PageTheme extends Theme
 {
- 
+
 }
 ----
 
@@ -41,7 +41,7 @@ In order for this class file to take effect, we need to actually uninstall the t
 src/Page/Theme/GridFramework/Type/
 ----
 
-We're planning on adding more, and developers can add support for them as well – but today let's just specify bootstrap 3, since that's what this theme uses behind the scenes.
+We're planning on adding more, and developers can add support for them as well - but today let's just specify bootstrap 3, since that's what this theme uses behind the scenes.
 
 Add this line to the class file you created:
 

@@ -2,7 +2,7 @@
 
 Concrete5's blocks system makes it really easy to store data in a single block type.
 If you name your form elements correctly and match them to the keys of the table found in your block controller's $btTable variable, you won't need to write a single line of SQL to insert, update or delete data in your database.
-It's easy to create more complex blocks that use multiple database tables, but you'll have to write database queries to interact with these tables directly – only one table can have its parameters automagically updated when saving the block.
+It's easy to create more complex blocks that use multiple database tables, but you'll have to write database queries to interact with these tables directly - only one table can have its parameters automagically updated when saving the block.
 
 == Example: Survey Block
 
@@ -80,7 +80,7 @@ The parent::save() method takes care of populating btSurvey, and the posted poll
 
 The duplicate() method is run on a block any time a block on an approved version of a page is edited.
 THe block is duplicated behind the scenes, receiving a new bID, and storing its data in its $btTable under the new $bID (while retaining the old data.) This ensures that if a page is rolled back to a previous version, the previous block still has its data available (under the old $bID).
-Most blocks won't need to implement their own duplicate() method, as Concrete5 takes care of this automatically – but blocks that depend on this bID parameter to map to their own custom additional database tables will need to extend the built-in duplicate() method.
+Most blocks won't need to implement their own duplicate() method, as Concrete5 takes care of this automatically - but blocks that depend on this bID parameter to map to their own custom additional database tables will need to extend the built-in duplicate() method.
 Here's how the survey block does it:
 
 [source,php]
@@ -92,7 +92,7 @@ public function duplicate($newBID)
         $v1 = array($newBID, $opt->getOptionName(), $opt->getOptionDisplayOrder());
         $q1 = 'INSERT INTO btSurveyOptions (bID, optionName, displayOrder) VALUES (?, ?, ?)';
         $db->query($q1, $v1);
- 
+
         $v2 = array($opt->getOptionID());
         $newOptionID = $db->Insert_ID();
         $q2 = 'SELECT * FROM btSurveyResults WHERE optionID = ?';
@@ -105,9 +105,9 @@ public function duplicate($newBID)
             }
         }
     }
- 
+
     return parent::duplicate($newBID);
- 
+
 }
 ----
 
@@ -127,13 +127,13 @@ public function delete()
 {
     $db = Loader::db();
     $v = array($this->bID);
- 
+
     $q = 'DELETE FROM btSurveyOptions WHERE bID = ?';
     $db->query($q, $v);
- 
+
     $q = 'DELETE FROM btSurveyResults WHERE bID = ?';
     $db->query($q, $v);
- 
+
     parent::delete();
 }
 ----

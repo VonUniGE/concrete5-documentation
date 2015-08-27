@@ -1,7 +1,7 @@
 = Automatically including CSS and JavaScript in Custom Templates
 
 So far you've seen how to create a custom view template that can be used in place of the standard view template for an existing block type.
-What if your custom view template relies on some CSS and JavaScript that isn't used by the existing view template? You want your custom template to be reasonably decoupled from the theme that it resides in, so you need some way to specify that CSS or JavaScript is included – but only when using this custom template.
+What if your custom view template relies on some CSS and JavaScript that isn't used by the existing view template? You want your custom template to be reasonably decoupled from the theme that it resides in, so you need some way to specify that CSS or JavaScript is included - but only when using this custom template.
 
 Fortunately, there's an easy way to do this within the custom view template system.
 In our previous example, our custom template is found here:
@@ -53,4 +53,4 @@ In these lines of code, the following files are kept from loading, should their 
 * concrete/blocks/feature/view.css
 * concrete/blocks/feature/templates/hover_description/view.css
 
-It isn't necessary to register these assets – any time a view.js or view.css file is detected in a block or custom template directory, they will automatically be registered.
+It isn't necessary to register these assets - any time a view.js or view.css file is detected in a block or custom template directory, they will automatically be registered.

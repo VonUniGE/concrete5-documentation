@@ -62,7 +62,7 @@ If this attribute is present for the page, the $response will actually be either
 === Return Presentable Data
 
 Custom attributes types can return their data in ways that are meant to be presented to the end user.
-While the custom getAttribute() call returns the data in its mode programmatic state (e.g. returning file objects, address objects, etc…) it's easy to return the data in such a way that it can be quickly printed out to the end user.
+While the custom getAttribute() call returns the data in its mode programmatic state (e.g. returning file objects, address objects, etc...) it's easy to return the data in such a way that it can be quickly printed out to the end user.
 
 [source,php]
 ----
@@ -101,7 +101,7 @@ It's easy to check to see if the page is currently being edited by a user.
 [source,php]
 ----
 if ($c->isEditMode()) {
- 
+
 }
 ----
 

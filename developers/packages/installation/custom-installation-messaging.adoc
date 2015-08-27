@@ -25,7 +25,7 @@ Then, from within the controller.php install() method
 public function install()
 {
      $pkg = parent::install();
- 
+
      $r = \Request::getInstance();
      if ($r->request->get('installSampleContent')) {
          // install sample content.

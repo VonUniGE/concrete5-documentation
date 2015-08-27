@@ -1,14 +1,14 @@
 = Overview
 
-== Background – Concrete5 through 5.6
+== Background - Concrete5 through 5.6
 
 When Concrete5 first launched, there was but one way to get JavaScript and CSS into your page and block templates: with script and link tags directly. While this is predictable and easy to maintain in a vacuum, there are numerous problems with this approach. These include.
 
 * No packaging of assets with block templates.
-* No asset positioning in the page for optimization – a block type's asset would just be printed out wherever that block was rendered.
+* No asset positioning in the page for optimization - a block type's asset would just be printed out wherever that block was rendered.
 * Bloated site-wide CSS and JavaScript files.
 * Requires handholding by developers.
-* No way to filter out duplicate assets – add a block multiple times, get multiple includes of JavaScript.
+* No way to filter out duplicate assets - add a block multiple times, get multiple includes of JavaScript.
 * No way for blocks to mark core assets as required for function.
 
 As Concrete5 matured, we added better ways for these assets to be included, including
@@ -36,7 +36,7 @@ But things were far from perfect:
 
 == Fixing the Problem: The Asset Sub-System in Concrete5 5.7
 
-The Assets Sub-System in Concrete5 5.7 and above aims to fix these problems, and even add some features that we've never had before. It is a central registry for shared assets, including jQuery, Bootstrap and all third party JavaScript and CSS libraries ued by Concrete5. This registery can be added to by packages and custom site code. Each Asset knows about how it works, including whether it should be added to the header or footer, can be minified to save space, or combined with other assets to limit HTTP requests. The assets system lets developers assign handles to an asset or a group of assets, which can be available locally or remotely – rather than worrying about the actual files' names. Themes and packages can mark assets as provided, so they don't get automatically included. Block custom template auto-loaded assets (view.js, view.css) are supported in the system as well.
+The Assets Sub-System in Concrete5 5.7 and above aims to fix these problems, and even add some features that we've never had before. It is a central registry for shared assets, including jQuery, Bootstrap and all third party JavaScript and CSS libraries ued by Concrete5. This registery can be added to by packages and custom site code. Each Asset knows about how it works, including whether it should be added to the header or footer, can be minified to save space, or combined with other assets to limit HTTP requests. The assets system lets developers assign handles to an asset or a group of assets, which can be available locally or remotely - rather than worrying about the actual files' names. Themes and packages can mark assets as provided, so they don't get automatically included. Block custom template auto-loaded assets (view.js, view.css) are supported in the system as well.
 
 == Introduction and Video
 

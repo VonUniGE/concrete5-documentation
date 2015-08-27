@@ -4,7 +4,7 @@ NOTE: This requires version 5.7.5 or greater.
 
 Concrete5 uses attributes for a lot of things.
 Usually, these attributes are set by administrators for business purposes (e.g. if someone wants to exclude a page from a navigation, they'll set the "Exclude from Nav" page attribute to true.).
-Files are an interesting case, though – many times you might have a file attribute that ought to be populated from the file itself in some way, rather than by an admin.
+Files are an interesting case, though - many times you might have a file attribute that ought to be populated from the file itself in some way, rather than by an admin.
 If that's the case, you need a custom file type inspector.
 
 == File Type Inspectors
@@ -23,7 +23,7 @@ use Concrete\Core\File\Version;
 use Image;
 use FileAttributeKey;
 use Core;
- 
+
 class ImageInspector extends Inspector
 {
     public function inspect(Version $fv)
@@ -31,7 +31,7 @@ class ImageInspector extends Inspector
         $fr = $fv->getFileResource();
         $image = Image::load($fr->read());
         $data = $image->getSize();
- 
+
         // sets an attribute - these file attribute keys should be added
         // by the system and "reserved"
         $at1 = FileAttributeKey::getByHandle('width');
@@ -107,7 +107,7 @@ class Controller extends Package
 }
 ----
 
-There's nothing special about this package yet – no custom code that registers our custom inspector.
+There's nothing special about this package yet - no custom code that registers our custom inspector.
 
 === Register Our Custom Inspector
 
@@ -167,12 +167,12 @@ Finally, in the `AudioInspector.php` file, we create our inspector class:
 <?php
 
 namespace Concrete\Package\Id3Reader\File\Type\Inspector;
- 
+
 use Concrete\Core\Attribute\Key\FileKey;
 use Concrete\Core\File\Type\Inspector\Inspector;
 use Concrete\Core\File\Version;
 use PhpId3\Id3TagsReader;
- 
+
 class AudioInspector extends Inspector
 {
     public function inspect(Version $fv)
@@ -180,10 +180,10 @@ class AudioInspector extends Inspector
         $fr = $fv->getFileResource();
         $fs = $fv->getFile()->getFileStorageLocationObject()->getFileSystemObject();
         $stream = $fs->readStream($fr->getPath());
- 
+
         $id3 = new Id3TagsReader($stream);
         $id3->readAllTags();
- 
+
         $artist = FileKey::getByHandle('audio_artist');
         $title = FileKey::getByHandle('audio_title');
         $data = $id3->getId3Array();

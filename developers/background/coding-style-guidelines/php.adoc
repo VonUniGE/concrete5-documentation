@@ -73,7 +73,7 @@ concrete/blocks/PageList/Controller.php
 
 exists (since that is the default PSR-4 autoloading behavior.)
 
-If it does not (and it won't, for blocks, attributes, single page controllers, etc...) – then we uncamelcase using our own methods, starting at the item after blocks. Backslashes become directory separatores, and camelcasing becomes underscores.
+If it does not (and it won't, for blocks, attributes, single page controllers, etc...) - then we uncamelcase using our own methods, starting at the item after blocks. Backslashes become directory separatores, and camelcasing becomes underscores.
 
 [source,php]
 ----
@@ -88,4 +88,4 @@ We have already taken care of moving files to support these updated naming and d
 
 === Important Note
 
-If you submit a pull request for this type of cleanup, please keep each request to one file – for the sake of vetting your pull request. Please *do not* run the entire concrete5 source through a cleanup tool and send that to us. We could do that ourselves ;-)
+If you submit a pull request for this type of cleanup, please keep each request to one file - for the sake of vetting your pull request. Please *do not* run the entire concrete5 source through a cleanup tool and send that to us. We could do that ourselves ;-)

@@ -22,7 +22,7 @@ Core items of functionality that are installed by a particular package like bloc
 
 The standard Concrete5 package uninstall screen lists all items that will be uninstalled when this package is uninstalled.
 This is automatic.
-If you'd like, you can add custom messaging or a form to this list – for example, an eCommerce package might prompt the user to confirm whether they want front-end store content also deleted from their site.
+If you'd like, you can add custom messaging or a form to this list - for example, an eCommerce package might prompt the user to confirm whether they want front-end store content also deleted from their site.
 To display a custom uninstallation message or form, simply create a file at `packages/package_handle/elements/dashboard/uninstall.php`.
 Anything found in this file will automatically be presented to the user after they choose to uninstall the package, but before they actually confirm that they want to uninstall it.
 

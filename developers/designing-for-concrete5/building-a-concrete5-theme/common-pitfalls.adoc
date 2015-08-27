@@ -4,7 +4,7 @@ Before we continue working on our Urbanic theme, we should talk about some commo
 
 == Greedy Styles
 
-If you've built your HTML template with particular greedy styles – global paragraph styles that modify line heights, styles on lists or list items, these can interfere with the Concrete5 user interface. This is because the Concrete5 toolbar and panels exist on the same page as your styles. All Concrete5 styles are namespaced within the .ccm-ui CSS class, but if theme styles are greedy, they can override these styles anyway. Fortunately, it's easy to make sure your styles don't conflict with Concrete5, just make sure certain greedy styles are referenced this way:
+If you've built your HTML template with particular greedy styles - global paragraph styles that modify line heights, styles on lists or list items, these can interfere with the Concrete5 user interface. This is because the Concrete5 toolbar and panels exist on the same page as your styles. All Concrete5 styles are namespaced within the .ccm-ui CSS class, but if theme styles are greedy, they can override these styles anyway. Fortunately, it's easy to make sure your styles don't conflict with Concrete5, just make sure certain greedy styles are referenced this way:
 
 [source,css]
 ----
@@ -26,11 +26,11 @@ Certain things that make Concrete5 faster can make development more of a chore. 
 
 == 404s are Slow
 
-In Concrete5, if a file can't be found, the resulting 404 page will be run through Concrete5. This is normally a good thing – you want to be able to style your 404 page like the rest of your site. Unfortunately while developing your site, you might be dealing with a lot of 404s while you're working with missing images, moving assets around, and figuring out how to convert your static HTML template into a Concrete5 theme. Every time you reload a page and that page has multiple 404 errors on it, all those requests are *also* being routed through Concrete5. Combine this with a development site that has no cache and you might have a slow environment. Fix those 404s first.
+In Concrete5, if a file can't be found, the resulting 404 page will be run through Concrete5. This is normally a good thing - you want to be able to style your 404 page like the rest of your site. Unfortunately while developing your site, you might be dealing with a lot of 404s while you're working with missing images, moving assets around, and figuring out how to convert your static HTML template into a Concrete5 theme. Every time you reload a page and that page has multiple 404 errors on it, all those requests are *also* being routed through Concrete5. Combine this with a development site that has no cache and you might have a slow environment. Fix those 404s first.
 
 == Try not to Fork jQuery UI
 
-If you must include a custom copy of jQuery UI, so be it – but this is highly discouraged. The jQuery UI stylesheet that's included with Concrete5 is fairly customized, so including a different one generated from jqueryui.com might break things like Concrete5's dialogs.
+If you must include a custom copy of jQuery UI, so be it - but this is highly discouraged. The jQuery UI stylesheet that's included with Concrete5 is fairly customized, so including a different one generated from jqueryui.com might break things like Concrete5's dialogs.
 
 == Conclusion
 

@@ -47,4 +47,4 @@ $stack->display();
 == Limitations
 
 Blocks embedded in this way cannot be cached using block output caching (since they do not have database records, which is what block output caching relies on).
-They also cannot be interactive – they can post back to the page, but since the page will have no record of such a block being added to it, it can't query to see what blocks can respond to the action URL that the block posts back to.
+They also cannot be interactive - they can post back to the page, but since the page will have no record of such a block being added to it, it can't query to see what blocks can respond to the action URL that the block posts back to.

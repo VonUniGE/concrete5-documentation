@@ -14,7 +14,7 @@ Concrete5 5.7.0 included Grid Frameworks for Bootstrap 2, 960 and Bootstrap 3 (a
 
 == Theme Package
 
-I have a zurb_foundation theme package. This theme is in the package format – which is important, because it's not just the theme that I want to install. I want to package the theme together, with my custom code – my Grid Framework PHP class file. This Grid Framework file will tell Concrete5 how the grid framework is structured – how many columns it has, how to name the columns using CSS classes, how to name the offset columns using CSS classes, etc...
+I have a zurb_foundation theme package. This theme is in the package format - which is important, because it's not just the theme that I want to install. I want to package the theme together, with my custom code - my Grid Framework PHP class file. This Grid Framework file will tell Concrete5 how the grid framework is structured - how many columns it has, how to name the columns using CSS classes, how to name the offset columns using CSS classes, etc...
 
 The theme itself is pretty simple. I haven't done much beyond creating a quick theme and a default page template. There's definitely much more one could do to create a really good Zurb Foundation-based theme. I just wanted to get started quickly.
 
@@ -82,7 +82,7 @@ If we reload the page, we'll get this error:
 Driver [foundation] not supported
 ----
 
-This is expected. We've told Concrete5 to load a grid framework named "foundation" but we haven't told it where to grab that framework – or even specified how that framework works yet.
+This is expected. We've told Concrete5 to load a grid framework named "foundation" but we haven't told it where to grab that framework - or even specified how that framework works yet.
 
 === Create a Grid Framework PHP Class
 
@@ -95,14 +95,13 @@ Let's create the PHP class in this file as well.
 [source,php]
 ----
 namespace Concrete\Package\ZurbFoundation\Src;
- 
+
 use Concrete\Core\Page\Theme\GridFramework\GridFramework;
- 
+
 defined('C5_EXECUTE') or die('Access Denied.');
- 
+
 class FoundationGridFramework extends GridFramework
 {
- 
 }
 ----
 
@@ -129,27 +128,27 @@ public function getPageThemeGridFrameworkName()
 {
     return t('Foundation');
 }
- 
+
 public function getPageThemeGridFrameworkRowStartHTML()
 {
     return '<div class="row">';
 }
- 
+
 public function getPageThemeGridFrameworkRowEndHTML()
 {
     return '</div>';
 }
- 
+
 public function getPageThemeGridFrameworkContainerStartHTML()
 {
     return '';
 }
- 
+
 public function getPageThemeGridFrameworkContainerEndHTML()
 {
     return '';
 }
- 
+
 public function getPageThemeGridFrameworkColumnClasses()
 {
     $columns = array(
@@ -169,7 +168,7 @@ public function getPageThemeGridFrameworkColumnClasses()
 
     return $columns;
 }
- 
+
 public function getPageThemeGridFrameworkColumnOffsetClasses()
 {
     $offsets = array(
@@ -189,19 +188,19 @@ public function getPageThemeGridFrameworkColumnOffsetClasses()
 
     return $offsets;
 }
- 
+
 public function getPageThemeGridFrameworkColumnAdditionalClasses()
 {
     return 'columns';
 }
- 
+
 public function getPageThemeGridFrameworkColumnOffsetAdditionalClasses()
 {
     return 'columns';
 }
 ----
 
-The name is self-explanatory. Each Foundation grid row starts with a DIV with the class of row. Since there is no container in the Zurb Foundation grid framework, those methods return empty strings. The getPageThemeGridFrameworkColumnClasses and getPageThemeGridFrameworkColumnOffsetClasses return an array of their relevant classes. And finally, the getPageThemeGridFrameworkColumnAdditionalClasses and getPageThemeGridFrameworkColumnOffsetAdditionalClasses returns the "columns" string – because offset columns and regular grid columns require the class "columns" in addition to whatever specific grid or offset class they're using.
+The name is self-explanatory. Each Foundation grid row starts with a DIV with the class of row. Since there is no container in the Zurb Foundation grid framework, those methods return empty strings. The getPageThemeGridFrameworkColumnClasses and getPageThemeGridFrameworkColumnOffsetClasses return an array of their relevant classes. And finally, the getPageThemeGridFrameworkColumnAdditionalClasses and getPageThemeGridFrameworkColumnOffsetAdditionalClasses returns the "columns" string - because offset columns and regular grid columns require the class "columns" in addition to whatever specific grid or offset class they're using.
 
 This is our final file, packages/zurb_foundation/src/FoundationGridFramework.php:
 
@@ -209,39 +208,39 @@ This is our final file, packages/zurb_foundation/src/FoundationGridFramework.php
 ----
 <?php 
 namespace Concrete\Package\ZurbFoundation\Src;
- 
+
 use Concrete\Core\Page\Theme\GridFramework\GridFramework;
- 
+
 defined('C5_EXECUTE') or die('Access Denied.');
- 
+
 class FoundationGridFramework extends GridFramework
 {
- 
+
     public function getPageThemeGridFrameworkName()
     {
         return t('Foundation');
     }
- 
+
     public function getPageThemeGridFrameworkRowStartHTML()
     {
         return '<div class="row">';
     }
- 
+
     public function getPageThemeGridFrameworkRowEndHTML()
     {
         return '</div>';
     }
- 
+
     public function getPageThemeGridFrameworkContainerStartHTML()
     {
         return '';
     }
- 
+
     public function getPageThemeGridFrameworkContainerEndHTML()
     {
         return '';
     }
- 
+
     public function getPageThemeGridFrameworkColumnClasses()
     {
         $columns = array(
@@ -261,7 +260,7 @@ class FoundationGridFramework extends GridFramework
 
         return $columns;
     }
- 
+
     public function getPageThemeGridFrameworkColumnOffsetClasses()
     {
         $offsets = array(
@@ -281,17 +280,17 @@ class FoundationGridFramework extends GridFramework
 
         return $offsets;
     }
- 
+
     public function getPageThemeGridFrameworkColumnAdditionalClasses()
     {
         return 'columns';
     }
- 
+
     public function getPageThemeGridFrameworkColumnOffsetAdditionalClasses()
     {
         return 'columns';
     }
- 
+
 }
 ----
 
@@ -330,4 +329,4 @@ Now, when we put our page in edit mode, we'll see Foundation as available, and w
 
 == Foundation Going Forward
 
-This entire tutorial has been about adding support for the Foundation grid via a Package, and should help you move forward creating your own Grid Framework classes for your own themes. Fortunately – if you want to use Foundation, you don't actually have to go through of all of this. As of 5.7.2.1, it's included with the core as well.
+This entire tutorial has been about adding support for the Foundation grid via a Package, and should help you move forward creating your own Grid Framework classes for your own themes. Fortunately - if you want to use Foundation, you don't actually have to go through of all of this. As of 5.7.2.1, it's included with the core as well.

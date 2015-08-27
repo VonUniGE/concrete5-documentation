@@ -33,10 +33,10 @@ $portrait = File::getByID(10);
 $version = $file->getVersionToModify(true); //forces the retrieval of a new version
 $resource = $version->getFileResource();
 $image = Image::load($resource->read());
- 
+
 // Now let's perform some manipulations to the image.
 $image->effects()->negative()->gamma(1.3);
- 
+
 // Now let's update the image
 $version->updateContents($image->get());
 ----

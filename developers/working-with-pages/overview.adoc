@@ -56,6 +56,6 @@ To do so, just omit the version specifier.
 [source,php]
 ----
 $c = \Page::getByPath('/path/to/page');
- 
+
 $c = \Page::getByID(HOME_CID);
 ----

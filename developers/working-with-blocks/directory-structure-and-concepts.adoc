@@ -8,7 +8,7 @@ This block is located at **concrete/blocks/content**:
 _Optional_ +
 This file is rendered every time an editor adds the block into the page.
 Since this block is set up to enable in-page editing, this add.php file is actually injected into the page's DOM structure.
-If this file isn't present, the block won't present a form when it's added – it will just be saved and added directly into the page.
+If this file isn't present, the block won't present a form when it's added - it will just be saved and added directly into the page.
 This is useful for blocks that don't have any options.
 
 `**composer.php**` +
@@ -35,7 +35,7 @@ If this file isn't present, the block won't be editable through the CMS.
 `**icon.png**` +
 _Required_ +
 This image is the icon representation of the block type when it's presented in the sidebar to site editors.
-The dimensions of this icon should be a square – and they should be at least 50x50.
+The dimensions of this icon should be a square - and they should be at least 50x50.
 
 `**scrapbook.php**` +
 _Optional_ +

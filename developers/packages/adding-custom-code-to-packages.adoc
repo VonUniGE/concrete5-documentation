@@ -52,7 +52,7 @@ This led to attractive class names like this:
 
 
 Unfortunately, this led to ambiguities.
-For example, if someone creates a file at `packages/my_package/src/Block/Updater.php` and references it using `\Concrete\Package\MyPackage\Block\Updater` – we don't know whether to load from `src/` or from the `blocks/` directory found inside `my_package`.
+For example, if someone creates a file at `packages/my_package/src/Block/Updater.php` and references it using `\Concrete\Package\MyPackage\Block\Updater` - we don't know whether to load from `src/` or from the `blocks/` directory found inside `my_package`.
 For this reason, we've added `\Src\` to the namespace of all files loaded from a package's `src/` directory or an application's `src/` directory.
 
 This isn't ideal; it's ugly and semantically unnecessary.

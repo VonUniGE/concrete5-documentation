@@ -73,7 +73,7 @@ Then, we import the two additional classes outside the package namespace that we
 We need these because we're going to use the BlockType class to add a block type during installation, and we need the base `Concrete\Core\Package\Package` class because our package controller extends this base class.
 
 After that, we specify the package's controller, which is the only class in this file.
-The package's controller is always named `Controller` – this works because it's present in a custom namespace.
+The package's controller is always named `Controller` - this works because it's present in a custom namespace.
 It also always extends from Concrete\Core\Package\Package.
 
 The three protected variables in this class are required by packages.

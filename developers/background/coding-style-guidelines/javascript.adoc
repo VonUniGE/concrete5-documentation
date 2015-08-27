@@ -30,4 +30,4 @@ While the style of our JavaScript is improving massively in 5.7, many of our fil
 
 === Important Note
 
-Again, if you submit a pull request for this type of cleanup, please keep each request to one or just a few files – for the sake of vetting your pull request. Please *do not* run the entire concrete5 source through a cleanup tool and send that to us. We could do that ourselves ;-)
+Again, if you submit a pull request for this type of cleanup, please keep each request to one or just a few files - for the sake of vetting your pull request. Please *do not* run the entire concrete5 source through a cleanup tool and send that to us. We could do that ourselves ;-)

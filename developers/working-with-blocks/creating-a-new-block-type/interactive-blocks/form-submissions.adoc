@@ -40,7 +40,7 @@ public function action_form_save_vote($bID = false)
     if ($this->bID != $bID) {
         return false;
     }
- 
+
     if (!$this->hasVoted()) {
         // Code omitted
         $c = \Page::getCurrentPage();

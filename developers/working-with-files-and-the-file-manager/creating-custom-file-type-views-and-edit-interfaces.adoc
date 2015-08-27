@@ -30,7 +30,7 @@ elements/files/view/audio.php
 ----
 
 The final filename will match whatever is passed in this argument.
-When loading a custom viewer, if a package handle is passed as the final parameter in the `define()` function, the file will be loaded from the `elements/` directory within the package – unless there's an overriding file in the `application/elements/` directory.
+When loading a custom viewer, if a package handle is passed as the final parameter in the `define()` function, the file will be loaded from the `elements/` directory within the package - unless there's an overriding file in the `application/elements/` directory.
 
 Since we've created a custom mapping for our `ID3_Reader` package, and we're specifying a custom viewer for our audio file, we need to make sure that our package contains an audio viewer.
 Otherwise, we're going to get a file not found error when we click on the the View link that is shown when working with audio files.
@@ -50,7 +50,7 @@ Next, these contents should be sufficient:
 
 This pretty easy to understand.
 First, we grab the URL of the file from the `$fv` object.
-We don't have to instantiate the object – it's automatically passed into the element.
+We don't have to instantiate the object - it's automatically passed into the element.
 It represents the relevant `\Concrete\Core\File\Version\Version` object for the file.
 Then we have our custom viewer code, which in this case is simply the HTML5 audio tag.
 Here's what the resulting output looks like:

@@ -4,7 +4,7 @@ NOTE: this requires Concrete5.7.5 or above
 
 Concrete5 5.7.5 includes a new XML format for `db.xml` files.
 This format is based off of http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/introduction.html[Doctrine DBAL], the database abstraction layer we use in Concrete5 version 7, and its http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/types.html[types and nomenclature].
-For example, no more do you have to remember that a varchar columns is `C` (as in AXMLS); instead, the documentation on Doctrine's types page refers to it as a `string` – and you can use `string` in the type field instead.
+For example, no more do you have to remember that a varchar columns is `C` (as in AXMLS); instead, the documentation on Doctrine's types page refers to it as a `string` - and you can use `string` in the type field instead.
 
 Doctrine XML has other benefits.
 

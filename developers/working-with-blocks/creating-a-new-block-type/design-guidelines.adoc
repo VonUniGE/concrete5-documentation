@@ -5,7 +5,7 @@
 Concrete5's edit interface makes heavy use of the http://www.getbootstrap.com[Bootstrap 3] user interface toolkit.
 This special build of Bootstrap namespaces its CSS classes within the "ccm-ui" class, but block developers don't have to worry about including this class in their HTML.
 This is automatically included in the dialog window.
-Bootstrap isn't required – any markup will likely work in a block dialog, but it does create nice looking forms.
+Bootstrap isn't required - any markup will likely work in a block dialog, but it does create nice looking forms.
 The link:#[Hello World Block] uses some basic Bootstrap styling.
 
 == Inline Blocks

@@ -9,7 +9,7 @@ Now let's get into some custom block, area, and Redactor editor CSS.
 
 == Custom Templates
 
-We've had custom templates in concrete5 for a very long time. These give you alternate views for blocks. But sometimes you don't need that. Sometimes you just want to add a custom class to a block or area. We've had the ability to do this in a free-form way – but 5.7 let's you specify these in a PageTheme file so that they show up in an easy to use select menu.
+We've had custom templates in concrete5 for a very long time. These give you alternate views for blocks. But sometimes you don't need that. Sometimes you just want to add a custom class to a block or area. We've had the ability to do this in a free-form way - but 5.7 let's you specify these in a PageTheme file so that they show up in an easy to use select menu.
 
 === Area Classes
 

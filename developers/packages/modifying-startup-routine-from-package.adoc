@@ -32,4 +32,4 @@ public function on_start()
 }
 ----
 
-Now, this code will run every time Concrete5 runs – but only if this particular package is installed.
+Now, this code will run every time Concrete5 runs - but only if this particular package is installed.

@@ -88,6 +88,6 @@ Here's how a form can submit back to the current page's "submit()" method in the
 [source,php]
 ----
 <form method="post" action="<?php echo $controller->action('submit'); ?>">
- 
+
 </form>
 ----

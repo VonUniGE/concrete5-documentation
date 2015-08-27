@@ -19,11 +19,11 @@ The controller class should have the StudlyCapsed version of your page type hand
 [source,php]
 ----
 <?php
- 
+
 namespace Application\Controller\PageType;
 
 use Concrete\Core\Page\Controller\PageTypeController
- 
+
 class BlogEntry extends PageTypeController
 {
     public function view()
@@ -35,7 +35,7 @@ class BlogEntry extends PageTypeController
 === Controller Note
 
 In this example, the page type controller extends the PageTypeController class within the `\Concrete\Core\Page\Controller` namespace, rather than the PageController.
-This is not strictly necessary, as currently the `PageTypeController` class is an empty class that just extends `PageController` – but in the future there might be important methods that we place within `PageTypeController`, so it's smart to extend that class just the same.
+This is not strictly necessary, as currently the `PageTypeController` class is an empty class that just extends `PageController` - but in the future there might be important methods that we place within `PageTypeController`, so it's smart to extend that class just the same.
 
 == That's It
 

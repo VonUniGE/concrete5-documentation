@@ -12,7 +12,7 @@ In Concrete5, a block is simply a collection of files in a directory, and some b
 
 Like other things in Concrete5, a block type has a handle.
 This is a lowercase-only, non-spaced string that describes the block type in the filesystem.
-Examples include "content", "youtube", "page_title", etc… If we're creating a block type that we'd like to refer to as a "Hello World!" block, we'd give it the handle of "hello_world", and it would be found in **application/blocks/hello_world/**.
+Examples include "content", "youtube", "page_title", etc... If we're creating a block type that we'd like to refer to as a "Hello World!" block, we'd give it the handle of "hello_world", and it would be found in **application/blocks/hello_world/**.
 
 == Contents of a Block's Directory
 

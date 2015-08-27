@@ -13,7 +13,7 @@ This approach requires that a developer be very familiar with http://doctrine-or
 
 == Example
 
-Let's say I'm creating a statistics package, and I want to create a table to store User Agents – the string of text that identifies a web browser viewing a page.
+Let's say I'm creating a statistics package, and I want to create a table to store User Agents - the string of text that identifies a web browser viewing a page.
 Instead of treating this like a database table, I'll treat it like an "entity object" instead.
 An entity object is simply a PHP object containing data about something.
 

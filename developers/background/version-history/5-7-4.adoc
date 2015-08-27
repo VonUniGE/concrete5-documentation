@@ -89,7 +89,7 @@
 * Content import with block type sets will now use existing sets if they are available.
 * Conversations block now includes its content in the search index (thanks mkly)
 * Significantly improved performance of the on-demand file thumbnailing utility when a cached version is found (thanks ijessup)
-* Custom block design style fixes – don’t output a style tag when just changing a custom template, better style tag support (thanks mlocati)
+* Custom block design style fixes - don’t output a style tag when just changing a custom template, better style tag support (thanks mlocati)
 * You can now unmap a page in the multilingual page report.
 * You can now set the minimum and maximum ranges of style customizer sliders by defining concrete.limits.style_customizer.size_max and concrete.limits.style_customizer.size_min (thanks EC-Joe)
 * respond.js and html5-shiv.js are now optionally included by themes, rather than being hard-coded for IE8 and below.
@@ -149,7 +149,7 @@
 * Localization fixes to Page Type Composer Control Name (thanks hissy)
 * Bug fixes and better sanitizing when saving Banned Words in the Dashboard (thanks Mnkras)
 * Better page permissions set on drafts page for users of advanced permissions mode (thanks hissy)
-* Bug fixed where Add Survey, Approve Page, Edit Survey, save – survey listed twice in the Dashboard. (thanks ECJoe)
+* Bug fixed where Add Survey, Approve Page, Edit Survey, save - survey listed twice in the Dashboard. (thanks ECJoe)
 * Fixed http://www.concrete5.org/developers/bugs/5-7-3-1/multiple-versions-of-a-page-cannot-be-deleted-at-once/
 * Fixed Unable to edit a user when concrete.seo.trailing_slash is enabled (thanks ECJoe)
 * Workflow progress categories are now uninstalled when uninstalling packages (thanks mkly)

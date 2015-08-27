@@ -17,7 +17,7 @@ You can also use some helper methods here.
 $html = Core::make('helper/html');
 echo $html->css('path/to/my.css');
 echo $html->javascript('path/to/library.js');
- 
+
 $pkg = Package::getByHandle('my_package');
 echo $html->javascript('path/to/library', $pkg);
 ?>

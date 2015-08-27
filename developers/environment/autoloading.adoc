@@ -22,7 +22,7 @@ Can be found at
 concrete/src/Page/Page.php
 ----
 
-*If you are writing code that belongs in a /src directory, you must adhere to PSR-4 as is. Classes must be capitalized, nested properly, etc…*
+*If you are writing code that belongs in a /src directory, you must adhere to PSR-4 as is. Classes must be capitalized, nested properly, etc...*
 
 For classes that do not exist within the src/ directory (such as block controllers, attribute controllers, etc...) We ask that you name your controllers with the same capitalization that PSR-4 requires, but you name your files with concrete5's classic lowercase + underscore method. These files will be converted by camelcasing those filenames on the fly.
 
@@ -61,7 +61,7 @@ concrete/blocks/PageList/Controller.php
 
 exists (since that is the default PSR-4 autoloading behavior.)
 
-If it does not (and it won't, for blocks, attributes, single page controllers, etc...) – then we uncamelcase using our own methods, starting at the item after blocks. Backslashes become directory separators, and camelcasing becomes underscores.
+If it does not (and it won't, for blocks, attributes, single page controllers, etc...) - then we uncamelcase using our own methods, starting at the item after blocks. Backslashes become directory separators, and camelcasing becomes underscores.
 
 ----
 concrete/blocks/page_list/controller.php
@@ -119,7 +119,7 @@ The following namespaces automatically map to locations in the concrete/ directo
 
 ==== Package Directory
 
-All of the above applies to Concrete5 packages – just substitute \Concrete\Package\YourPackageHandle (where YourPackageHandle is the camelcased version of the "your_package_handle" package directory found in packages/). For example:
+All of the above applies to Concrete5 packages - just substitute \Concrete\Package\YourPackageHandle (where YourPackageHandle is the camelcased version of the "your_package_handle" package directory found in packages/). For example:
 
 * Concrete\Package\FancySlider\Block\FancySlider\Controller -> packages/fancy_slider/blocks/fancy_slider/controller.php
 * Concrete\Package\FileSetTools\Attribute\FileData\Controller -> packages/file_set_tools/attributes/file_data/controller.php
@@ -127,7 +127,7 @@ All of the above applies to Concrete5 packages – just substitute \Concrete\Pa
 
 ==== Application Directory
 
-The application/ directory holds custom code for the current Concrete5 application. It's overrides directory namespaces follow the same pattern as the concrete/ directory – just with Application\ as the first segment of the namespace.
+The application/ directory holds custom code for the current Concrete5 application. It's overrides directory namespaces follow the same pattern as the concrete/ directory - just with Application\ as the first segment of the namespace.
 
 * Application\Block\FancySlider\Controller -> application/blocks/fancy_slider/controller.phgp
 * Application\Attribute\FileData\Controller -> application/attributes/file_data/controller.php

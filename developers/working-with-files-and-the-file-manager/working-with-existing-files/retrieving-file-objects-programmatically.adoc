@@ -23,15 +23,15 @@ For example, taking the $f File object above:
 echo $f->getFileID();
 ----
 
-This retrieves "1" – by running the getFileID() method on the $f object itself.
+This retrieves "1" - by running the getFileID() method on the $f object itself.
 
 [source,php]
 ----
 echo $f->getURL();
 ----
 
-This retrieves "http://www.mysite.com/1234/1234/1234/foo.txt" – the URL of the file.
-The method getURL() doesn't exist on the \Concrete\Core\File\File object – it exists on the \Concrete\Core\File\Version object.
+This retrieves "http://www.mysite.com/1234/1234/1234/foo.txt" - the URL of the file.
+The method getURL() doesn't exist on the \Concrete\Core\File\File object - it exists on the \Concrete\Core\File\Version object.
 The File object runs $this->getApprovedVersion() behind the scenes to retrieve the approved version of the File, and passes the method onto it.
 
 === Retrieving a Specific File Version

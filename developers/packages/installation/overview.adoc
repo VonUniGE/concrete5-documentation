@@ -17,13 +17,13 @@ The package object is created by using the `parent::install()` method, which ret
 NOTE: In general, most items that can be installed through packages will have an `install()` method (or something very similar) which takes this package object as one of its parameters. +
 This package object must be passed through when installing the item through a package, or Concrete5 won't know where to look for the files used by that block type, theme, or other item of functionality.*
 
-NOTE: the install() method is not *required* in the package's custom controller – but almost all packages will want to include it, because they're installing one or more items of functionality that need to have their custom installation routines run. +
+NOTE: the install() method is not *required* in the package's custom controller - but almost all packages will want to include it, because they're installing one or more items of functionality that need to have their custom installation routines run. +
 If your package doesn't install anything like a block type or a theme, and instead just needs to run some custom functionality on every page load, you might be able to get away with not specifying an install() method at all. +
 This is not usually the case.
 
 == Error Handling in Installation
 
-Sometimes you might need to abort an installation – for example, say your package requires PHP 5.4 and the version of PHP installed is only 5.3.
+Sometimes you might need to abort an installation - for example, say your package requires PHP 5.4 and the version of PHP installed is only 5.3.
 Just throw an exception from within the `install()` method *before* you run `parent::install()` and the error will be nicely displayed to the end user, and installation aborted.
 
 [source,php]

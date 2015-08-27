@@ -86,7 +86,7 @@ The results:
 
 image:custom-blocks_adding-help-5.png[With inline tooltips - Not working]
 
-This looks great – but it doesn't actually do anything yet.
+This looks great - but it doesn't actually do anything yet.
 By adding a "title" attribute and a special CSS class, we'll enable Twitter Bootstrap tooltips.
 
 [source,php]
