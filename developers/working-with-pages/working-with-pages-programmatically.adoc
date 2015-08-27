@@ -1,0 +1,193 @@
+= Working with Pages Programmatically
+
+== Overview
+
+While Concrete5 provides a slick interface for working with pages graphically, there are times when developers will want to set attributes on pages, update pages' names or even add new pages programmatically.
+The Concrete5 API makes this eays to do.
+
+== Setting Attributes on an Existing Page
+
+Let's say we want to set the value of "Exclude from Nav" on a particular page to true.
+"Exclude from Nav" is a boolean attribute with the handle "exclude_nav".
+
+[source,php]
+----
+$page = \Page::getCurrentPage();
+$page->setAttribute('exclude_nav', true);
+----
+
+That's it! More complex attribute types may take more complex values in the second argument.
+For example, if you have an address attribute for a particular page and you want to set it programmatically, the Address attribute type expects its value to be an array with keys that match the properties of the http://concrete5.org/api/class-Concrete.Attribute.Address.Value.html[Concrete\Attribute\Address\Value] object:
+
+[source,php]
+----
+$page = \Page::getCurrentPage();
+$av = array(
+    'address1' => '123 SW Test',
+    'address2' => 'Suite 100',
+    'city' => 'Portland',
+    'state_province' => 'OR',
+    'postal_code' => '99999',
+);
+$page->setAttribute('exclude_nav', $av);
+----
+
+== Updating a Page's Name, Description, Posting Date, or Author
+
+The http://concrete5.org/api/source-class-Concrete.Core.Page.Page.html#_update[update] method on the Page class takes care of updating many properties of a Page object, based on what array keys are passed to its first (and only) argument.
+
+[source,php]
+----
+$page = \Page::getCurrentPage();
+
+// this updates the name
+$page->update(array(
+    'cName' => 'My new page name'),
+));
+
+// this updates the name AND description
+$page->update(array(
+    'cName' => 'My new page name'),
+    'cDescription' => 'My new page description'),
+));
+
+// updates the author ID on the page
+$newAuthor = \UserInfo::getByUserName('aembler');
+$page->update(array(
+    'uID' => $newAuthor->getUserID(),
+));
+
+// updates the posting date of the page to right now
+$date = date('Y-m-d H:i:s');
+$page->update(array(
+    'cDatePublic' => $date,
+));
+----
+
+The following array keys are checked in the update function, and can be passed through to update on the page:
+
+* Page Name (`cName`)
+* Page Description (`cDescription`)
+* Page Posting Date (`cDatePublic`)
+* Page Author (user ID integer) (`uID`)
+* Page Template ID (`pTemplateID`)
+* URL Slug/handle (`cHandle`)
+* Enable Full Page Cache (`true`/`false`) (`cCacheFullPageContent`)
+* Override global full page caching lifetime (`true`/`false`) (`cCacheFullPageContentOverrideLifetime`)
+* Custom Lifetime for full page cache content (if overridden) (`cCacheFullPageContentLifetimeCustom`)
+
+== Adding a New Page Programmatically
+
+This is taken care of by the http://concrete5.org/api/source-class-Concrete.Core.Page.Page.html#_add[Page::add] method.
+First, choose the page under which you'd like to add the new page in the site hierarchy:
+
+[source,php]
+----
+$parentPage = \Page::getByPath('/my/articles');
+----
+
+Next, choose the page type for the new page you'd like to add.
+
+[source,php]
+----
+$pageType = \PageType::getByHandle('blog_post');
+----
+
+Then, choose a page template for the new page.
+
+[source,php]
+----
+$template = \PageTemplate::getByHandle('three_column');
+----
+
+Put it all together, along with a $data array containing properties about the new page you'd like to add (similar to the $data array used above in Page::update.
+The data array can contain any or all of the following array keys:
+
+* Page Name (`cName`)
+* Page Description (`cDescription`)
+* Page Posting Date (`cDatePublic`)
+* Page Author (user ID integer) (`uID`)
+* URL Slug/handle (`cHandle`)
+* Is the initial page version created approved? Usually defaults to true (`cvIsApproved`)
+* Package ID (Associates this page specifically with a package) (`pkgID`)
+
+=== Full Example
+
+Let's add a new blog entry to our articles section.
+
+[source,php]
+----
+$parentPage = \Page::getByPath('/my/articles');
+$pageType = \PageType::getByHandle('blog_post');
+$template = \PageTemplate::getByHandle('three_column');
+$entry = $parentPage->add(
+    $pageType,
+    array(
+        'cName' => 'Hello World!',
+        'cDescription' => 'Just a quick blog post.',
+        'cHandle ' => 'hello-all',
+    ),
+    $template
+);
+----
+
+$entry is the object corresponding to the new page.
+
+== Move a Page
+
+Moving or copying a page via the API is easy.
+Just call the move() method on the page you'd like to move, and provide it the new parent page as its argument.
+Let's move our new entry into the archives.
+
+[source,php]
+----
+$entry = \Page::getByPath('/my/articles/hello-all');
+$archives = \Page::getByPath('/archives');
+$entry->move($archives);
+----
+
+== Copy a Page
+
+Want to copy a page from a particular location? Use a similar pattern.
+
+[source,php]
+----
+$starter = \Page::getByPath('/starters/profile-page');
+$parent = \Page::getByPath('/profiles');
+$newPage = $starter->duplicate($parent);
+----
+
+Now that we have a $newPage object, update it with some real values:
+
+[source,php]
+----
+$newPage->update(array('cName' => 'Jane Doe'));
+----
+
+== Delete a Page
+
+Deleting a page is simple.
+Say we want to delete our newly created profile page (which was copied into the '/profiles' section.
+
+[source,php]
+----
+$page = \Page::getByPath('/profiles/jane-doe');
+$page->delete();
+----
+
+IMPORTANT: Deleting a page this way will *delete it immediately.* It will not move it to the trash can.
+
+If you'd like to move a page to the trash can, call `Page::moveToTrash();`
+
+[source,php]
+----
+$page = \Page::getByID(200);
+$page->moveToTrash();
+----
+
+== API
+
+These are just a few examples of what can be done with the Concrete5 API.
+Get more from the Page API docs:
+
+http://concrete5.org/api/class-Concrete.Core.Page.Page.html[API Reference]

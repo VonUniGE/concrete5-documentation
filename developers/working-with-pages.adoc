@@ -1,19 +1,23 @@
 = Working with Pages
 
-== <<working-with-pages_overview>>[Overview]
+:leveloffset: +1
 
-== <<working-with-pages_getting-data-about-a-page>>[Getting Data about a Page]
+include::working-with-pages/overview.adoc[]
 
-== <<working-with-pages_single-pages>>[Single Pages]
+include::working-with-pages/getting-data-about-a-page.adoc[]
 
-== <<working-with-pages_controllers-for-page-types>>[Controllers for Page Types]
+include::working-with-pages/single-pages.adoc[]
 
-== <<working-with-pages_creating-a-custom-page-type-validator>>[Creating a Custom Page Type Validator]
+include::working-with-pages/controllers-for-page-types.adoc[]
 
-== <<working-with-pages_swapping-out-the-base-controller>>[Swapping out the Base Controller]
+include::working-with-pages/creating-a-custom-page-type-validator.adoc[]
 
-== <<working-with-pages_setting-a-page-s-title-from-a-controller>>[Setting a Page's Title from a Controller]
+include::working-with-pages/swapping-out-the-base-controller.adoc[]
 
-== <<working-with-pages_working-with-pages-programmatically>>[Working with Pages Programmatically]
+include::working-with-pages/setting-a-page-s-title-from-a-controller.adoc[]
 
-== <<working-with-pages_searching-and-sorting-with-the-pagelist-object>>[Searching and Sorting with the PageList object]
+include::working-with-pages/working-with-pages-programmatically.adoc[]
+
+include::working-with-pages/searching-and-sorting-with-the-pagelist-object.adoc[]
+
+:leveloffset: -1

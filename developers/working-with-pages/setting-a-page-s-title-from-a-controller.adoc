@@ -1,0 +1,71 @@
+= Setting a Page's Title from a Controller
+
+NOTE: This requires Concrete5 5.7.4 or Greater
+
+Concrete5 5.7.4 introduces a cool new service object: SEO Helper.
+
+[source,php]
+----
+$seo = \Core::make('helper/seo');
+----
+
+This will return an instance of the \Concrete\Core\Html\Service\Seo object, which has a number of interesting methods available to it.
+
+* `setSiteName`
+* `addTitleSegment`
+* `setTitleFormat`
+* `setTitleSegmentSeparator`
+
+Use this service object to set your site's title from anywhere, or modify the existing title of the page.
+For example, let's say you want to render a custom view for a single page at a controller method:
+
+[source,php]
+----
+public function view_album($albumID = null)
+{
+    $selectedAlbum = \Foo\Media\Album::getByID($albumID);
+    $this->set('albumID', $albumID);
+    $this->set('album', $selectedAlbum);
+    $this->render('/media/albums');
+}
+----
+
+While this method will work to render the albums list – the name of the page will be unchanged.
+Why not change the page's name as well?
+
+[source,php]
+----
+public function view_album($albumID = null)
+{
+    $selectedAlbum = \Foo\Media\Album::getByID($albumID);
+    $this->set('albumID', $albumID);
+    $this->set('album', $selectedAlbum);
+    $this->render('/media/albums');
+    $seo = \Core::make('helper/seo');
+    $seo->addTitleSegment('Albums');
+}
+----
+
+This can even work from a block view.
+Check out how the Page List block listens for the active topic filtering a page, and then modifies the page's title accordingly:
+
+[source,php]
+----
+public function action_filter_by_topic($treeNodeID = false, $topic = false)
+{
+    if ($treeNodeID) {
+        $this->list->filterByTopic(intval($treeNodeID));
+        $topicObj = Topic::getByID(intval($treeNodeID));
+        if (is_object($topicObj)) {
+            $seo = Core::make('helper/seo');
+            $seo->addTitleSegment($topicObj->getTreeNodeDisplayName());
+        }
+    }
+    $this->view();
+}
+----
+
+== Note
+
+This is all accomplished at runtime for the current request.
+This does not change the underlying page's name at the record level.

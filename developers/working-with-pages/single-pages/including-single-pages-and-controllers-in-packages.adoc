@@ -1,0 +1,58 @@
+= Including in Packages
+
+If you haven't, check out the documentation on https://www.concrete5.org/documentation/developers/5.7/designing-for-concrete5/packaging-your-theme/overview-and-full-screencast/[packaging a theme].
+Here you'll learn the ins and outs on the Concrete5 package format, a package's Controller file and get up to speed quickly.
+
+Once you have your package's Controller file created, it's a simple matter to add support for your custom single page and its controller to the package.
+For this example, we'll assume we're creating a single page at /dashboard/system/game/
+
+Create a single_pages and controllers directories within your package's directory.
+
+----
+mkdir packages/game_system
+mkdir packages/game_system/single_pages
+mkdir packages/game_system/single_pages/dashboard
+mkdir packages/game_system/single_pages/dashboard/system
+mkdir packages/game_system/controllers
+mkdir packages/game_system/controllers/single_page
+mkdir packages/game_system/controllers/single_page/dashboard
+mkdir packages/game_system/controllers/single_page/dashboard/system
+----
+
+Create a controller file for your package as per the theming instructions listed above, at packages/game_system/controller.php.
+
+Create your single page at packages/game_system/single_pages/dashboard/system/game.php.
+
+Create the controller at packages/game_system/controllers/single_page/dashboard/system/game.php.
+Make sure it has the proper namespace (NOT beginning with Application)
+
+[source,php]
+----
+<?
+ 
+namespace Concrete\Package\GameSystem\Controller\SinglePage\Dashboard\System;
+
+use Concrete\Core\Page\Controller\DashboardPageController;
+ 
+class Game extends DashboardPageController
+{
+}
+----
+
+Add a refernece to the \Concrete\Core\Page\Single class to the top of your controller.
+
+[source,php]
+----
+use Concrete\Core\Page\Single as SinglePage;
+----
+
+In your package's install() method, install your single page using the http://concrete5.org/api/class-Concrete.Core.Page.Single.html#_add[Concrete\Core\Page\Single::add()] method.
+
+[source,php]
+----
+public function install()
+{
+    $pkg = parent::install();
+    SinglePage::add('/dashboard/system/game', $pkg);
+}
+----
