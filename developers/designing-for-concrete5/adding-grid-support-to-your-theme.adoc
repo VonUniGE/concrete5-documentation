@@ -1,0 +1,11 @@
+= Adding Grid Support to Your Theme
+
+:leveloffset: +1
+
+include::adding-grid-support-to-your-theme/enabling-grid-support-for-areas-and-layo.adoc[]
+
+include::adding-grid-support-to-your-theme/area-and-block-containers.adoc[]
+
+include::adding-grid-support-to-your-theme/advanced-create-and-use-your-own-grid-framework.adoc[]
+
+:leveloffset: -1

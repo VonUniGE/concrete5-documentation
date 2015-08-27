@@ -1,0 +1,190 @@
+= File Storage Locations
+
+== Overview & Background
+
+While concrete5 version 6 and earlier contained the concept of storage locations, these were relatively simple: you could only ever have a maximum of two storage locations.
+One was the default storage location (`/webroot/files/`) and the other was a directory that could exist outside the web root.
+This was useful if you wanted to have certain files protected and inaccessible through the public website.
+These files could only be delivered to users via download scripts, which would ensure that they could be accurately checked for permissions and/or custom file passwords.
+
+While this was useful for certain situations, it didn't address the need that certain sites had to serve files using a completely different backend than the standard web server.
+For example, if a site wanted store its file in Amazon S3, there was no easy to do it.
+In concrete5 version 7, that has changed.
+
+== Additional Storage Locations
+
+File storage locations are now a fully extensible object.
+You can define multiple file storage locations in the Dashboard, and their type determines options about them.
+
+image:filestoragelocation-list-default.png[Dashboard list of File Storage Locations]
+
+image:filestoragelocation-create.png[Define a new File Storage Location]
+
+In these two screenshots, we're showing the list of file storage locations, and adding a new one.
+The only type of file storage location installed by default is the "Local" file storage location, which is simply a directory on the same server.
+NOTE: this directory can be within the web root, but doesn't have to be.
+You add new file storage location functionality to your site by installing new file storage location types, which come bundled in packages.
+For example, here's what the Amazon S3 File Storage Location type looks like when you add a new location of that type.
+You choose the type, and then set the relevant options for it.
+
+image:filestoragelocation-created.png[New File Storage Location defined]
+
+image:filestoragelocation-create-s3.png[Define a new File Storage Location for Amazon S3]
+
+Any file storage location that's registered in the system can be the default storage location.
+Any file added to the file manager goes into this storage location by default.
+You can also choose which storage location a file uses on a file-by-file basis, using the Permissions dialog in the File Manager
+
+image:filestoragelocation-file-specific.png[Specify File Storage Location for a file]
+
+== Creating a File Storage Location Type
+
+Here's how you can create your own File Storage Location type.
+NOTE: since file storage location types must be installed via a package, you should http://www.concrete5.org/documentation/developers/5.7/packages/overview/[have an understanding of how packages work before you try this].
+
+=== First, create the package controller
+
+We'll create a pretty standard package controller for our package.
+
+[source,php]
+----
+<?php
+
+namespace Concrete\Package\CustomStorage;
+
+use Concrete\Core\Package\Package;
+
+defined('C5_EXECUTE') or die('Access Denied.');
+
+class Controller extends Package
+{
+    protected $pkgHandle = 'custom_storage';
+    protected $appVersionRequired = '5.7.5RC1';
+    protected $pkgVersion = '1.0';
+
+    public function getPackageDescription()
+    {
+        return t('A custom file storage location type.');
+    }
+
+    public function getPackageName()
+    {
+        return t('Custom Storage');
+    }
+}
+----
+
+There's nothing special about this package yet.
+
+=== Install our File Storage Location Type
+
+Now, we'll install our custom file storage location type when the package is installed.
+Add this method to the package:
+
+[source,php]
+----
+public function install()
+{
+    $pkg = parent::install();
+    \Concrete\Core\File\StorageLocation\Type\Type::add('type_foo', 'Custom Type', $pkg);
+}
+----
+
+When our custom type is installed, it will be listed in the type dropdown shown in screenshots above.
+
+By default, custom file storage location library files are loaded from `packages/your_package/src/File/StorageLocation/Configuration/CustomConfiguration`, where `Custom` is the `StudlyCapsed` version of the first parameter in the `add()` method above.
+So in our case we'd be loading from `packages/custom_storage/src/File/StorageLocation/Configuration/TypeFooConfiguration.php`, with a namespace of `\Concrete\Package\CustomStorage\Src\File\StorageLocation\Configuration\TypeFooConfiguration.php`.
+However, if we want to remove the \Src from the namespace and make things a little bit nicer, we can add this line of code to our class.
+
+[source,php]
+----
+protected $pkgAutoloaderMapCoreExtensions = true;
+----
+
+Now, our class's name will be `Concrete\Package\CustomStorage\File\StorageLocation\Configuration\TypeFooConfiguration.php`, and it will load from `packages/custom_storage/src/Concrete/File/StorageLocation/TypeFooConfiguration.php`.
+
+=== Creating Your Custom Configuration Class
+
+The most important part of the file storage location class is the custom configuration class auto-loaded above.
+Here's an empty version of the class you'll need to create:
+
+[source,php]
+----
+<?php
+
+namespace Concrete\Package\CustomStorage\File\StorageLocation\Configuration;
+
+use Concrete\Core\File\StorageLocation\Configuration\ConfigurationInterface;
+use Concrete\Core\File\StorageLocation\Configuration\Configuration;
+
+class TypeFooConfiguration extends Configuration implements ConfigurationInterface
+{
+}
+----
+
+The custom configuration class must extend the base Configuration class above, and it also might implement the `ConfigurationInterface`.
+The `ConfigurationInterface` class takes care of defining methods that any Configuration needs to operate, including how to retrieve public files, get paths to a particular file object, and more.
+Here is the interface that the custom class will need to implement.
+
+[source,php]
+----
+public function hasPublicURL();
+----
+
+Returns true if the configuration has a public URL.
+
+[source,php]
+----
+public function hasRelativePath();
+----
+
+Returns true if the configuration has a relative path.
+
+[source,php]
+----
+public function loadFromRequest(\Concrete\Core\Http\Request $req);
+public function validateRequest(\Concrete\Core\Http\Request $req);
+----
+
+These methods take care of handling the POST request from the custom options form used by the file storage location type.
+`validateRequest()` should return an instance of the `\Concrete\Core\Error\Error` object, with or without errors attached.
+You can use these methods to save your custom file storage options in whatever way you choose.
+
+[source,php]
+----
+public function getAdapter();
+----
+
+Returns whatever adapter you're using with your custom storage object.
+This doesn't need to be any particular object, it's just here in order to force you to understand the adapter pattern.
+
+[source,php]
+----
+public function getPublicURLToFile($file);
+public function getRelativePathToFile($file);
+----
+
+Return public URL and relative path to a particular file.
+$file in this case is always a file path string, not a concrete5 file object.
+
+=== Create a Custom Form For Our File Storage Location
+
+A file storage location will likely need to present custom options to the end user during configuration.
+For example, in the screenshots above we can see fields for Amazon-S3-specific options, including API Key and more.
+To preset custom options to the end user when configuring a file storage location, create a file at `packages/your_package/elements/storage_location_types/your_handle.php`.
+So, in this instance, you'd create `packages/custom_storage/storage_location_types/type_foo.php`.
+
+When adding a storage location, the form within this element can be empty.
+When editing, the element receives a fully configured version of the storage location type via the $configuration object, which is automatically available.
+In our case the $configuration object would be an instance of the `\Concrete\Package\CustomStorage\File\StorageLocation\Configuration\TypeFooConfiguration` object.
+
+=== That's It
+
+Add your custom file storage location type, create a configuration object that it uses, and then create a custom options page that shows the configured file storage location types in the Dashboard.
+You can use composer and other third party libraries to actually facilitate the interactions with your storage location type - this code is simply the glue that sticks these third party libraries and their functionality to concrete5.
+(For example, the Amazon S3 plugin the marketplace uses the official Amazon S3 PHP SDK to handle actually delivering files, authenticating, and more.)
+
+Since this might still be a little opaque, it might be helpful to check out the built in LocalConfiguration object to see how it works.
+This is the file storage location type that handles delivering files in the local file system.
+
+http://concrete5.org/api/class-Concrete.Core.File.StorageLocation.Configuration.LocalConfiguration.html[Local Configuration Object]

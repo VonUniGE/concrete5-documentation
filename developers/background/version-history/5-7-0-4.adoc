@@ -1,0 +1,22 @@
+= 5.7.0.4 Release Notes
+
+== Behavioral Improvements
+
+* Pagination is now translated (thanks mlocati)
+* Social links block now has a unique ID and gets its style based on CSS class, rather than ID.
+
+== Bug Fixes
+
+* Fixed MySQL bug when attempting to install on non-local MySQL installs.
+* Image block hover parameters now work again (thanks olliephillips)
+* Fixed incorrect message about inadequate RAM when users actually had 64MB allocated to PHP.
+* Fixed exception when deleting a block from a page defaults (thanks Chadstrat).
+* Removed unique constraints in configuration on namespaces.
+* Fixed "Invalid foreach()" error when dealing with page types that allowed different templates than their default.
+
+== Developer Updates
+
+* Punic Unicode library updated to 1.1 (thanks mlocati)
+* Doctrine ORM updated to 2.4.5 (thanks mkly)
+* Updated Symfony2 Components to 2.5.5.
+* Updated Monolog to 1.11.

@@ -1,0 +1,136 @@
+= Importing New Files
+
+When working with blocks, it's typical for developers to hook into the File Manager to select files that exist.
+The File Manager provides upload functionality, after all, so developers with access to the block interface will be able to upload files and then choose the uploaded file.
+
+This is not always the case, however.
+For example, what if you're developing a custom application or a custom Dashboard page, and need to store files as part of this process? You should definitely be using the concrete5 File manager for this, as it provides version control, searching, metadata support and more.
+But what if your custom interface just using a simple <input type="file" /> element? You need the ability to take a custom file upload and import that uploaded file into the File Manager.
+Fortunately this is pretty easy.
+
+Consider this form, in a single page template.
+This will post back to the submit() method in the single page controller.
+
+[source,php]
+----
+<form method="post" enctype="multipart/form-data" action="<?php echo $view->action('submit'); ?>">
+    <div class="form-group">
+        <label class="control-label">Upload Photo</label>
+        <input type="file" name="photo">
+    </div>
+    <div class="form-group">
+        <button type="submit" name="upload">Upload</button>
+    </div>
+</form>
+----
+
+This is a standard form for uploading files in PHP.
+This file will be posted in the $_FILES array to the submit() method, per the http://php.net/manual/en/features.file-upload.php[PHP file uploading guidelines].
+Here is our submit method
+
+[source,php]
+----
+public function submit()
+{
+    $file = $_FILES['photo']['tmp_name'];
+    $filename = $_FILES['photo']['name'];
+}
+----
+
+Normally, we would use something like move_uploaded_file() to move the file to a file storage directory, then have to save the filename somewhere.
+And we wouldn't know anything about the file, or really be able to work with it in an extensible way.
+But if we import the file into the file manager, we'll get a File object back, which gives us lots of functionality.
+
+[source,php]
+----
+public function submit()
+{
+    $file = $_FILES['photo']['tmp_name'];
+    $filename = $_FILES['photo']['name'];
+    $importer = new \Concrete\Core\File\Importer();
+    $result = $importer->import($file, $filename);
+}
+----
+
+That's it! Assuming a successful file upload, $result will be an instance of the \Concrete\Core\File\Version object for the newly uploaded file.
+
+== Handling Errors
+
+Unfortunately, we can't always assume a successful file upload.
+Sometimes users attempt to upload files with disallowed file extensions, or something goes wrong on the server like we run out of space, or the file is too large.
+In these instances we need to provide feedback to the user.
+
+[source,php]
+----
+public function submit()
+{
+    $error = \Concrete\Core\File\Importer::E_PHP_FILE_ERROR_DEFAULT;
+    if (isset($_FILES['photo']) && is_uploaded_file($_FILES['photo']['tmp_name'])) {
+        $file = $_FILES['photo']['tmp_name'];
+        $filename = $_FILES['photo']['name'];
+        $importer = new \Concrete\Core\File\Importer();
+        $result = $importer->import($file, $filename);
+        if ($result instanceof \Concrete\Core\File\Version) {
+            $this->redirect('/my/success/page');
+        } else {
+            $error = $result;
+        }
+    } elseif (isset($_FILES['photo'])) {
+        $error = $_FILES['photo']['error'];
+    }
+
+    $this->set('errorMessage', \Concrete\Core\File\Importer::getErrorMessage($error));                
+}
+----
+
+This is pretty self-explanatory.
+First, we seed the $error code variable with the general PHP error code in concrete5.
+If everything fails, this is the code we will use.
+Next, we make sure that the $_FILES array actually contains data.
+If it does, but there's no upload, we seed the $error code with the $_FILES['photo']['error'] code from PHP.
+Finally, if that all works, but for some reason $result isn't an instance of the Version object, we seed the $error code with whatever error code concrete5 returned from the import() method.
+This will likely be a code telling us that we uploaded a file with an invalid extension, or something similar.
+Finally, whatever code we got, we use the getErrorMessage() method to translate that code into a human-readable error string, and send it into the page template.
+
+== Handling Permissions
+
+If we want to handle upload permissions as well as errors, we need to add a little bit more code to our example.
+In this example, we're only going to allow file uploads if the user has access to the file manager, and then we're going to check permissions against the file extension to ensure that the extension is also something allowed by the user.
+
+[source,php]
+----
+public function submit()
+{
+    $fp = \FilePermissions::getGlobal();
+    if ($fp->canAddFiles()) {
+        $error = \Concrete\Core\File\Importer::E_PHP_FILE_ERROR_DEFAULT;
+        if (isset($_FILES['photo']) && is_uploaded_file($_FILES['photo']['tmp_name'])) {
+            $validator = \Core::make('helper/file');
+            if (!$fp->canAddFileType($validator->getExtension($_FILES['photo']['name']))) {
+                $error = \Concrete\Core\File\Importer::E_FILE_INVALID_EXTENSION;
+            } else {
+                $file = $_FILES['photo']['tmp_name'];
+                $filename = $_FILES['photo']['name'];
+                $importer = new \Concrete\Core\File\Importer();
+                $result = $importer->import($file, $filename);
+                if ($result instanceof \Concrete\Core\File\Version) {
+                    $this->redirect('/my/success/page');
+                } else {
+                    $error = $result;
+                }
+            }
+        } elseif (isset($_FILES['photo'])) {
+            $error = $_FILES['photo']['error'];
+        }
+        $this->set('errorMessage', \Concrete\Core\File\Importer::getErrorMessage($error));                
+    } else {
+        $this->set('errorMessage', 'You do not have access to add files to the file manager.');
+    }
+}
+----
+
+First, we retrieve the global file permissions object.
+We then ask that permissions object whether the current user has access to add files.
+If they don't, we exit immediately with the error message.
+Otherwise, we use a special file helper method to retrieve the extension of the uploaded file, and we pass that to the canAddFileType() method of the same object.
+This method queries the detailed file permissions for the current user, ensuring that they have access to upload files of this particular type.

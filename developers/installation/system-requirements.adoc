@@ -1,0 +1,18 @@
+= System Requirements
+
+Concrete5 Version 7 requires the following:
+
+* PHP 5.3.3. or greater
+* The following PHP modules:
+** MySQL (with PDO extensions)
+** DOM
+** SimpleXML
+** GD Library with Freetype
+** CURL
+** Mcrypt
+* PHP Safe Mode Off
+* PHP Memory Limit at least 64 MB (more might be required for the processing and handling of large image files.)
+* MySQL 5.1.5 or Higher
+* MySQL InnoDB Table Support
+
+Concrete5 is run mostly on Apache 2, but will also work on IIS and Nginx.

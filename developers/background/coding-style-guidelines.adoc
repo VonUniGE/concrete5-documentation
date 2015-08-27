@@ -1,0 +1,13 @@
+= Coding Style Guidelines
+
+:leveloffset: +1
+
+include::coding-style-guidelines/php.adoc[]
+
+include::coding-style-guidelines/javascript.adoc[]
+
+include::coding-style-guidelines/css-less.adoc[]
+
+include::coding-style-guidelines/further-discussion.adoc[]
+
+:leveloffset: -1

@@ -1,0 +1,31 @@
+= Working with Files and the File Manager
+
+:leveloffset: +1
+
+include::working-with-files-and-the-file-manager/overview.adoc[]
+
+include::working-with-files-and-the-file-manager/working-with-existing-files.adoc[]
+
+include::working-with-files-and-the-file-manager/importing-new-files.adoc[]
+
+include::working-with-files-and-the-file-manager/accessing-the-physical-file-from-a-file-object.adoc[]
+
+include::working-with-files-and-the-file-manager/using-the-imagine-image-library-to-work-with-images.adoc[]
+
+include::working-with-files-and-the-file-manager/working-with-image-thumbnails.adoc[]
+
+include::working-with-files-and-the-file-manager/automatically-set-attributes-and-more-with-custom-file-type-insp.adoc[]
+
+include::working-with-files-and-the-file-manager/creating-custom-file-type-views-and-edit-interfaces.adoc[]
+
+include::working-with-files-and-the-file-manager/grouping-files-with-file-sets.adoc[]
+
+include::working-with-files-and-the-file-manager/searching-and-sorting-with-the-filelist-object.adoc[]
+
+include::working-with-files-and-the-file-manager/useful-core-services-for-working-with-files.adoc[]
+
+include::working-with-files-and-the-file-manager/file-storage-locations.adoc[]
+
+include::working-with-files-and-the-file-manager/creating-control-sets-and-filters-for-the-image-editor.adoc[]
+
+:leveloffset: -1

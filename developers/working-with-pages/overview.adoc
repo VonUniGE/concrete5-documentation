@@ -1,0 +1,61 @@
+= Overview
+
+The http://concrete5.org/api/class-Concrete.Core.Page.Page.html[Concrete\Core\Page\Page] object is one of the most commonly used throughout Concrete5.
+Pages are the entry point to a site, and with custom attributes can store lots of information that developers might want to access.
+Additionally, operations as simple as printing out the date a page was created or the name of a page require understanding how to retrieve and operate on the page object.
+
+== Retrieving the Current Page Object
+
+=== From within a Page Template
+
+Within a page template (e.g. a template file found in a theme or a single page template) you don't have to do anything to retrieve the current page object.
+It's already present in the local scope:
+
+[source,php]
+----
+$c
+----
+
+(The `$c` stands for "current page.")
+
+=== From within a Block Template
+
+The $c object isn't always available in a block's view or edit template.
+Instead, use this snippet of code to retrieve the current page:
+
+[source,php]
+----
+$c = \Page::getCurrentPage();
+----
+
+== Getting a Page By Path or ID
+
+Sometimes you want to operate on a page that you know exists in a certain spot on the tree.
+
+[source,php]
+----
+$c = \Page::getByPath('/path/to/page', 'APPROVED');
+----
+
+Similarly, if you know the exact numerical ID of the page you want to work with, use this code:
+
+[source,php]
+----
+$c = \Page::getByID(HOME_CID, 'APPROVED'); // Retrieves the home page.
+----
+
+Once you have a page object, there's a lot you can do with it.
+
+=== Retrieving the Most Recent Page Object
+
+The examples above return the page object and load the approved http://concrete5.org/api/class-Concrete.Core.Page.Collection.Version.Version.html[Page Version] object for that page.
+Most of the time this is right, ensuring that you're displaying information from the approved version of the page you're interested in.
+Sometimes, however, a developer might want to retrieve the most recent version of the page, rather than the approved one.
+To do so, just omit the version specifier.
+
+[source,php]
+----
+$c = \Page::getByPath('/path/to/page');
+
+$c = \Page::getByID(HOME_CID);
+----

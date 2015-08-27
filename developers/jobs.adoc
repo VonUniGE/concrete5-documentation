@@ -1,0 +1,11 @@
+= Automated Jobs
+
+:leveloffset: +1
+
+include::jobs/overview.adoc[]
+
+include::jobs/creating-a-job.adoc[]
+
+include::jobs/creating-and-scheduling-a-queueable-job.adoc[]
+
+:leveloffset: -1

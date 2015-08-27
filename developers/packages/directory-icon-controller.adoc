@@ -1,0 +1,106 @@
+= Directory, Icon and Controller
+
+== Directory Name
+
+When creating a package, first choose how you're going to name its outer directory.
+This directory name should be all lower case, with no spaces.
+If you want to separate something, place an underscore between its two strings.
+This is exactly how other items like block types and themes work.
+For example, if your package is named `Hello World` you might choose to make its directory name `hello_world`.
+
+== Icon
+
+A file named icon.png may be present at the root level in your package controller.
+Historically this has been a 97px by 97px icon in the PNG format, but in Concrete5 version 7 and above this may be any size, as long as its square in its aspect ratio
+
+NOTE: there won't be much to gain by making this file larger than 200 pixels, as it's only displayed at a pretty small size.
+
+== Controller
+
+Finally, every package has a controller.php file in its base directory.
+This file contains the information needed for your system to identify the package, install it, uninstall it, and optional custom code that this package adds to the Concrete5 startup routine.
+All other logic relating to what your package actually does should be located elsewhere.
+Here is an example package controller for a package that does nothing but install a custom block type.
+
+[source,php]
+----
+<?php
+
+namespace Concrete\Package\DocumentLibrary;
+
+use Concrete\Core\Package\Package;
+use Concrete\Core\Block\BlockType\BlockType;
+
+defined('C5_EXECUTE') or die('Access Denied.');
+
+class Controller extends Package
+{
+    protected $pkgHandle = 'document_library';
+    protected $appVersionRequired = '5.7.4.3b1';
+    protected $pkgVersion = '1.0';
+
+    public function getPackageDescription()
+    {
+        return t('Adds a searchable file library to a page.');
+    }
+
+    public function getPackageName()
+    {
+        return t('Document Library');
+    }
+
+    public function install()
+    {
+        $pkg = parent::install();
+        BlockType::installBlockTypeFromPackage('document_library', $pkg);
+    }
+}
+----
+
+This file is very straightforward.
+First, we namespace it appropriately.
+All items within a Concrete5 package will begin with the Concrete\Package namespace, with the segment immediately following being the camelCased version of their package directory name.
+In this case, this package directory name is `document_library`, so the namespace is `Concrete\Package\DocumentLibrary`.
+
+Next, we take care of making sure this file can't be browsed to directly in the browser with this line:
+
+[source,php]
+----
+defined('C5_EXECUTE') or die('Access Denied.');
+----
+
+Then, we import the two additional classes outside the package namespace that we're going to need.
+We need these because we're going to use the BlockType class to add a block type during installation, and we need the base `Concrete\Core\Package\Package` class because our package controller extends this base class.
+
+After that, we specify the package's controller, which is the only class in this file.
+The package's controller is always named `Controller` - this works because it's present in a custom namespace.
+It also always extends from Concrete\Core\Package\Package.
+
+The three protected variables in this class are required by packages.
+(**Note**: there are other protected variables you could add to this package to provide additional functionality and behavior, but they're not required and we'll worry about them later.)
+These are:
+
+* `**$pkgHandle**` +
+  This is the *handle* for your package.
+  It is a unique, string-based identifier for your package.
+  It must match your package's directory name exactly.
+* `**$appVersionRequired**` +
+  This is the minimum version of Concrete5 required by your package.
+  If this package is installed on a version of Concrete5 that is lower than this version, an error will be displayed and installation will not continue.
+* `**$pkgVersion**` +
+  This is the version number for this package. +
+  **This can be any value, as long as its a version number format that http://www.php.net/version_compare[PHP's version_compare] function supports.
+  You do not need to begin with 1.0, for example.
+  This version number is used to provide upgrade options.
+  For example, if you install version 1.0 of a package, and then replace the package directory with a package with a `controller.php` file stating its version is 1.5, you'll be presented with an update notice in the Dashboard, and you'll be able to upgrade the package.
+
+Next, we have two methods that provide more data about the package to Concrete5.
+
+* `**getPackageDescription()**` +
+  This method provides a short description about the package to Concrete5.
+  This is displayed in the Dashboard.
+* `**getPackageName()**` +
+  This method provides the name of the package to Concrete5.
+  This is displayed in the Dashboard.
+
+Finally, in the `install()` method defines what gets installed when this package is installed.

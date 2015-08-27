@@ -1,0 +1,31 @@
+= Basic Concepts
+
+While easy for end users to understand, Concrete5 is a powerful and complex application. Before diving in to development with Concrete5, one should understand the main concepts and vocabulary of a Concrete5 site.
+
+== Overview Video
+
+If you want a quick summary before diving in, this video's less than four minutes, and should acquaint you with many of Concrete5's core concepts:
+
+video::vcIIM5ZgzP8[youtube, width=640, height=315]
+
+:leveloffset: +1
+
+include::concepts/front-end-content.adoc[]
+
+include::concepts/files.adoc[]
+
+include::concepts/users-groups.adoc[]
+
+include::concepts/permissions-and-workflow.adoc[]
+
+include::concepts/attributes.adoc[]
+
+include::concepts/conversations.adoc[]
+
+include::concepts/jobs.adoc[]
+
+include::concepts/packages.adoc[]
+
+include::concepts/advanced.adoc[]
+
+:leveloffset: -1

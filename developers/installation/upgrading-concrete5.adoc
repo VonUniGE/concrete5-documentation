@@ -1,0 +1,49 @@
+= Upgrading Concrete5
+
+== Prior to Upgrading
+
+You should always link:/documentation/how-tos/developers/backup-a-database/[perform a database backup prior to upgrading a Concrete5 site]
+
+Once backup is complete, choose your upgrade method. There are a few ways to upgrade a Concrete5 site.
+
+== Remote Update: Upgrade Completely Through the Dashboard
+
+If you head to Dashboard > System and Settings > Update Concrete5, you can download updates from concrete5.org. These will be unzipped into your root updates/ directory, and you will be able to choose when to apply them to your site. Updates to Concrete5 may not be available as quickly through this interface as they are from the website.
+
+== Manual Dashboard Update
+
+Since the method above simply delivers a Concrete5 directory to your updates directory, you can manually perform the first half of these steps, and use the Dashboard to complete the update process.
+
+. Download the latest core from http://www.concrete5.org/download
+. Unzip the file. Remove all contents except the concrete directory.
+. At this point you should have a folder named something like concrete5.7.x.x, with only a "concrete" directory inside it.
+. Move the concrete5.7.x.x folder into your updates/ directory.
+. Head to Dashboard > System and Settings > Update Concrete5. The update should be listed, and you can click through to update to the latest version.
+
+In both cases, an update.php file will be written to your application/config directory specifying the specific version you're updating to. The directory will continue to exist within the updates/ directory.
+
+== Replacing the original concrete Directory
+
+If you want to minimize disk space usage and don't need to use the web interface for update Concrete5, you can replace the original concrete directory with a new version, and then upgrade through a particular route.
+
+. Login as the super user or someone in the Administrators group. You must do this because upgrading a Concrete5 site requires that the user attempting to do so have access to the "Upgrade Concrete5" permission. By default this is people in the Administrators group (or the super user.)
+. Download the latest core from http://www.concrete5.org/download
+. Unzip the file.
+. Replace the concrete directory in the web root with the concrete directory you downloaded.
+. Visit the URL http://www.yoursite.com/ccm/system/upgrade. You should see a message about an upgrade being available. Click through to upgrade your database to the most recent version.
+
+=== Emergency: Disable Upgrade Permissions Protection
+
+If you have copied the concrete directory over the old directory, and now wish to upgrade, but forgot to login prior to copying the directory (and you can't login due to the upgrade causing issues since it has not yet run) you can momentarily disable the permissions protection by modifying a configuration value on the web server. Create a file named concrete.php in the application/config/ directory, or open it if it already exists. If the file is empty, copy this into it:
+
+[source,php]
+----
+<?php
+return array(
+    'updates' => array(
+        'enable_permissions_protection' => false
+    )
+);
+----
+
+If the file isn't empty, just add the enable permissions protection key to the existing array. Once the upgrade is complete, remove this file or the line (to re-enable upgrade permissions protection.)

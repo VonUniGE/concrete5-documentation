@@ -1,0 +1,55 @@
+= Enabling Basic Customization
+
+We've made a variable in our theme run through a LESS file - but that's just the first step toward making it customizable through Concrete5.
+If you open the Design panel on the page, you still won't get the Customize link. That's because we need to define a *styles.xml* file for this theme.
+
+A styles.xml file lives within the css directory of a theme, and it is responsible for defining the layout of the style customizer panel.
+The styles.xml file breaks styles up in groups, defines their names, types and variables.
+In order for us to make our single color customizable, we're going to need to create a styles.xml file, and make an entry for this variable within it.
+
+Let's create `application/themes/urbanic/css/styles.xml`, and begin working with it.
+
+[source,xml]
+----
+<?xml version="1.0"?>
+<styles version="1.0">
+</styles>
+----
+
+First we create the outer XML node, which must have the name of styles.
+
+Next, we create an inner node for the style set. Style sets group styles together into logical groups. Every style must exist inside a style set, but otherwise there isn't much importance to how you name or structure your sets. Style sets don't impact variables or naming or anything like that.
+
+[source,xml]
+----
+<?xml version="1.0"?>
+<styles version="1.0">
+    <set name="Full Page">
+
+    </set>
+</styles>
+----
+
+Finally, let's add an entry for our single customizable style. Remember, we chose the variable name "primary-action-color".
+
+[source,xml]
+----
+<?xml version="1.0"?>
+<styles version="1.0">
+    <set name="Full Page">
+        <style name="Primary Action Color" variable="primary-action" type="color" />
+    </set>
+</styles>
+----
+
+A couple notes:
+
+. We can name the style whatever we want.
+. The type here is very important. There are several built-in types of variable in the Concrete5 style customizer. Color is the simplest, which is why we've started with it.
+. The variable is also very important. *Note: Note the variable name. It's "primary-action."* It's *not* primary-action-color. This may seem counterintuitive, but it's because the style type actually determines the suffix of the variable, and even can instantiate multiple variables. Since the type is color, the color style type determines that any variables defined in a styles.xml file will automatically be injected with the suffix -color into the LESS files that they work with. This will make more sense when we start to customize more complex style types.
+
+This is all we need for our starter styles.xml. Reload the page and enter the design panel. The Customize link appears beneath the Urbanic theme. Clicking it opens the customizer and shows our style! You can change the color, wait a moment, see the change reflected in the preview. Clicking the save form lets us save our customizations.
+
+*Important Note: Unless a variable is defined within an entry in a styles.xml file it will be saved properly in the customized stylesheet.*
+
+This is just the first property that we wanted to make customizable. Let's take a look at how to make some more advanced properties customizable.

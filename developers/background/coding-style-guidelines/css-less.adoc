@@ -1,0 +1,34 @@
+= CSS/LESS
+
+== Coding Style
+
+Your CSS/LESS is largely your business, but we do ask that all selectors be lowercased, with dashes as their delimiters. If coding something for the core, please prefix it with 'ccm-' and try and be consistent.
+
+== File Naming and Location
+
+CSS file names should be all lowercase, with dashes the only non alphanumeric character allowed in the filenames before the extension.
+
+=== Yes
+
+* css/jquery-ui.css
+* css/redactor.css
+* css/conversations.css
+* css/jquery-rating.css
+
+=== No
+
+* css/MyLib.css
+* css/_whozits.css
+* css/ccm.spellchecker.css
+
+CSS should go in the standard css/ directories only. Unless it is explicitly allowed by the core (e.g. view.css files in blocks.)
+
+== Existing Code
+
+Most of our CSS has been moved into LESS files as of 5.7. We will accept pull requests for minor syntax changes here and there, but we're generally pretty pleased with this cleanup so far, and it doesn't require too much.
+
+The names of our CSS files definitely don't currently support these standards. *We will be handling the renaming of files as needed.* Please do not submit pull requests renaming core files.
+
+=== Important Note
+
+Again, if you submit a pull request for this type of cleanup, please keep each request to one or just a few files - for the sake of vetting your pull request.

@@ -1,0 +1,37 @@
+= Common Pitfalls
+
+Before we continue working on our Urbanic theme, we should talk about some common pitfalls in Concrete5 theme development.
+
+== Greedy Styles
+
+If you've built your HTML template with particular greedy styles - global paragraph styles that modify line heights, styles on lists or list items, these can interfere with the Concrete5 user interface. This is because the Concrete5 toolbar and panels exist on the same page as your styles. All Concrete5 styles are namespaced within the .ccm-ui CSS class, but if theme styles are greedy, they can override these styles anyway. Fortunately, it's easy to make sure your styles don't conflict with Concrete5, just make sure certain greedy styles are referenced this way:
+
+[source,css]
+----
+.ccm-page p
+.ccm-page ul li
+----
+
+The ccm-page class is added by the getPageWrapperClass() method, which must be a part of your template. This should wrap all of your theme's content, while not wrapping anything added by Concrete5 (which is added to the DOM outside of this DIV.)
+
+== JavaScript Conflicts
+
+Concrete5 already includes a recent version of jQuery 1. If your custom theme includes jQuery and Concrete5 includes it, this could be a problem. Be careful about including lots of JavaScript libraries with your themes. These could conflict with the core. jQuery is added in the header of Concrete5 but most other libraries are added in the footer. If you JavaScript requires these files, make sure you add them in the footer as well.
+
+Even better, register your JavaScript as part of the Concrete5 asset system, to ensure that it doesn't conflict with assets delivered by packages, enable minification and combination of asset files, and more.
+
+== Turn off the Cache While Developing
+
+Certain things that make Concrete5 faster can make development more of a chore. Make sure that you disable all caches while developing your Concrete5 theme. This can be done from Dashboard > System & Settings > Optimization > Cache & Speed Settings. Especially important is the disabling of the Overrides cache. Without this turned off, Concrete5 won't look into the application folder for files it doesn't know are in there. This can cause lots of headaches.
+
+== 404s are Slow
+
+In Concrete5, if a file can't be found, the resulting 404 page will be run through Concrete5. This is normally a good thing - you want to be able to style your 404 page like the rest of your site. Unfortunately while developing your site, you might be dealing with a lot of 404s while you're working with missing images, moving assets around, and figuring out how to convert your static HTML template into a Concrete5 theme. Every time you reload a page and that page has multiple 404 errors on it, all those requests are *also* being routed through Concrete5. Combine this with a development site that has no cache and you might have a slow environment. Fix those 404s first.
+
+== Try not to Fork jQuery UI
+
+If you must include a custom copy of jQuery UI, so be it - but this is highly discouraged. The jQuery UI stylesheet that's included with Concrete5 is fairly customized, so including a different one generated from jqueryui.com might break things like Concrete5's dialogs.
+
+== Conclusion
+
+Hopefully these tips will help you as you continue to develop Concrete5 themes. They are good to keep in mind as we continue to work on our Urbanic theme.

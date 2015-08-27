@@ -1,0 +1,148 @@
+= Working with Multiple Database Tables
+
+Concrete5's blocks system makes it really easy to store data in a single block type.
+If you name your form elements correctly and match them to the keys of the table found in your block controller's $btTable variable, you won't need to write a single line of SQL to insert, update or delete data in your database.
+It's easy to create more complex blocks that use multiple database tables, but you'll have to write database queries to interact with these tables directly - only one table can have its parameters automagically updated when saving the block.
+
+== Example: Survey Block
+
+The built-in survey block is a great example a block that uses multiple database tables, because it's more complex than a typical block, but it's still pretty easy to understand.
+The core properties of the survey, including its question and whether it requires registration are found in the btSurvey database table, which is the $btTable table.
+That means that any time the block is saved or deleted, the corresponding block ID row from this table will still automatically be inserted, updated or removed.
+
+There are two additional tables, however: btSurveyOptions and btSurveyResults.
+The options table holds the choosable answers for each particular survey, and the results table holds the chosen responses of those who have filled out the survey.
+Let's look at how these database tables are managed.
+(**Note**: I'm ommitting certain bits of code that, while important for the survey block as it works in Concrete5, don't necessarily assist in the understanding of how this works for the average block developer).
+
+=== db.xml and Table Structure
+
+Like the btSurvey table, the btSurveyOptions and btSurveyResults tables are defined in db.xml.
+These are just separate
+
+[source,xml]
+----
+<schema version="0.3">
+  <table name="btSurvey">
+    <field name="bID" type="I">
+      <key />
+      <unsigned />
+    </field>
+    <field name="question" type="C" size="255">
+      <default value=""/>
+    </field>
+    <field name="requiresRegistration" type="I">
+      <default value="0"/>
+    </field>
+  </table>
+  <table name="btSurveyOptions">
+    <!-- Fields snipped for brevity -->
+  </table>
+  <table name="btSurveyResults">
+    <!-- Fields snipped for brevity -->
+  </table>
+</schema>
+----
+
+Each of these additional tables also contains a bID column, which is used to join to the original mandatory bID column in the btSurvey table.
+
+=== save() method
+
+The survey block implements a save() method.
+When it calls parent::save($args) (where $args is the POST array), that will automatically populate the btSurvey table.
+But since the survey results are also submitted at this time, additional custom code needs to be written to populate the btSurveyOptions table.
+This is that code:
+
+[source,php]
+----
+public function save($args)
+{
+    parent::save($args);
+    $db = Loader::db();
+    $db->query('delete from btSurveyOptions where bID = ?', array($this->bID));
+    if (is_array($args['pollOption'])) {
+        $displayOrder = 0;
+        foreach ($args['pollOption'] as $optionName) {
+            $v1 = array($this->bID, $optionName, $displayOrder);
+            $q1 = 'INSERT INTO btSurveyOptions (bID, optionName, displayOrder) VALUES (?, ?, ?)';
+            $db->query($q1, $v1);
+            $displayOrder++;
+        }
+    }
+}
+----
+
+This is pretty self-explanatory.
+The save() method automatically gets the POSTed form values.
+The parent::save() method takes care of populating btSurvey, and the posted pollOption values (which are just a series of text inputs with the name pollOption[]) are inserted into the btSurveyOptions table, after being cleared out based on their block ID.
+
+=== duplicate() method
+
+The duplicate() method is run on a block any time a block on an approved version of a page is edited.
+THe block is duplicated behind the scenes, receiving a new bID, and storing its data in its $btTable under the new $bID (while retaining the old data.) This ensures that if a page is rolled back to a previous version, the previous block still has its data available (under the old $bID).
+Most blocks won't need to implement their own duplicate() method, as Concrete5 takes care of this automatically - but blocks that depend on this bID parameter to map to their own custom additional database tables will need to extend the built-in duplicate() method.
+Here's how the survey block does it:
+
+[source,php]
+----
+public function duplicate($newBID)
+{
+    $db = Loader::db();
+    foreach ($this->options as $opt) {
+        $v1 = array($newBID, $opt->getOptionName(), $opt->getOptionDisplayOrder());
+        $q1 = 'INSERT INTO btSurveyOptions (bID, optionName, displayOrder) VALUES (?, ?, ?)';
+        $db->query($q1, $v1);
+
+        $v2 = array($opt->getOptionID());
+        $newOptionID = $db->Insert_ID();
+        $q2 = 'SELECT * FROM btSurveyResults WHERE optionID = ?';
+        $r2 = $db->query($q2, $v2);
+        if ($r2) {
+            while ($row = $r2->fetchRow()) {
+                $v3 = array($newOptionID, $row['uID'], $row['ipAddress'], $row['timestamp']);
+                $q3 = 'INSERT INTO btSurveyResults (optionID, uID, ipAddress, timestamp) VALUES (?, ?, ?, ?)';
+                $db->query($q3, $v3);
+            }
+        }
+    }
+
+    return parent::duplicate($newBID);
+
+}
+----
+
+The duplicate() method receives a single argument: the new block ID for the block that has been created.
+First, the survey block grabs the existing survey options and inserts them into the survey options table under the new block ID.
+Then it does the same for the survey results.
+
+=== delete() method
+
+Similar to duplicate(), most block's won't need to implement their own delete() method, since Concrete5 takes care of clearing out the one row of data found in a block's $btTable database table when that block is officially deleted.
+Any developer working with a block that uses multiple tables will want to extend this method, however, to ensure that all their data is cleaned up when a block is deleted.
+Here's how the survey block does it:
+
+[source,php]
+----
+public function delete()
+{
+    $db = Loader::db();
+    $v = array($this->bID);
+
+    $q = 'DELETE FROM btSurveyOptions WHERE bID = ?';
+    $db->query($q, $v);
+
+    $q = 'DELETE FROM btSurveyResults WHERE bID = ?';
+    $db->query($q, $v);
+
+    parent::delete();
+}
+----
+
+NOTE: In Concrete5, a block is only deleted when no more instances of it are referenced in any page version on the site.
+
+NOTE: Don't be alarmed if you delete a block on a page and still see its data in the database; that simply means that an older version of the page exists with that block in it.
+Delete the page and still see the block? That's because the page exists in your site's trash can.
+Empty the trash and the data will be deleted.
+
+That's all it takes.
+While there's no magical syntax for working with multiple database tables at the block level, doing so with direct SQL queries is usually pretty easy to write and maintain.

@@ -1,0 +1,120 @@
+= Getting Data about a Page
+
+== Built-In Properties
+
+The following are some of the built-in properties always available about a page, and how to retrieve them.
+
+Retrieve a page's name
+
+[source,php]
+----
+echo $c->getCollectionName();
+----
+
+Get its short description
+
+[source,php]
+----
+echo $c->getCollectionDescription();
+----
+
+Get the canonical date the page was created
+
+[source,php]
+----
+echo $c->getCollectionDateAdded();
+----
+
+Get the publicly changeable date (useful for treating pages like blog objects.)
+
+[source,php]
+----
+echo $c->getCollectionDatePublic();
+----
+
+== Custom Attributes
+
+It's also easy to retrieve a custom attribute about a page.
+
+[source,php]
+----
+$response = $c->getAttribute('attribute_handle');
+----
+
+The $response in this case will be the standard response based on the type of attribute.
+Sometimes this will be simple:
+
+[source,php]
+----
+$response = $c->getAttribute('exclude_nav');
+----
+
+Since The Exclude from Navigation attribute is a boolean attribute, $response will either be true or false.
+
+[source,php]
+----
+$response = $c->getAttribute('thumbnail');
+----
+
+The Elemental Full installation of sample content creates a "thumbnail" attribute of the image/file type.
+If this attribute is present for the page, the $response will actually be either null or an instance of the http://concrete5.org/api/class-Concrete.Core.File.File.html[Concrete\Core\File\File] object.
+
+=== Return Presentable Data
+
+Custom attributes types can return their data in ways that are meant to be presented to the end user.
+While the custom getAttribute() call returns the data in its mode programmatic state (e.g. returning file objects, address objects, etc...) it's easy to return the data in such a way that it can be quickly printed out to the end user.
+
+[source,php]
+----
+$response = $c->getAttribute('thumbnail', 'display');
+----
+
+This will return the thumbnail attribute using the image/file attribute types getDisplayValue() method, which returns an HTML link.
+
+=== Example
+
+Here's an example taken from a theme's page template, that lists all the tags on a page, and makes it easy to link to them in a search interface.
+
+[source,php]
+----
+<?php
+$tags = $c->getAttribute('tags');
+if ($tags && count($tags)) { ?>
+    <div class="tags">
+        <div class="title"><span>Tags</span></div>
+        <ul>
+            <?php foreach ($tags as $tag) { ?>
+                <li><a href="<?php echo URL::page($blog, 'tag', strtolower($tag)); ?>">
+                    <?php echo $tag; ?>
+                </a></li>
+            <?php } ?>
+        </ul>
+    </div>
+<?php }
+?>
+----
+
+== Checking if in Edit Mode
+
+It's easy to check to see if the page is currently being edited by a user.
+
+[source,php]
+----
+if ($c->isEditMode()) {
+
+}
+----
+
+== Retrieving all Blocks Objects on a Page.
+
+[source,php]
+----
+$blocks = $c->getBlocks();
+----
+
+== Page API
+
+There are many, many more operations available on the page object.
+Check out the API documentation.
+
+http://concrete5.org/api/class-Concrete.Core.Page.Page.html[\Concrete\Core\Page\Page API Reference]

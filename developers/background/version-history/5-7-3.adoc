@@ -1,0 +1,89 @@
+= 5.7.3 Release Notes
+
+== Feature Updates
+
+* Full Multilingual Website support has been added to the core. This includes the functionality of the 5.6 Internationalization add-on, with improvements from the Internationalization Enterprise add-on as well.
+* Much improved add page experience from the Sitemap.
+* Better sitemap reload behaviors when changing attributes, page titles.
+* Google Authentication type now included
+* Authentication types can now optionally specify a group that users created by that authentication type will go into.
+* You can now attach multiple classes to blocks and areas in the custom design menu (thanks mlabrum)
+* Image slider block can now choose from external links OR from a page selector on the current site.
+* Much improved functionality and appearance of the account navigation when public profiles are enabled (thanks hissy)
+* Page Types can now specify default permissions for pages mode of that type.
+* Default attributes are now settable for page types again.
+* Added underline command to Redactor (thanks olsgreen!)
+* Added center alignment to custom style dropdown for blocks and areas.
+* Added the ability to change page type of an existing page from the sitemap.
+* You can now duplicate a page type.
+
+== Behavioral Improvements
+
+* /members now redirects to /members/directory when public profiles are enabled.
+* Foundation grid framework now uses medium column sizes instead of large.
+* Custom area classes at the theme level will now filter down into sub areas built by layouts (thanks Jon Hartman)
+* Add on_before_user_add (which can be canceled by the $event->canAdd() method) and the on_user_attributes_saved method, which has access to all attributes that were saved at that time. Thanks to Jeremy Werst and Remo for ideas on implementation.
+* Lots of miscellaneous internationalization improvements (thanks hissy)
+* The local storage location type can now serve files from a different URL (thanks Mnkras)
+* Storage location types can be uninstalled when a package is uninstalled (thanks Mnkras)
+* Improved installation checks for required components (multibyte, iconv, all the options required for GD library).
+* No longer show "Approve Version" blue box on page drafts - instead show a notice that this is an un-published draft.
+* Less intrusive stacking of the page alert blue box.
+* Topic trees now support multibyte characters (thanks hissy!)
+* Fix to remove the closing link tag that was causing pages to fail HTML5 W3C validation (thanks olsgreen)
+* Better use of page type permissions to control access.
+* Edit profile screen allows users to set their default language (used to only be available in the Dashboard) (thanks GutDing)
+* Composer edit interface now shows a publish button even for published pages.
+* Custom area styles on defaults pages are now copied out to newly created pages of that type.
+* Better job detecting when we can't edit a block in composer, and inform user of this fact.
+
+== Bug Fixes
+
+* Fixes bug where "inherit permissions from page type" on a page in advanced permissions mode did nothing.
+* Fixed bug where form blocks with file uploads weren't working and were displaying errors on submission.
+* Using a separate theme for mobile requests now works.
+* Fixed bug where updating packages wasn't working.
+* Fixed bug where marketplace pagination wasn't working.
+* Fixed bug where custom blocks styles weren't showing up on stacks in the dashboard after being first saved.
+* Fixed bug where "edit container layout" wasn't showing up on certain layouts (including those on copied pages.)
+* Bug fixed: Edit profile shows the user timezones dropdown even if user timezones are not enabled (thanks GutDing)
+* Fixed http://www.concrete5.org/developers/bugs/5-7-2-1/uninstalling-packages-and-upgrading-packages-produce-error/#686546
+* Fixed bug when displaying custom channels on logs (thanks hissy).
+* Fixed bug where block composer templates in packaged blocks weren't being found (thanks jaromirdalecky)
+* Bug fixes with asset caching and various attribute types when concrete5 is installed in a subdirectory.
+* Fixed bug where email validation errors weren't being printed out to the screen when resetting passwords.
+* Fixed issue: 500 error for Editing Thumbnails missing Width/Height.
+* Lots of bug fixes to conversations per-block attachment settings.
+* Conversation posting permissions now work to restrict posting to certain groups or users.
+* Fixed potential SQL injection when saving form blocks (thank Mnkras).
+* Fixed full page cache bug that could return a 500 error when rendering a page for the first time (subsequent page requests from the cache would be fine.)
+* External forms are now properly overridable.
+* Fixed bug: Editing image thumbnails / Saving does not work with alternate file storage location (thanks ahukkanen).
+* Fixed bug where "apply to site" or "reset site customizations" in the theme customizer wouldn't reset or override custom page styles.
+* Better checking for URL icons (favicon, etc...) that may have been deleted before trying to output them (thanks Mnkras)
+* "Reply to email address" now will be properly checked when editing form options (thanks hissy)
+* Fixed bug that lead to Page Owner permission access entity not working in advanced permission mode.
+* Miscellaneous bug fixes when using badges (thanks hissy)
+* Fixed bug where register page inherited page permissions of site (leading to it being inaccessible on sites where only registered users could view the site.)
+* Fixed bug "Composer content-block gets decoupled when I edit the content-block in-context"
+* Fixed http://www.concrete5.org/developers/bugs/5-7-2-1/template-autonav-block-duplicates/
+* Fixed http://www.concrete5.org/developers/bugs/5-7-2-1/autonav-navbar-nav-bootstrap-conflict/
+* Fixed bug where you could drag a topic tree node outside of a topic tree.
+* Fixed missing site title in many email templates (thanks hissy)
+* Fixed bug where flagging a conversation as spam resulted in "Invalid Flag Type" (thanks mnkras)
+* Fixed bug where custom block types in the add block to area advanced permission weren't being saved.
+* Fixed http://www.concrete5.org/developers/bugs/5-7-2-1/facebook-authentication-redirecting-to-incorrect-path-with-extra/
+* Fixed http://www.concrete5.org/developers/bugs/5-7-2-1/form-block-constant-exists-form_block_sender_email/
+* Fixed error when trying to upload files via the "More" link in the file manager when there were files in the incoming/ directory.
+* Fixed Page Attribute Display blocks won't display rich text in version
+* Fix inability to set permissions on view user attributes permission
+* Fixed the inability to include a rich text attribute on a page.
+* Fixed bug: "If user granted only (for instance) "delete" permissions on page, gets composer pane with "Access Denied" as well"
+* Fixed issue where
+* tags couldn't be included in the description text of an image slider entry (due to style conflicts.) (thanks mkly)
+* Fixed several bugs with file storage locations.
+* Fixed bug on file sets add where error messages weren't displaying properly (thanks akodde)
+
+== Developer Updates
+
+* Page Selector form helper is now decoupled from the JavaScript Page Selector library. Should be much easier to work with.

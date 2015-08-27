@@ -1,0 +1,19 @@
+= Getting Started
+
+It's easy to get started creating your own block type. Read on for more information.
+
+:leveloffset: +1
+
+include::getting-started/overview.adoc[]
+
+include::getting-started/anatomy-of-a-block.adoc[]
+
+include::getting-started/php-controller.adoc[]
+
+include::getting-started/adding-saving-and-rendering.adoc[]
+
+include::getting-started/installing-your-custom-block-type.adoc[]
+
+include::getting-started/sample-block-hello-world.adoc[]
+
+:leveloffset: -1

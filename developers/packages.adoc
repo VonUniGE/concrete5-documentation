@@ -1,0 +1,25 @@
+= Bundling Code into Packages for Reuse and Marketplace Distribution
+
+:leveloffset: +1
+
+include::packages/overview.adoc[]
+
+include::packages/directory-icon-controller.adoc[]
+
+include::packages/installation.adoc[]
+
+include::packages/modifying-startup-routine-from-package.adoc[]
+
+include::packages/handling-package-upgrades.adoc[]
+
+include::packages/handling-uninstallation.adoc[]
+
+include::packages/implementing-a-centralized-help-registry-for-a-package.adoc[]
+
+include::packages/adding-custom-code-to-packages.adoc[]
+
+include::packages/including-third-party-libraries-in-a-package.adoc[]
+
+include::packages/custom-database-tables-in-packages.adoc[]
+
+:leveloffset: -1

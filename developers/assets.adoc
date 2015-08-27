@@ -1,0 +1,15 @@
+= JavaScript and CSS Asset System
+
+:leveloffset: +1
+
+include::assets/overview.adoc[]
+
+include::assets/registering-an-asset.adoc[]
+
+include::assets/grouping-assets.adoc[]
+
+include::assets/requiring-an-asset.adoc[]
+
+include::assets/asset-list.adoc[]
+
+:leveloffset: -1

@@ -1,0 +1,153 @@
+= Implementing AJAX & Server-Side Requests in a Block Add/Edit Template
+
+NOTE: this requires concrete5 7.5 or greater.
+
+It is not uncommon for a block developer to employ some server-side scripting to pass data dynamically to their block's add or edit interface.
+For example, let's say we want to use the bundled http://select2.github.io/select2/[Select2] library to implement a custom AJAX page autocomplete, in which we can select multiple pages.
+We don't want to load the entire site tree into a select menu.
+Here's our custom HTML:
+
+[source,php]
+----
+<div class="form-group">
+    <?php echo $form->label('fromPages', 'Choose Page(s)'); ?>
+    <div>
+        <?php echo $form->hidden('fromPages'); ?>
+    </div>
+</div>
+----
+
+And our custom JavaScript
+
+[source,javascript]
+----
+$('input[name=fromPages]').select2({
+  placeholder: <?php echo json_encode(t('Search for a Page')); ?>,
+  minimumInputLength: 1,
+  width: '100%',
+  multiple: true,
+  ajax: {
+    url: "/path/to/serverside/script",
+    dataType: 'json',
+    quietMillis: 250,
+    data: function (term, page) {
+      return {
+        q: term
+      };
+    },
+    results: function (data, page) { // parse the results into the format expected by Select2.
+      var results = [];
+      $.each(data, function(i, concretePage) {
+        results.push({'id': concretePage.id, 'text': concretePage.name});
+      });
+      return {
+        results: results
+      };
+    },
+    cache: true
+  }
+});
+----
+
+This snippet gets us this: a nicely styled select2 box that, when typed in, will send its request to the server and look for a response.
+It'll then store that data in a hidden variable, which will be submitted when we save the block.
+
+image:custom-blocks-ajax-1.png[Ajax with Custom Blocks]
+
+This select2 snippet is documented well at the select2 documentation linked above.
+Basically, the moment someone starts typing, a server-side request will be made to /path/to/serverside/script?q=keywords (where keywords is whatever is typed in the box.)
+
+But what script is that actually going to be? In concrete5 6 and earlier, we had the ability to run $view->action() from within block add and edit dialogs.
+Unfortunately, 5.7 lost this functionality: you can run this type of action from within the *view* of a block, but not within an add or edit window.
+[Instead, we encouraged developers to use http://www.concrete5.org/community/forums/5-7-discussion/implementing-block-ajax-in-5.7/[the routing engine] to handle block AJAX.
+While this was a valid way for us to get something ready to ship, it's got some significant downsides:
+
+. It requires your block implement some additional custom code outside of the controller.
+. It requires that your block AJAX methods check permissions themselves - which many won't do.
+. It's just not as intuitive or as easy as 99% of the rest of concrete5 block development.
+
+So, we might have encouraged a developer to replace '/path/to/serverside/script' with a custom route:
+
+[source,php]
+----
+url: "<?php echo URL::to('/ccm/blocks/myblock/get_pages'); ?>",
+----
+
+and then have them register their custom route, and point it to the block controller that they have.
+Then, they'd either just have to output these results without checking permissions, or pass all the information about their block to this custom controller method.
+What a pain.
+
+== 5.7.5 to the Rescue
+
+Thankfully, this has been fixed in 5.7.5, by reimplementing the $view->action() functionality that we had in 5.6 and earlier.
+Now, any time you use $view->action() from within a block add or edit template, it'll Just Work - and route that request to a method that begins with action_ in the Block Controller.
+That's it: it takes care of passing the current page, block and area into the controller, and checking whether you have permissions to add a block of that type (if you're adding a block) or edit this particular block if you're editing it.
+
+Let's implement our page list check in this new way.
+First, change the URL parameter above to:
+
+[source,php]
+----
+url: "<?php echo $view->action('load_pages'); ?>",
+----
+
+Now, whenever the user types in the select2 box, a special AJAX request to a custom core route will be fired, and all the relevant information about the block type or block will be passed through.
+Permissions will be checked, and the request will automatically be routed to action_load_pages in the block's controller.
+Let's implement this method:
+
+[source,php]
+----
+public function action_load_pages()
+{
+    $pl = new \Concrete\Core\Page\PageList();
+    $pl->filterByKeywords($this->request->query->get('q'));
+    $pl->sortByName();
+    $pl->setItemsPerPage(20);
+    $results = $pl->getResults();
+    $data = array();
+    foreach ($results as $page) {
+        $data[] = array(
+            'id' => $page->getCollectionID(),
+            'name' => $page->getCollectionName(),
+        );
+    }
+
+    return new \Symfony\Component\HttpFoundation\JsonResponse($data);
+}
+----
+
+This is pretty simple.
+First, we instantiate an instance of the \Concrete\Core\Page\PageList class (https://www.concrete5.org/documentation/developers/5.7/working-with-pages/searching-and-sorting-with-the-pagelist-object/[which has many methods to assist in the filtering of pages] and query pages based on the 'q' parameter in the query string.
+This q parameter is automatically comprised of whatever the user types in the select2 box.
+Next, we sort and paginate our results, and get 20 of them.
+Next, we turn our data into something that select2 is going to be able to work with: JSON.
+We're going to return an array of JSON objects comprised of id (page ID) and name.
+And finally, we return that JSON response.
+**Block AJAX actions should always return an object that's in instance of the \Symfony\Component\HttpFoundation\Response)**.
+This could be a regular HTML response, or a JsonResponse as in this example.
+
+Now let's look back at our JavaScript.
+Select2 takes care of handling our JSON response in these lines:
+
+[source,javascript]
+----
+results: function (data, page) { // parse the results into the format expected by Select2.
+  var results = [];
+  $.each(data, function(i, concretePage) {
+    results.push({'id': concretePage.id, 'text': concretePage.name});
+  });
+  return {
+    results: results
+  };
+},
+----
+
+Our data is simply a JSON object comprised of our JSON response.
+Each object has an id parameter and a name parameter.
+We tweak that data to get it into a format that select2 can work with, and send it back to select2.
+
+And that's it! We have AJAXified our select2 box!
+
+image:custom-blocks-ajax-2.png[Ajax with Custom Blocks]
+
+Obviously, there's more to do to make this work in the context of a block - but if you ever find yourself wanting some server-side processing while working in a block's add or edit template, 5.7.5 will make your life much, much easier.

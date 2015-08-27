@@ -1,0 +1,15 @@
+= Getting Started
+
+A Concrete5 theme that provides style customization is one that defines some of its CSS properties in such a way that they can be overridden through the Design panel:
+
+image:style-customization_design-panel.png[Design Panel]
+
+This functionality has been in Concrete5 since version 5.3. - but it's been overhauled and improved substantially in 5.7. Here's how you add this functionality to your Concrete5 themes.
+
+== Before You Begin: LESS
+
+Before you dive headfirst into making a Concrete5 theme customizable, you're going to want to understand LESS. LESS is a simple preprocessor for CSS that enables certain niceties that CSS doesn't have out of the box. With LESS you can include variables, nest CSS statements, use basic functions and more. Concrete5's style customizer uses LESS extensively - you'll want to be pretty familiar with it. http://lesscss.org/[You can learn more about LESS at lesscss.org]
+
+== Caching
+
+Another important note: make sure that you disable overrides caching and all the LESS related caching found on Dashboard > System and Settings > Optimize > Cache & Speed Settings. You can re-enable these when you're done working with your theme.

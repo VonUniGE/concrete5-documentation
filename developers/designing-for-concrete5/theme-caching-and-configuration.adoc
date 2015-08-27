@@ -1,0 +1,22 @@
+= Theme Caching & Configuration
+
+Whenever you're making changes to a theme's template, CSS or LESS files, it's a good idea to disable all the caches in Dashboard > System and Settings > Optimization > Cache and Speed Settings.
+When you're done editing themes, don't forget to turn these settings back on! Here is a little information about what the theme-specific cache settings actually do:
+
+== Theme CSS Cache
+
+This setting controls whether the LESS file values are cached by our LESS CSS Parser, or if they are re-parsed on every page load.
+While working with customization it's good to turn this off, but in general it can be kept on.
+We try to detect changes by file modification time, so in theory it's possible to keep this on all the time while working with themes, but unless you're working with very heavy LESS files comprised of many different includes it's probably safer to just turn it off while developing.
+
+== Compress LESS Output
+
+When turned on, the parsed .less files that are turned into .css files will be minified.
+This makes them more difficult to read but potentially smaller.
+If you're trying to debug why some CSS isn't working it can be helpful to turn this option off, otherwise it's best to leave it on.
+
+== CSS and JavaScript Cache
+
+This setting is actually used by the Asset Caching System, not by the customizer.
+This will attempt to minify and combine JavaScript and CSS.
+While working with themes it's generally a good idea to leave this off. Only turn it on when you're in production mode and you're not actively making changes.

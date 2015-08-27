@@ -1,0 +1,70 @@
+= Converting an HTML Template to a Concrete5 Theme
+
+In the spirit of the original http://www.concrete5.org/documentation/how-tos/designers/make-a-theme/[How to concrete-ize an HTML theme in 8 minutes] comes this, a slightly longer tutorial for how to do the same thing in concrete5 5.7 and above.
+
+video::vQm1QXN9OfI[youtube, width=640, height=360]
+(Note: the full HD video is available at Youtube.)
+
+== Recap
+
+. First, turn off all caching in the Dashboard.
+. Find your favorite HTML theme - or build it yourself (or grab it from a designer.)
+. Create a directory for your theme in the `webroot/application/themes/` directory. In your theme's directory (e.g. `webroot/application/themes/urbanic/`), create a thumbnail.png file (120x90) that is a good representation of it. Next, create a new `description.txt` file with the title of the theme on the first line, a description of it on the second.
+. Copy your theme's assets into the directory.
+. Go into *Dashboard > Pages and Themes > Themes* and your theme should show up as awaiting installation. Install the theme.
+. Activate the theme from the same Themes dashboard page.
+. Then go to the home page. It's blank - because we haven't yet created any templates. Let's do that now.
+. The one file every theme needs is `default.php`. This template is used any time a page that has a specific page template can't find a file in the theme's directory that matches the template's handle. Copy the `index.html` of Urbanic into the theme directory, change it's name to `default.php`, and see what happens.
++
+NOTE: you can also name this file "full.php" - since that's the handle of the page template used by the home page.
+. Load the home page again. Content shows up but none of the assets are loading. That's because the paths to the assets need updating.
+. Copy all js, css, fonts, images directories into the theme's directory.
+. Go into `default.php` and prefix all references to scripts, CSS and images.
++
+So:
++
+[source,html]
+----
+src="js/file.js"
+----
+becomes
++
+[source,php]
+----
+src="<?php echo $view->getThemePath(); ?>/js/file.js"
+----
+Add the required PHP to the header and footer of your page.
++
+Add:
++
+[source,php]
+----
+<?php Loader::element('header_required'); ?>
+----
+in the HEAD tag (and make sure to remove title, various meta tags used by concrete5.) +
+Add:
++
+[source,php]
+----
+<?php Loader::element('footer_required'); ?>
+----
+right before the closing body tag. +
+If you've done this correctly, when you refresh the page, you should see the concrete5 edit bar.
+. We need to add a container DIV with the proper classes around the content in the page, in order for panels to be able to shift content around. +
+Add a DIV around the content of the page (typically right after the opening of the body tag and before the closing of the body tag) and give it this class
++
+[source,php]
+----
+<div class="<?php echo $c->getPageWrapperClass(); ?>">
+----
+. Fix any CSS issues where the theme you've chosen might conflict with the concrete5 theme.
+. Now we can make editable areas. Choose some content that you want to remove in order to make editable, and replace it with this:
++
+[source,php]
+----
+<?php
+$a = new Area('Area Name');
+$a->display($c);
+?>
+----
+That will make your first editable area - and you'll be on your way!

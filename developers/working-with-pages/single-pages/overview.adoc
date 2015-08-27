@@ -1,0 +1,111 @@
+= Overview
+
+Single Pages are just like regular pages in a concrete5 site, with the following important differences:
+
+* Like the name implies, single pages are meant to be used one place in a particular site.
+For example, multiple login pages makes little sense.
+* Single Pages are not shown in the page types list, because they are not page types (and they can't be added in more than one spot.)
+* Your custom code often relies on single pages living in a particular spot, at a particular path.
+* Single Pages view templates are not, by default, contained within a themes directory.
+
+Want an example of a single page? The concrete5 login page is a single page, and the perfect one: there's no need to add multiple login pages throughout a site. One will do.
+Furthermore, since blocks and multiple parts of concrete5 need to point to the login page, we need to rely on it being available at "/login", off the root of your site.
+
+The pages within the concrete5 dashboard are another example of single pages.
+We wouldn't want all the dashboard pages cluttering up our various themes, or our page types selector; however, since single pages are actual Concrete5 pages, we can assign permissions to them, change their titles through the CMS, and even add blocks to them.
+Yes: single pages can contain block areas.
+
+== Adding a Single Page
+
+Let's say we're using Concrete5 to build a social networking tool, and we need a page that allows the logged-in user to upload pictures.
+We want this page to be available at
+
+----
+http://www.yoursite.com/index.php/media/
+----
+
+We've already decided that this should be a single page because this page is very custom, and will have multiple pages pointing to it at its address.
+To add this single page, create an empty PHP page within the application/single_pages/ directory at the root of your site. Name it "media.php".
+Whatever you name this page will be its path in the URL (e.g. "media.php" = http://www.yoursite.com/media").
+Typically Concrete5 naming conventions should be used here, so if you want to name something with separators in it, using underscores (e.g. "my_profile.php").
+
+Sign in to the Concrete5 dashboard, and go to Pages & Themes > Single Pages.
+Find the "Add a Single Page" form at the top of the list, and enter "media" at the bottom (or whatever the name of your single page.) Do not include ".php" in the field.
+
+If all goes as planned, the page should refresh, and your single page will now be added at the root of your site.
+You can change its name, permissions and attributes all through the CMS.
+The only thing you can't do is change its handle and page path, because the page exists at one spot in the tree.
+
+Browse to your single page.
+You should see a page in the current theme with very little content on it.
+That's because your single page has no content inside it yet.
+You'll need to add content to your single page view template (the media.php page you added).
+
+== Adding Content to the Single Page View Template
+
+Single pages are wrapped by the "view.php" template for the current theme.
+This means you don't need to include header or footer information within your single page - it is already present.
+
+In a stock concrete5 site, try opening concrete/themes/elemental/view.php.
+This is the wrapper for all the single pages within the Elemental theme.
+Notice the line? That's where all the single page content will be inserted within this template.
+
+Want to change this? You can.
+If you need more flexible control over a single page within a particular theme, just include a file with the same name as your single page within the theme itself.
+That entirely file will be used as the single pages template, including the header, footer, etc...
+It can completely override the single page, too. (So, in our example above, once we have "media" added as a single page, add "media.php" to your active theme).
+This template will then be used instead of the single page.
+
+== Single Pages and Paths
+
+If you anticipate having multiple single pages in a particular section of your site, you can create an entire folder for your single page and its children.
+For example, instead of creating this:
+
+----
+application/single_pages/media.php
+----
+
+Create this:
+
+----
+ application/single_pages/media/view.php
+----
+
+And add the single page in the same way above.
+Your single page will still be viewable at /media, but you'll be able to add other pages beneath that path over time
+
+----
+application/single_pages/media/add.php
+application/single_pages/media/organize.php
+----
+
+These single pages will be available at `http://yoursite.com/index.php/media/add` and `http://yoursite.com/index.php/media/organize/`, respectively.
+
+== Extending Existing Parts of Your Site
+
+You can use single pages to extend existing Concrete5 functionality, like the dashboard.
+Say you want to add another page into the Concrete5 dashboard for some custom business forms.
+You want this form to be available at
+
+----
+http://www.yoursite.com/index.php/dashboard/my_business_forms/
+----
+
+Just add
+
+----
+application/single_pages/dashboard/my_business_forms.php
+----
+
+And add it through the single pages interface in the dashboard.
+The new page should show up immediately in the dashboard navigation, both in the side navigation and the home page.
+
+== Adding Interactivity
+
+As mentioned, Single Pages are great for those parts of your site that solve custom problems, and will not need to be reused.
+This is typically because these pages offer some interactivity, whether its a search form, a lengthy multi-step business form, or forms that let you add/edit certain objects.
+
+The keyword here is "form." Single Pages are made for solving complex, interactive problems on your site.
+Once we have a single page in place, we'll inevitably need to send some data into the single page, and perhaps submit the data back to a processing script of some page.
+This is what a single page's controller is for.
+Read on for more information.

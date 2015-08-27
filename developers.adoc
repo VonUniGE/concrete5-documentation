@@ -1,0 +1,42 @@
+= concrete5 5.7 Developer Documentation
+:doctype: book
+:source-highlighter: coderay
+:toc: left
+:toclevels: 2
+:imagesdir: images/developers
+ifeval::["{backend}" == "html5"]
+:imagesdir: https://raw.githubusercontent.com/concrete5/concrete5-documentation/master/src/images/developers
+endif::[]
+
+:leveloffset: +1
+
+include::developers/background.adoc[]
+
+include::developers/concepts.adoc[]
+
+include::developers/installation.adoc[]
+
+include::developers/environment.adoc[]
+
+include::developers/designing-for-concrete5.adoc[]
+
+include::developers/working-with-blocks.adoc[]
+
+include::developers/working-with-pages.adoc[]
+
+include::developers/working-with-files-and-the-file-manager.adoc[]
+
+include::developers/jobs.adoc[]
+
+include::developers/assets.adoc[]
+
+include::developers/packages.adoc[]
+
+include::developers/interface-customization.adoc[]
+
+include::developers/appendix.adoc[]
+
+include::developers/api.adoc[]
+
+
+:leveloffset: -1

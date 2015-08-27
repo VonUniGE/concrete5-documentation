@@ -1,0 +1,13 @@
+= Working with Existing Block Types
+
+:leveloffset: +1
+
+include::working-with-existing-block-types/modifying-the-default-view-template-for-a-core-block-type.adoc[]
+
+include::working-with-existing-block-types/creating-additional-custom-view-templates.adoc[]
+
+include::working-with-existing-block-types/using-a-custom-controller-for-a-core-block-type.adoc[]
+
+include::working-with-existing-block-types/embedding-blocks-in-a-page-template.adoc[]
+
+:leveloffset: -1

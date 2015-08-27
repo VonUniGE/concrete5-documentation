@@ -1,0 +1,18 @@
+= Swapping out the Base Controller
+
+Does some built of business logic in your site have to be available or run on every page? You might need to swap out the base page controller for your own custom page controller.
+This can be done by rebinding the `controller/page/default` pointer in the Concrete5 class loader to point to your own custom page controller class.
+
+[source,php]
+----
+public function on_start()
+{
+    Core::bind('controller/page/default', '\Concrete\Package\MyPackage\Src\Page\Controller');
+}
+----
+
+Now any time a base page is loaded that doesn't have a custom single page or page type controller, this controller will be used for it.
+
+== Extension Notes
+
+Note: Any custom page type controller or single page controllers that you create will have to extend this controller, rather than `\Concrete\Core\Page\Controller\PageController`.

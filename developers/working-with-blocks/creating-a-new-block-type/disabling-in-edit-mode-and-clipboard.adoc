@@ -1,0 +1,52 @@
+= Disabling in Edit Mode & Clipboard View
+
+While most blocks can coexist with Concrete5's editing environment without issue, it can be useful to display a different view layer for a block while a page is in edit mode.
+Perhaps your block employs some custom CSS that places its z-index higher than Concrete5's edit layer, or it uses Flash or other technologies that don't always work well with our overlay.
+Maybe its JavaScript and Concrete5's JavaScript conflict.
+In these cases, it's useful to disable your block's view in edit mode.
+Here's how the YouTube block does it.
+
+[source,php]
+----
+<?php
+$c = Page::getCurrentPage();
+if ($c->isEditMode()) { ?>
+    <div
+        class="ccm-edit-mode-disabled-item"
+        style="width: <?php echo $vWidth; ?>px; height: <?php echo $vHeight; ?>px;"
+    >
+        <div style="padding:8px 0px; padding-top: <?php echo round($vHeight / 2) - 10; ?>px;">
+            <?php echo t('YouTube Video disabled in edit mode.'); ?>
+        </div>
+    </div>
+<? } else { ?>
+    <!-- YouTube contents here -->
+<? } ?>
+----
+
+This is pretty self-explanatory.
+We use the current page object, and then we display disabled content within the "ccm-edit-mode-disabled-item."
+
+== Clipboard
+
+The "Add from Clipboard" view from the Add Panel attempts to render the view layer of each block that appears within it, and this can also lead to problems.
+For example, if a block has a problem displaying its contents with multiple instances on a page, this could be a problem.
+To fix this, simply include a file named "scrapbook" in your block's folder.
+This file will be used when the block is rendered in the Add Panel, as opposed to the view.php file.
+
+=== Example
+
+The HTML block is an excellent example of using a custom clipboard template.
+Since anything can be in the HTML block, and this could lead to problems, we sanitize the view when the HTML block is rendered in the clipboard.
+From concrete/blocks/html/scrapbook.php:
+
+[source,php]
+----
+<?php defined('C5_EXECUTE') or die('Access Denied.'); ?>
+
+<div id="HTMLBlock<?php echo intval($bID); ?>" class="HTMLBlock" style="max-height: 300px; overflow: auto;">
+    <?php echo Concrete\Block\Html\Controller::xml_highlight(($content)); ?>
+</div>
+----
+
+The contents are highlighted nicely, and are guaranteed to not impact any other blocks rendered in the panel at the same time.

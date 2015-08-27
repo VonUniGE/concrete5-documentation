@@ -1,0 +1,100 @@
+= Enabling Full Content Swap
+
+Concrete5 themes are increasingly becoming sites unto themselves. They ship with custom block view templates or even custom block types, custom page templates and attributes, and work best in specific configurations. Historically, these themes might not look as good when simply applied over an existing site. That's why we introduced "Full Content Swap." Any Concrete5 package can mark itself as providing this feature. If it does, upon installation, the admin user may consent to have the entire front-end contents of the site removed, the site content as specified by the theme installed in its place. This way theme developers can ensure that sites look exactly as intended.
+
+== Package Your Theme
+
+In order to enable full content swap, you'll first have to link:#[package your theme]. Take care of this first.
+
+== Understand the Content Import Format
+
+This Concrete5 Content Import Format is used to describe the content and structure of entire Concrete5 sites. This file format is simply XML, with nodes that Concrete5 uses to install bits of functionality. This file format is used to install the starting points in Concrete5, including the full Elemental Install. Here are some examples of this format:
+
+=== Installing Dashboard Pages
+
+[source,xml]
+----
+<concrete5-cif version="1.0">
+    <singlepages>
+        <page name="Sitemap" path="/dashboard/sitemap" filename="/dashboard/sitemap/view.php" pagetype=""
+          description="Whole world at a glance." package="">
+            <attributes>
+                <attributekey handle="meta_keywords">
+                    <value>pages, add page, delete page, copy, move, alias</value>
+                </attributekey>
+            </attributes>
+        </page>
+    </singlepages>
+</concrete5-cif>
+----
+
+=== Installing and Activating Themes
+
+[source,xml]
+----
+<concrete5-cif version="1.0">
+    <themes>
+        <theme handle="elemental" package="" activated="1"/>
+    </themes>
+</concrete5-cif>
+----
+
+=== Installing Page Templates
+
+[source,xml]
+----
+<concrete5-cif version="1.0">
+    <pagetemplates>
+        <pagetemplate handle="full" name="Full" icon="full.png" package="" />
+    </pagetemplates>
+</concrete5-cif>
+----
+
+Multiple nodes can be nested in one tag, and everything found within it will be installed at once.
+
+A good idea now is to take a look through the concrete/config/install/packages/ directory, to see how both starting points provide very different content.xml files.
+
+== Download the Sample Content Generator
+
+The Content Import Format becomes easier to work with with the use of the https://github.com/concrete5/addon_sample_content_generator/tree/5.7[Sample Content Generator Add-On]. This is a free package (available in the marketplace and in Github) that is used to create Content Import Format files. Just install this on a site and run the export routine, and you'll get XML you can include in your own package.
+
+== Typical Process
+
+Using the Sample Content Generator add-on to create content.xml files for full content swap generally works like this:
+
+. Have both the theme package and the Sample Content Generator add-on available in a Concrete5 site's packages directory.
+. Do a clean install of the *Blank* starting point into the Concrete5 site.
+. Install the Theme Package and the Sample Content Generator add-on.
+. Activate The Theme.
+. Build out Page Types, Install Page Templates, create entire pages of content. Basically - do everything necessary to make the exact sample site you want. You can even upload images.
+. When ready, use the "Generate Install Data" link in the Dashboard panel.
+. First, download all images into one archive using the Go button under "Archive Files." This will give you a zip archive of all files you've uploaded. Make sure to keep these files with the same filenames - as that's how they'll be referenced in the content.xml file. Place these files in a directory named "content_files" in your package directory.
+. Next, click the Go button under "Generate content.xml from current website." This will give you a complete XML representation of your website in the Content Import Format. Copy this text into an empty text document and save it somewhere.
+. Create a new, empty content.xml file in your package directory. Copy the relevant portions of sample content from step 8 into the empty content file created in step 9.
+
+Step 9 above is by far the most difficult. The XML created in the step before is the entire representation of the website - but not all of this should be copied into the new content.xml file, because much of is managed by the core. For example, step 8's XML contains the entire Dashboard content XML. You don't want to include this in your content.xml file. In general the content import routine attempts to skip duplicate content, but it can't always. Plus, the larger the content.xml file, the slower the installation routine.
+
+== Prepare Package
+
+Once you have your files in the content_files directory and a content.xml file in your package root, you'll need to mark the package as one that enables full content swap. You do this by adding this variable to your package controller.php
+
+[source,php]
+----
+protected $pkgAllowsFullContentSwap = true;
+----
+
+Next, you'll need to create a file at a specific location. Any time a package enables full content swap, it attempts to load a specific file to give the user more information, above the standard full content swap error. If you don't provide a file - even a blank one - you'll get an include error. So, create a file at packages/your_package/elements/dashboard/install.php. You can also put important information about this process in this file as well. It will be displayed to users right before they confirm whether to commit to full content swap.
+
+== Install Theme Package on Blank Site
+
+Your package is ready! Now, delete your current Concrete5 application/config/database.php file, and clear your databases, and reinstall Concrete5 with the blank starting point. When complete, install your package in the Dashboard. You should see something similar to this:
+
+image:confirm-sample-content-swap.png[Confirm Sample Content Swap]
+
+Confirm the choice and click through. *This first time will likely fail!* Don't get discouraged. You may have to continually uninstall and reinstall your package, tweaking the content.xml file as you do so. This process involves some significant trial and error, but in the end it really does significantly improve the lives of those installing your themes.
+
+== Install Theme Package on Site with Full Content
+
+You're almost done. The only thing left to do is to confirm that you sample content file works when reinstalling over the full Concrete5 Sample Install. Reinstall Concrete5 with the full Sample Content offering selected. Then repeat the process from the last step, and confirm that your theme installs over this content as well.
+
+When that's complete, you're done!

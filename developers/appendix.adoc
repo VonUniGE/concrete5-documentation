@@ -1,0 +1,9 @@
+= Appendix
+
+:leveloffset: +1
+
+include::appendix/form-widget-reference.adoc[Full list of helpful form services, including helper methods for standard HTML input tags and Concrete5 widgets like the page and file selector]
+
+include::appendix/asset-list.adoc[A list of all assets and asset groups defined by Concrete5 (and therefore usable via requireAsset() and providesAsset()]
+
+:leveloffset: -1

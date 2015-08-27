@@ -1,0 +1,17 @@
+= Overview
+
+The concrete5 package format is a way to bundle most aspects of concrete5 functionality together, so that they can be easily distributed, installed and uninstalled.
+The package format is used by the concrete5 marketplace, but can also be used without connecting to concrete5.org.
+
+Packages consist of an outer directory, an optional icon image (icon.png), a controller.php file immediately within the directory, and then a files and folders that map to concrete5 components.
+The controller.php specifies the version of the package, defines an installation and uninstallation routine, and specifies any custom code that should be added to the concrete5 startup routine when that package is installed.
+In general, the filesystem of a particular package's contents will match the filesystem of those contents in the concrete/ directory, if they were to be installed by the core.
+If, for example, your package contains a theme, two custom block types and a dashboard single page and controller, it might look like this in the file system:
+
+image:packages-directory-structure.png[Directory structure of a package]
+
+In general, when building a package, you'll start by building your item of functionality (block type, theme, etc...) in your application/ folder, and installing it manually through the Concrete5 dashboard.
+When it's done and ready to go, you move it into a package folder.
+Then, you'll have to add some custom code to the controller.php in order to install these items when the package is installed, but that can usually be done pretty easily.
+Once that's done, the items of functionality will automatically install when the package is installed, and will also automatically *uninstall* when the package is removed.
+Additionally, custom code can be run when a package is present and installed in a concrete5 site, but won't be run when the package isn't installed - making packages an ideal way to deliver custom event-based functionality as well as simpler items like block types and themes.

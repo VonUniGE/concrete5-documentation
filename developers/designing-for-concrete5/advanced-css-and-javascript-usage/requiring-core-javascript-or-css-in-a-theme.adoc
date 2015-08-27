@@ -1,0 +1,62 @@
+= Requiring Core JavaScript or CSS in a Theme
+
+We've seen how simple it is to include stylesheets or JavaScripts that ship with your theme in your theme template files. You *could* include JavaScript or CSS that comes with the core in the same manner:
+
+[source,php]
+----
+<!-- Include jQuery and Font Awesome In your Theme -->
+<script type="text/javascript" src="<?php echo ASSETS_URL_JAVASCRIPT; ?>/js/jquery.js"></script>
+----
+
+I say *could* because this isn't the absolute best way of including this. In this example, what if a block that you place on the page also needs jQuery or Font Awesome in order to render? These blocks have no idea that your theme has already included jQuery or Font awesome. At best, they will provide the same asset twice, potentially bloating the size of your page (at least for the first request). At worst, the inclusion of the same JavaScript twice could cause all JavaScript on the page to break, breaking Concrete5's user interface in the process.
+
+When you want to include core JavaScript or CSS in your theme, there's a better option than just including the scripts or stylesheets in the template. You can leverage the power of the Concrete5 Assets system. The Concrete5 Assets system is a way to define and group JavaScript and CSS files in such a way that they can never be included twice, conflicts can be minimized, you don't have to remember which individual files are required for each function and unneeded files don't have to be included. Additionally, the assets system supports minifying and combining assets on the fly, in order to improve site performance. Concrete5 uses this asset system for all of its core JavaScript and CSS.
+
+So, in the event that your theme requires jQuery and Font Awesome to run smoothly, don't use the methods above. Instead, here's how we would accomplish the same thing. Open concrete/config/app.php. This file contains core configuration values for a number of developer-centric items, including assets. These are stored in the associative array with the "assets" key. Locate this array, and find jQuery. It's the first one:
+
+[source,php]
+----
+'jquery' => array(
+    array(
+        'javascript',
+        'js/jquery.js',
+        array(
+            'position' => Asset::ASSET_POSITION_HEADER,
+            'minify' => false,
+            'combine' => false,
+        ),
+    ),
+),
+----
+
+The very first array key is the asset handle. The first key for the array inside is the asset type.
+
+Next, find Font Awesome.
+
+[source,php]
+----
+'font-awesome' => array(
+    array(
+        'css',
+        'css/font-awesome.css',
+        array(
+            'minify' => false,
+        ),
+    ),
+),
+----
+
+For this asset, "font-awesome" is the asset handle, and "css" is the type.
+
+Now that we know the types and handles for our two assets, we need to require them in our theme. We can do this from within our PageTheme class. In the example of the non-packaged Urbanic theme, we would open application/themes/urbanic/page_theme.php, and within our PageTheme class, add this code:
+
+[source,php]
+----
+public function registerAssets()
+{
+    $this->requireAsset('css', 'font-awesome');
+    $this->requireAsset('javascript', 'jquery');
+}
+----
+
+The \Concrete\Core\Page\Theme\Theme class that all PageTheme classes extend provides a method named requireAsset that can be extremely useful here. With those lines of code above we know that our theme will always load jQuery and Font Awesome - and we also know that they'll never be loaded twice (since the Core uses the same asset system.)

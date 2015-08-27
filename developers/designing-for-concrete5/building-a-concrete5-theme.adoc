@@ -1,0 +1,15 @@
+= Building a Concrete5 Theme
+
+:leveloffset: +1
+
+include::building-a-concrete5-theme/converting-an-html-template-to-a-concrete5-theme.adoc[]
+
+include::building-a-concrete5-theme/reusing-common-elements-in-theme-template-files.adoc[]
+
+include::building-a-concrete5-theme/including-javascript-and-css-in-template-files.adoc[]
+
+include::building-a-concrete5-theme/suggested-process.adoc[]
+
+include::building-a-concrete5-theme/common-pitfalls.adoc[]
+
+:leveloffset: -1
