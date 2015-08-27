@@ -5,7 +5,7 @@
 :toclevels: 2
 :imagesdir: images/developers
 ifeval::["{backend}" == "html5"]
-:imagesdir: https://raw.githubusercontent.com/concrete5/concrete5-documentation/master/src/images/developers
+:imagesdir: https://raw.githubusercontent.com/concrete5/concrete5-documentation/master/images/developers/
 endif::[]
 
 :leveloffset: +1
