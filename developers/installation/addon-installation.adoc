@@ -12,7 +12,7 @@ video::GV77-8_LLog[youtube, width=853, height=480]
 
 If your webserver is properly configured, you should be able to automatically install add-ons directly from your dashboard. Click Dashboard in the upper right of your concrete5 toolbar, then at the bottom of the Dashboard, click the link titled **Extend concrete5**. You should see a page like this:
 
-image:howto-install.jpg[How to install]
+image:howto-install.png[How to install]
 
 You should see a green button labeled "Connect to Community". Click that and use the account you made on _this_ site to make a project page for your site. At this point you are connecting your own website to concrete5.org. The user account and password you used to login to your own website has nothing to do with the user account and password you made here to shop in the marketplace. Mildly confusing, but that's what it is.
 
