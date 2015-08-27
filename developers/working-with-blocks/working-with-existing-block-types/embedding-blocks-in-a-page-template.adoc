@@ -1,0 +1,50 @@
+= Embedding Blocks in a Page Template
+
+There are times when you might want to use a block's functionality within a page without having that block editable through the CMS.
+For example, say you have a Blog Entry page template that always contains a tag block at a certain spot.
+You want to use the power of the tags block but don't really need the overhead of making that block editable through the CMS or having to worry about it always being present in page type defaults.
+Or perhaps you want to use an Auto-Nav block to create a site map without worrying about it being editable through the CMS by some of your editors (and without worrying about advanced permissions.) You can render a block with parameters as though it were added through the CMS by coding it directly into a page template.
+
+== Rendering by Block Type Controller
+
+=== Example 1: Hard-Coding Tags Block
+
+[source,php]
+----
+$bt = BlockType::getByHandle('tags');
+$c = Page::getByID('/path/to/target/page');
+$bt->controller->set('title', t('Tags'));
+$bt->controller->set('target', $c);
+$bt->render();
+----
+
+=== Example 2: Hard-Coding Auto-Nav Block with Custom Template
+
+Render a breadcrumb navigation using the Auto-Nav block with certain options, and the built-in Breadcrumb Auto-Nav custom tempate.
+
+[source,php]
+----
+$bt = BlockType::getByHandle('autonav');
+$bt->controller->orderBy = 'display_asc';
+$bt->controller->displayPages = 'top';
+$bt->controller->displaySubPages = 'relevant_breadcrumb';
+$bt->controller->displaySubPageLevels = 'all';
+$bt->render('templates/breadcrumb');
+----
+
+== Rendering a Stack
+
+It's even easier to render the contents of a stack.
+This will be just as immutable on the front-end of the site, but the contents rendered can change over time.
+Change the stack, not the front-end.
+
+[source,php]
+----
+$stack = Stack::getByName('Your Stack Name');
+$stack->display();
+----
+
+== Limitations
+
+Blocks embedded in this way cannot be cached using block output caching (since they do not have database records, which is what block output caching relies on).
+They also cannot be interactive – they can post back to the page, but since the page will have no record of such a block being added to it, it can't query to see what blocks can respond to the action URL that the block posts back to.

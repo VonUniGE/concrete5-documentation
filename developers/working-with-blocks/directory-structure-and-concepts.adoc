@@ -1,0 +1,79 @@
+= Directory Structure & Concepts
+
+One of the nicest aspects of Concrete5's block type system is its relative simplicity: every block type is bundled into its own directory, whose contents is pretty easy to understand.
+For a basic example, let's check out the Content block, which editors use when they want to add rich text by interactive with an in-page WYSIWYG editor.
+This block is located at **concrete/blocks/content**:
+
+`**add.php**` +
+_Optional_ +
+This file is rendered every time an editor adds the block into the page.
+Since this block is set up to enable in-page editing, this add.php file is actually injected into the page's DOM structure.
+If this file isn't present, the block won't present a form when it's added – it will just be saved and added directly into the page.
+This is useful for blocks that don't have any options.
+
+`**composer.php**` +
+_Optional_ +
+This is the custom editing template used by this block when it is included in a Page Type's Compose form.
+
+`**controller.php**` +
+_Required_ +
+This file is responsible for defining core properties of the block type, like its name and handle.
+This file can also contain methods that automatically get run by the block when its different states are rendered.
+
+`**db.xml**` +
+_Optional_ +
+This file contains an XML representation of the block's database tables.
+If the block doesn't have a database table this won't be used.
+The structure of this file is in the link:#[AXMLS] format.
+
+`**edit.php**` +
+_Optional_ +
+This file is rendered every time an editor edits the block.
+In the case of the content block, this form will be injected directly into the page's DOM.
+If this file isn't present, the block won't be editable through the CMS.
+
+`**icon.png**` +
+_Required_ +
+This image is the icon representation of the block type when it's presented in the sidebar to site editors.
+The dimensions of this icon should be a square – and they should be at least 50x50.
+
+`**scrapbook.php**` +
+_Optional_ +
+This file is rendered any time this block is present in the clipboard panel.
+If this file isn't present the regular view template will be rendered.
+This can be useful when the view file conflicts in some way with the clipboard container.
+
+`**view.php**` +
+_Required_ +
+This file is rendered any time the block is displayed in the page.
+
+== Overrides
+
+As with many things in Concrete5, the files in a block type's directory can be overridden.
+To override a block type template file:
+
+. Turn off the Overrides Cache from Dashboard > System & Settings > Optimization > Cache & Speed Settings.
+. Copy the file you wish to override from the *concrete/blocks/* directory into a directory exactly matching it in the empty *application/blocks* directory.
+
+This should be all you need to do, with one exception:
+
+=== Overriding controller.php
+
+If you're overriding controller.php, you'll need to change the namespace of the controller.php, and it should extend the original block type controller.
+For example, if you're overriding the Content block controller:
+
+. Create a file at *application/blocks/content/controller.php*
+. Within this file, make sure the namespace of the file is **\Application\Block\Content**.
+. Make the class in the file extend the Content block controller:
++
+[source,php]
+----
+class Controller extends \Concrete\Block\Content\Controller
+{
+    // .. your customizations
+}
+----
+
+Overriding block templates is one of the things a Concrete5 developer does frequently.
+Any time a developer has existing HTML that they want to adapt to a Concrete5 block, it can often be easier to override that block's view template to match the existing HTML structure rather than rework CSS and the HTML to match Concrete5's output.
+Read on to see how:

@@ -1,0 +1,174 @@
+= Example: Passing Data from a custom URL into a Block's View Layer
+
+A block can react to URL parameters without using $view->action().
+If you want your block to react to the following URL:
+
+----
+http://www.mysite.com/index.php/path/to/page/custom_foo/param1/param2/param3
+----
+
+Just create a method named
+
+[source,php]
+----
+public function action_custom_foo($param1 = null, $param2 = null, $param3 = null)
+{
+    // Custom Logic
+    $this->view();
+}
+----
+
+No need to worry about the block ID in this case.
+NOTE: All blocks on this page that have a method named action_custom_foo with the same signature will fire this action.
+
+== Blog Example
+
+Concrete5's sample blog in the Elemental theme shows a good example of how multiple block types can use action.
+When the a topic in the Topic List block is clicked, the following URL is browsed to:
+
+----
+http://www.yoursite.com/index.php/blog/topic/11/projects
+----
+
+This means that any block on the page that responds to `action_topic` with a $treeNodeID and a $topicText as its optional second parameters will fire.
+This includes the following blocks
+
+=== Topic List
+
+The topic list block uses the action_topic() method to mark the particular clicked-on topic as selected.
+Here is its action_topic() method in the controller.
+
+[source,php]
+----
+public function action_topic($treeNodeID = false, $topic = false)
+{
+    $this->set('selectedTopicID', intval($treeNodeID));
+    $this->view();
+}
+----
+
+The method simply sets the selected topic ID into the block view.
+The view then will check to see if this variable exists, and if it does, it will apply the active CSS class to the clicked-on topic.
+
+=== Page Title
+
+When the `Archives` custom template is applied to the Page Title block, the Page Title block will listen for action_topic() and display the selected topic text instead of `Blog`.
+
+[source,php]
+----
+public function action_topic($treeNodeID = false, $topic = false)
+{
+    if ($treeNodeID) {
+        $topicObj = Topic::getByID(intval($treeNodeID));
+        $this->set('currentTopic', $topicObj);
+    }
+    $this->view();
+}
+----
+
+First, it uses the topic tree node ID to grab the selected topic, and sets it into the page.
+The archives custom template then displays it.
+
+[source,php]
+----
+<?php
+if (is_object($currentTopic)) {
+    $title = t('Topic Archives: %s', $currentTopic->getTreeNodeDisplayName());
+}
+?>
+<h1 class="page-title"><?php echo $title; ?></h1>
+----
+
+=== Page List
+
+Finally, the Page List block filters by the topic.
+First, it routes the `topic` URL slug to the action_filter_by_topic() method (see below for more on how to do this).
+Then the action_filter_by_topic() method filters the instance of the http://concrete5.org/api/class-Concrete.Core.Page.PageList.html[\Concrete\Core\Page\PageList] object that is already instantiated within the Page List block.
+
+[source,php]
+----
+public function action_filter_by_topic($treeNodeID = false, $topic = false)
+{
+    if ($treeNodeID) {
+        $this->list->filterByTopic(intval($treeNodeID));
+        $topicObj = Topic::getByID(intval($treeNodeID));
+        if (is_object($topicObj)) {
+            $seo = Core::make('helper/seo');
+            $seo->addTitleSegment($topicObj->getTreeNodeDisplayName());
+        }
+    }
+    $this->view();
+}
+----
+
+The method even updates the page title using the SEO service to that of the selected topic.
+
+== Advanced: Programmatically Disabling action_ URLs for Certain Block Instances
+
+The Page List block provides a number of action_ URLs for other blocks to use to filter the resulting pages displayed.
+While this is powerful, its only meant to be used when you're displaying page lists in an interactive capacity (e.g. as part of a blog or search results).
+If you're just listing featured pages, or recenty updated pages, you may not want the ability to arbitrarily filter these pages via URLs.
+That's why the Page List block uses a custom internal boolean to control whether this filtering is available.
+Here's how that works:
+
+Any time an action URL is checked, the http://concrete5.org/api/class-Concrete.Core.Block.BlockController.html[\Concrete\Core\Block\BlockController] method `isValidControllerTask` is checked.
+This checks the class to see if the method exists, and whether it starts with `action_`.
+The Page List block controller overrides this method to also check if an additional internal boolean is set to true.
+
+[source,php]
+----
+public function isValidControllerTask($method, $parameters = array())
+{
+    if (!$this->enableExternalFiltering) {
+        return false;
+    }
+ 
+    return parent::isValidControllerTask($method, $parameters);
+}
+----
+
+This only enables the action_ URLs if the page list "Enable External Filtering" option is checked in the Page List edit interface.
+
+== Advanced: Mapping a Custom URL segment to a Differently Named Action
+
+Sometimes you might want your method to be named differently than the standard `action_*` method name.
+For example, the Page List block reacts to the `tag`, `topic` and `date` parameters:
+
+----
+http://www.mysite.com/index.php/path/to/page/topic/123/kittens
+http://www.mysite.com/index.php/path/to/page/date/2015/01/01
+http://www.mysite.com/index.php/path/to/page/tags/hats
+----
+
+The core team didn't want to create methods named `action_tag`, `action_date`, `action_topic` – just because amidst all the other methods some of the purpose of these methods might be lost.
+We wanted to name the methods
+
+* action_filter_by_tag
+* action_filter_by_date
+* action_filter_by_topic
+
+Without losing the nice, succinct URL segments.
+To do this, simply override the built-in http://concrete5.org/api/class-Concrete.Core.Block.BlockController.html[\Concrete\Core\Block\BlockController]
+
+[source,php]
+----
+public function getPassThruActionAndParameters($parameters)
+{
+    if ($parameters[0] == 'topic') {
+        $method = 'action_filter_by_topic';
+        $parameters = array_slice($parameters, 1);
+    } elseif ($parameters[0] == 'tag') {
+        $method = 'action_filter_by_tag';
+        $parameters = array_slice($parameters, 1);
+    } elseif (Loader::helper('validation/numbers')->integer($parameters[0])) {
+        // then we're going to treat this as a year.
+        $method = 'action_filter_by_date';
+        $parameters[0] = intval($parameters[0]);
+        if (isset($parameters[1])) {
+            $parameters[1] = intval($parameters[1]);
+        }
+    }
+ 
+    return array($method, $parameters);
+}
+----

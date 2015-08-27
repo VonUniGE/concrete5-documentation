@@ -1,11 +1,11 @@
-== Requiring Core JavaScript or CSS in a Theme
+= Requiring Core JavaScript or CSS in a Theme
 
 We've seen how simple it is to include stylesheets or JavaScripts that ship with your theme in your theme template files. You *could* include JavaScript or CSS that comes with the core in the same manner:
 
 [source,php]
 ----
 <!— Include jQuery and Font Awesome In your Theme //—>
-<script type="text/javascript" src="<?=ASSETS_URL_JAVASCRIPT?>/js/jquery.js"></script>
+<script type="text/javascript" src="<?php echo ASSETS_URL_JAVASCRIPT; ?>/js/jquery.js"></script>
 ----
 
 I say *could* because this isn't the absolute best way of including this. In this example, what if a block that you place on the page also needs jQuery or Font Awesome in order to render? These blocks have no idea that your theme has already included jQuery or Font awesome. At best, they will provide the same asset twice, potentially bloating the size of your page (at least for the first request). At worst, the inclusion of the same JavaScript twice could cause all JavaScript on the page to break, breaking Concrete5's user interface in the process.
@@ -16,15 +16,17 @@ So, in the event that your theme requires jQuery and Font Awesome to run smoothl
 
 [source,php]
 ----
-    'jquery'
-        => array(
+'jquery' => array(
+    array(
+        'javascript',
+        'js/jquery.js',
         array(
-            'javascript',
-            'js/jquery.js',
-            array('position' => Asset::ASSET_POSITION_HEADER, 
-        'minify' => false, 'combine' => false)
-        )
+            'position' => Asset::ASSET_POSITION_HEADER,
+            'minify' => false,
+            'combine' => false,
+        ),
     ),
+),
 ----
 
 The very first array key is the asset handle. The first key for the array inside is the asset type.
@@ -33,9 +35,15 @@ Next, find Font Awesome.
 
 [source,php]
 ----
-    'font-awesome'             => array(
-        array('css', 'css/font-awesome.css', array('minify' => false))
+'font-awesome' => array(
+    array(
+        'css',
+        'css/font-awesome.css',
+        array(
+            'minify' => false,
+        ),
     ),
+),
 ----
 
 For this asset, "font-awesome" is the asset handle, and "css" is the type.

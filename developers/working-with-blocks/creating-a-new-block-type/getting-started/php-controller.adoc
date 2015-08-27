@@ -1,0 +1,205 @@
+= PHP Controller
+
+controller.php contains information about our block, as well as methods that automatically get run when different things happen to our block.
+
+== Namespace
+
+First, we have to give our block the proper namespace.
+Since this block is a custom Concrete5 block living in the application/ directory, the first segment is **Application**.
+Next, we add *Block* (since all blocks have this as their second namespace segment), and finally the camelcased version of block type handle.
+So, if our block is has the handle hello_world, this would be our namespace:
+
+[source,php]
+----
+<?php
+
+namespace Application\Block\HelloWorld;
+----
+
+== Extend the Core Block Controller
+
+Next, we have to include the core block controller from Concrete5, which our Controller class will extend.
+
+[source,php]
+----
+use Concrete\Core\Block\BlockController;
+----
+
+== Class Definition
+
+Finally, let's create our class.
+
+[source,php]
+----
+<?php
+
+namespace Application\Block\HelloWorld;
+
+use Concrete\Core\Block\BlockController;
+
+class Controller extends BlockController
+{
+}
+----
+
+== Class Properties
+
+=== Database Parameters
+
+`**$btTable**` +
+The block's primary database table.
+If specified, and if the block only uses this one database table, then the block will be able to automatically save its information to this table, provided the block's form fields map directly to the columns in the database.
+*This value will also be set in db.xml.*
+
+=== Organization
+
+`**$btDefaultSet**` +
+Defaults to null.
+If a valid Block Type Set handle is passed, the block type will be installed in this set automatically, and will show up there in the Add block interface.
+
+=== Interface
+
+`**$btSupportsInlineAdd**` +
+A boolean value that specifies whether the block supports inline editing when added to a page.
+Defaults to false if unspecified.
+
+`**$btSupportsInlineEdit**` +
+A boolean value that specifies whether the block supports inline editing when edited in a page.
+Defaults to false if unspecified.
+
+`**$btInterfaceWidth**` +
+The width in pixels of the modal popup dialog box that holds this block when it is added or edited.
+Does nothing if hte block supports inline adding/editing.
+
+`**$btInterfaceHeight**` +
+The height of the modal popup dialog box in pixels that holds this block when it is added or edited.
+Does nothing if hte block supports inline adding/editing.
+
+`**$btIgnorePagethemeGridFrameworkContainer**` +
+Defaults to false.
+If set to true, and this block is added to a page that is within a theme grid container, this block will *not* be contained within that container.
+Useful for full-width blocks like Horizontal Rule, Image Slider.
+
+=== Caching
+
+`**$btCacheBlockRecord**` +
+Defaults to true.
+When block caching is enabled, this means that the block's database record data will also be cached.
+*This can almost always be set to true.*
+
+`**$btCacheBlockOutput**` +
+Defaults to false.
+When block caching is enabled, enabling this boolean means that the output of the block will be saved and delivered without rendering the view() function or hitting the database at all.
+
+`**$btCacheBlockOutputLifetime**` +
+Defaults to no time limit (0).
+When block caching is enabled and output caching is enabled for a block, this is the value in seconds that the cache will last before being refreshed.
+
+`**$btCacheBlockOutputOnPost**` +
+Defaults to false.
+This determines whether a block will cache its output on POST.
+Some blocks can cache their output but must serve uncached output on POST in order to show error messages, etc…
+
+`**$btCacheBlockOutputForRegisteredUsers**` +
+Defaults to false.
+Determines whether a block that can cache its output will continue to cache its output even if the current user viewing it is logged in.
+
+=== Advanced
+
+`**$btExportPageColumns**` +
+Defaults to an empty array.
+When this block is exported, any database columns found in this array will automatically be swapped for links to specific pages.
+Upon import they will map to the specific page found at that path, regardless of its ID.
+
+`**$btExportFileColumns**` +
+Defaults to an empty array.
+When this block is exported, any database columns found in this array will automatically be swapped for links to specific files, by file name.
+Upon import they will map to the specific file with that filename, regardless of its file ID.
+
+`**$btExportPageTypeColumns**` +
+Defaults to an empty array.
+When this block is exported, any database columns found in this array will automatically be swapped for references to a particular page type.
+Upon import they will map to that specific page type ID based on the handle specified.
+
+`**$btExportPageFeedColumns**` +
+Defaults to an empty array.
+When this block is exported, any database columns found in this array will automatically be swapped for a reference to a specific RSS feed object.
+Upon import they will map to the specific feed, regardless of its ID in the database.
+
+`**$btIncludeAll**` +
+Defaults to false.
+Determines whether this block should include itself as is on all versions of a page.
+This will disable versioning for this block type.
+*Note: this is not recommended, but sometimes it is necessary given the architecture of a block type.*
+
+`**$btCopyWhenPropagate**` +
+Defaults to false.
+When a block is aliased from page defaults or from another location, setting this to true will cause that block to copy itself, rather than alias back to the original block.
+
+== Required Methods
+
+`**getBlockTypeName()**` +
+Returns the block type's name, as it will be shown in the Dashboard and the Add Panel.
+Usually this should be returned in a t() string, so that it can be translated.
+
+`**getBlockTypeDescription()**` +
+Returns a short description of the block type.
+[source,php]
+----
+<?php
+
+namespace Application\Block\HelloWorld;
+
+use Concrete\Core\Block\BlockController;
+
+class Controller extends BlockController
+{
+    public function getBlockTypeName()
+    {
+        return t('Hello World');
+    }
+    public function getBlockTypeDescription()
+    {
+        return t('This is my sample block.');
+    }
+}
+----
+
+== Optional Methods
+
+`**add()**` +
+If present, this method will automatically be run when the add template is rendered (whether in the page for inline editing or through the dialog for traditional Concrete5 block adding.) If no add template is present, this method will not be excuted.
+
+`**edit()**` +
+If present, this method will automatically be run when the edit template is rendered (whether in the page for inline editing or through the dialog for traditional Concrete5 block adding.) Like add(), if no edit template is present, this method will not be excuted.
+
+`**validate()**` +
+This method will be run automatically any time add or edit interface is submitted to the backend to be saved.
+If this block returns a Concrete\Core\Error\Error() object with any messages inside it, those will be displayed to the user and the block will not be saved.
+
+`**save($data)**` +
+This method is automatically run when a block is submitted to the backend to be saved.
+If this method is omitted, the block will be saved based on the variables found in the $data array.
+This $data array is populated from entries in the POST.
+These variables will be mapped directly to columns found in the $btTable database table, and attempted to be saved automatically.
+This can be extended or overridden entirely by defining a save() method in the controller.
+That means that if your add.php or edit.php file contains a form element with a particular input name, that name parameter will be found in the $data array of the save() method.
+
+`**duplicate($newBlockID)**` +
+This method is automatically run any time a block is duplicated.
+This happens automatically in Concrete5 when versioning blocks and pages.
+If this method is omitted then the data row in the $btTable database table will be duplicated with the bID parameter found in that table getting the value of the $newBlockID parameter.
+Duplication operations can be extended for blocks that use multiple tables by specifying a custom duplicate() handler.
+
+`**export(SimpleXMLElement $blockNode), import($page, $areaHandle, SmpleXMLElement $blockNode)**` +
+These methods are run automatically when exporting and importing blocks of this type.
+Most of the time these can be omitted but custom import/export routines are possible.
+
+`**delete()**` +
+This method is automatically run when a block is deleted.
+*Note:* this may not happen very often since a block is only completed deleted when all versions that reference that block, including the original, have themselves been deleted.
+If this is omitted the delete() operation simply deletes the row from the $btTable database table that has the block ID parameter of the current block ($bID).
+
+`**getSearchableContent()**` +
+If present, this method provides text for the page search indexing routine.
+This method should return simple, unformatted plain text, not HTML.

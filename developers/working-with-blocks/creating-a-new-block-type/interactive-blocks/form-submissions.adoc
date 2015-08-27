@@ -1,0 +1,55 @@
+= Example: Handling a Form Submission from a Block's View Layer
+
+The survey block presents the user with a form that, when submitted, tallies the result against a particular option.
+Here's how that works:
+
+== Form Action
+
+To create a form action in a block, use the \Concrete\Core\Block\View\BlockView::action method:
+
+[source,php]
+----
+$view->action('form_save_vote');
+----
+
+The $view object is an instance of the http://concrete5.org/api/class-Concrete.Core.Block.View.BlockView.html[\Concrete\Core\Block\View\BlockView] object.
+It is automatically available in a blocks' template's local scope.
+The name of this action isn't important.
+It could be "submit" or even "save."
+
+== Generated URL
+
+The `$view->action('form_save_vote')` method generates the following URL:
+
+----
+http://www.mysite.com/index.php/path/to/page/form_save_vote/{bID}
+----
+
+Where bID is the numerical block ID.
+
+== Controller Method
+
+Now create a method named action_method_name, where method_name is the contents of the action() method you used on the page.
+For the survey block, the name is "action_form_save_vote." When the form is submitted, this action will be run.
+At the end of this method you can redirect the user to another page, but this is not required.
+
+[source,php]
+----
+public function action_form_save_vote($bID = false)
+{
+    if ($this->bID != $bID) {
+        return false;
+    }
+ 
+    if (!$this->hasVoted()) {
+        // Code omitted
+        $c = \Page::getCurrentPage();
+        $this->redirect($c->getCollectionPath().'?survey_voted=1');
+    }
+}
+----
+
+When we use $view->action(), the current block ID is automatically entered as the first argument.
+This then gets passed to our action, and we can determine whether to proceed.
+Some blocks don't care about whether they are being triggered by the same instance as they began.
+Others, like the form and survey, definitely want to ensure that only the submitted form is the one that is saved for that request.

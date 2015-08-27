@@ -1,14 +1,17 @@
-== Adding Custom CSS Classes to Blocks, Areas and the Editor
+= Adding Custom CSS Classes to Blocks, Areas and the Editor
+
+video::FLeyA63Tvn0[youtube, width=640, height=360]
 
 (Note: the full HD video is available at YouTube)
 
-We've concrete-tized our theme, enabled a grid, added some custom block classes, and worked with assets. Now let's get into some custom block, area, and Redactor editor CSS.
+We've concrete-tized our theme, enabled a grid, added some custom block classes, and worked with assets.
+Now let's get into some custom block, area, and Redactor editor CSS.
 
-=== Custom Templates
+== Custom Templates
 
 We've had custom templates in concrete5 for a very long time. These give you alternate views for blocks. But sometimes you don't need that. Sometimes you just want to add a custom class to a block or area. We've had the ability to do this in a free-form way – but 5.7 let's you specify these in a PageTheme file so that they show up in an easy to use select menu.
 
-==== Area Classes
+=== Area Classes
 
 Adding this method to the PageTheme class:
 
@@ -17,14 +20,14 @@ Adding this method to the PageTheme class:
 public function getThemeAreaClasses()
 {
     return array(
-        'Welcome' => array('templatemo-team')
+        'Welcome' => array('templatemo-team'),
     );
 }
 ----
 
 will make it so that any area named "Welcome" will have the "templatemo-team" class available in the advanced dropdown of the Custom Design toolbar.
 
-==== Block Classes
+=== Block Classes
 
 Adding this method to the PageTheme class:
 
@@ -34,13 +37,14 @@ public function getThemeBlockClasses()
 {
     return array(
         'image' => array(
-            'img-thumbnail'
-        )
+            'img-thumbnail',
+        ),
     );
 }
 ----
 
-will make it so that any Image block will have the "img-thumbnail" class available in the advanced dropdown of the Custom Design toolbar. Adding this method to the PageTheme class:
+will make it so that any Image block will have the `img-thumbnail` class available in the advanced dropdown of the Custom Design toolbar.
+Adding this method to the PageTheme class:
 
 [source,php]
 ----
@@ -48,7 +52,7 @@ public function getThemeEditorClasses()
 {
     return array(
         array('title' => t('Orange Button'), 'menuClass' => '', 'spanClass' => 'btn btn-orange'),
-        array('title' => t('Green Button'), 'menuClass' => '', 'spanClass' => 'btn btn-green')
+        array('title' => t('Green Button'), 'menuClass' => '', 'spanClass' => 'btn btn-green'),
     );
 }
 ----

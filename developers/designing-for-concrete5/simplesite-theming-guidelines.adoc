@@ -1,10 +1,12 @@
 = SimpleSite Theming Guidelines
 
-Theme developers who would like their themes considered for Concrete5 SimpleSite hosting must adhere to a higher standard than regular marketplace theme submissions. SimpleSite themes need to be both compelling and useful on their own, and work well with the built-in Concrete5 page types and blocks.
+Theme developers who would like their themes considered for Concrete5 SimpleSite hosting must adhere to a higher standard than regular marketplace theme submissions.
+SimpleSite themes need to be both compelling and useful on their own, and work well with the built-in Concrete5 page types and blocks.
 
 == Pass Basic Marketplace Tests
 
-SimpleSite themes *must* be in the Concrete5 package format, and pass all PRB tests as they are currently defined. Themes *must* adhere to basic Concrete5 theming principles, like the implementation of $page->getPageWrapperClass(), the inclusion of a default.php file and view.php file.
+SimpleSite themes *must* be in the Concrete5 package format, and pass all PRB tests as they are currently defined.
+Themes *must* adhere to basic Concrete5 theming principles, like the implementation of $page->getPageWrapperClass(), the inclusion of a default.php file and view.php file.
 
 == Provide Sample Content
 
@@ -12,13 +14,16 @@ SimpleSite package controllers *must* enable full content.
 
 Tested themes will be installed by first installing Concrete5 using the blank starting point, and then installing a theme package with sample content swap enabled.
 
-Additionally, themes *must* provide sample content in the Concrete5 Import Format, using content.xml and a content_files directory in the package directory. This can be generated using the Concrete5 Sample Content Exporter add-on.
+Additionally, themes *must* provide sample content in the Concrete5 Import Format, using content.xml and a content_files directory in the package directory.
+This can be generated using the Concrete5 Sample Content Exporter add-on.
 
 *Installing these themes must provide an experience exactly like the experience demonstrated in the theme's marketing.* No setup should be required to begin using these themes as intended, once a Concrete5 SimpleSite with this theme is created.
 
 == Customizable, Plus Presets
 
-The SimpleSite theme *must* be customizable using the Style Customizer, and should provide at least three presets (including the defaults). The level of customization does not need to be as broad as Concrete5's built-in Elemental theme. Instead, focus on changing the most areas of theme with the fewest options.
+The SimpleSite theme *must* be customizable using the Style Customizer, and should provide at least three presets (including the defaults).
+The level of customization does not need to be as broad as Concrete5's built-in Elemental theme.
+Instead, focus on changing the most areas of theme with the fewest options.
 
 == Editor Integration
 
@@ -26,23 +31,36 @@ The SimpleSite theme should provide integration with the Redactor using getTheme
 
 == Fully Responsive and Modern
 
-Each theme approved for Concrete5 SimpleSite *must* be fully responsive at the same break points as the built-in Elemental theme. A theme *must* also implement getThemeResponsiveImageMap for responsive image support. Efforts should be made to make the markup clean, closely adhering to HTML5 standards, and rendering reasonably in IE8+.
+Each theme approved for Concrete5 SimpleSite *must* be fully responsive at the same break points as the built-in Elemental theme.
+A theme *must* also implement getThemeResponsiveImageMap for responsive image support.
+Efforts should be made to make the markup clean, closely adhering to HTML5 standards, and rendering reasonably in IE8+.
 
 == Grid-Based
 
-Each theme approved for Concrete5 SimpleSite *must* enable a grid framework. This could be a custom grid framework shipped with the theme, the Bootstrap 3 grid framework, or the Foundation grid framework. *Neither the 960 Grid System nor the Bootstrap 2 grid framework should be used.* The theme grid framework used *must* be fully responsive.
+Each theme approved for Concrete5 SimpleSite *must* enable a grid framework.
+This could be a custom grid framework shipped with the theme, the Bootstrap 3 grid framework, or the Foundation grid framework.
+*Neither the 960 Grid System nor the Bootstrap 2 grid framework should be used.*
+The theme grid framework used *must* be fully responsive.
 
 == Styling
 
-Core panels and dialogs *must* not be altered by the usage of a SimpleSite theme. This means careful CSS scoping within your theme.
+Core panels and dialogs *must* not be altered by the usage of a SimpleSite theme.
+This means careful CSS scoping within your theme.
 
-All block types *must* also look decent without the requirement of custom templates when viewed in the SimpleSite theme. Templates could be provided to further enhance functionality of core blocks. We do not mandate the use of certain block types in SimpleSite sample content – but in case an end user swaps out content with a different core block type, that block type should look good.
+All block types *must* also look decent without the requirement of custom templates when viewed in the SimpleSite theme.
+Templates could be provided to further enhance functionality of core blocks.
+We do not mandate the use of certain block types in SimpleSite sample content – but in case an end user swaps out content with a different core block type, that block type should look good.
 
 == Blocks
 
-Every core block type *must* must not break when added to a page in a SimpleSite theme. There must be no JavaScript errors or botched rendering.
+Every core block type *must* must not break when added to a page in a SimpleSite theme.
+There must be no JavaScript errors or botched rendering.
 
-A SimpleSite theme could install its own custom block types or core block type custom templates. This does not replace the need to support existing similar block types, however. For example, if a SimpleSite theme includes its own custom image slider, the built-in image slider *must* still function within the SimpleSite theme. It does not need to have the same level of styling as the custom Image Slider, nor do they need to be interchangeable. It is recommended to limit the use of custom block types in favor of core block types wherever possible.
+A SimpleSite theme could install its own custom block types or core block type custom templates.
+This does not replace the need to support existing similar block types, however.
+For example, if a SimpleSite theme includes its own custom image slider, the built-in image slider *must* still function within the SimpleSite theme.
+It does not need to have the same level of styling as the custom Image Slider, nor do they need to be interchangeable.
+It is recommended to limit the use of custom block types in favor of core block types wherever possible.
 
 == Page Types & Templates
 
@@ -55,14 +73,23 @@ A SimpleSite *must* provide the following page types:
 * Blog Entry
 * Blog
 
-SimpleSite themes are strongly encouraged to provide additional useful page types. SimpleSite themes should provide useful page templates and set their page types and defaults in such a way that the distinction between a page type and a page template is clear. This means making multiple page templates available for use of page types, if those page templates will be compatible.
+SimpleSite themes are strongly encouraged to provide additional useful page types.
+SimpleSite themes should provide useful page templates and set their page types and defaults in such a way that the distinction between a page type and a page template is clear.
+This means making multiple page templates available for use of page types, if those page templates will be compatible.
 
-SimpleSite theme page types should provide a useful composer form layout, and launch in composer where applicable (e.g. Blog Entry page types.)
+SimpleSite theme page types should provide a useful composer form layout, and launch in composer where applicable (e.g.
+Blog Entry page types.)
 
-SimpleSite themes should limit the use of block areas, and should use layouts with grids when possible. SimpleSite themes should limit the use of global block areas as well, but should use them for sitewide header and footer content.
+SimpleSite themes should limit the use of block areas, and should use layouts with grids when possible.
+SimpleSite themes should limit the use of global block areas as well, but should use them for sitewide header and footer content.
 
 SimpleSite page templates *must* include an area named "Main."
 
 == End Goals
 
-Above all else, consider a SimpleSite theme as a mostly finished product. You are not delivering a framework or a starting point to someone with a SimpleSite theme. SimpleSite users do not have access to the file system. They do not have access to create new page templates, modify code, or even install any packages beyond the SimpleSite theme that comes with their site. This is why SimpleSite themes must be ready to launch, with compelling sample content. With a SimpleSite theme, we are delivering the first 80% of a particular website, and giving the site's administrators tools to launch the site and maintain it going forward.
+Above all else, consider a SimpleSite theme as a mostly finished product.
+You are not delivering a framework or a starting point to someone with a SimpleSite theme.
+SimpleSite users do not have access to the file system.
+They do not have access to create new page templates, modify code, or even install any packages beyond the SimpleSite theme that comes with their site.
+This is why SimpleSite themes must be ready to launch, with compelling sample content.
+With a SimpleSite theme, we are delivering the first 80% of a particular website, and giving the site's administrators tools to launch the site and maintain it going forward.

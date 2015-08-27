@@ -1,0 +1,63 @@
+= Enabling Inline Editing
+
+Concrete5 5.7 introduces the concept of inline editing for blocks.
+Prior to 5.7, all block types were rendered in a dialog box.
+Now, block types can inject their add and edit interfaces directly into the page:
+
+image:inline-editing.png[Inline Editing]
+
+Marking your block as capable of inline editing is as easy as adding the following parameters to your block type's controller.php class.
+
+[source,php]
+----
+protected $btSupportsInlineEdit = true;
+protected $btSupportsInlineAdd = true;
+----
+
+NOTE: once your block is available for inline editing, you'll need to provide your own code to save your block and to generate an inline toolbar, if you'd like it to match the built-in styles of the Concrete5 inline editor.
+
+Here is some example code for a simple inline toolbar as used by the very handy (slightly adapted) http://www.concrete5.org/marketplace/addons/editor-comment1[Editor Comment] block:
+
+[source,php]
+----
+<ul class="ccm-inline-toolbar">
+    <li class="ccm-inline-toolbar-button ccm-inline-toolbar-button-cancel">
+        <button class="btn btn-default"><?php echo t('Cancel'); ?></button>
+    </li>
+    <li style="cursor:help;">
+        <span class="fa fa-question-circle">
+        </span>
+    </li>
+    <li class="ccm-inline-toolbar-button ccm-inline-toolbar-button-save">
+        <button class="btn btn-primary"><?php echo t('Save'); ?></button>
+    </li>
+</ul>
+----
+
+Next, you'll need to ensure that the buttons fire the proper Concrete5 JavaScript events.
+These take of saving blocks in inline edit mode.
+Your cancel button should call this method:
+
+[source,javascript]
+----
+ConcreteEvent.fire('EditModeExitInline');
+----
+
+To save your block, you'll need to wire this JavaScript method to your save button:
+
+[source,javascript]
+----
+ConcreteEvent.fire('EditModeBlockSaveInline');
+----
+
+(Note: this only works in 5.7.4 or later.
+If you're making a block for an earlier version of 5.7, you'll need to use this code to save your inline-editable block):
+
+[source,javascript]
+----
+$('#ccm-block-form').submit();
+ConcreteEvent.fire('EditModeExitInlineSaved');
+ConcreteEvent.fire('EditModeExitInline', {
+  action: 'save_inline'
+});
+----

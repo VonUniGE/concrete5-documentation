@@ -1,10 +1,11 @@
-== Assets Screencast
+= Assets Screencast
 
+video::FsWc09wR0Pc[youtube, width=640, height=360]
 (Note: the full HD video is available at YouTube.)
 
 Now that we've added a theme and given it a grid, it's time for us to continue exploring 5.7's new theme-focused features. This one is asset support.
 
-==== What are Assets?
+== What are Assets?
 
 When we talk about Assets, we mean CSS and JavaScript files, which typically are required at the same time, in order to add functionality. For example, in order for the Redactor rich text editor to function we need to include
 
@@ -12,13 +13,15 @@ concrete/js/redactor.js concrete/css/redactor.css concrete/js/file-manager.js co
 
 and perhaps a few more files.
 
-===== addHeaderItem and addFooterItem
+== addHeaderItem and addFooterItem
 
-We used to specify these with $view->addHeaderItem() and $view->addFooterItem(). Those methods still exist, but they are brittle, and littering your code with these makes it difficult to ensure the code will still work later when more or different assets are required for the same functionality.
+We used to specify these with $view->addHeaderItem() and $view->addFooterItem().
+Those methods still exist, but they are brittle, and littering your code with these makes it difficult to ensure the code will still work later when more or different assets are required for the same functionality.
 
-==== Asset Framework
+== Asset Framework
 
-Now, with the Asset, AssetGroup and AssetList classes found in the \Concrete\Core\Asset namespace, we can register these assets, including whether to minify or combine them on the fly, their versions and paths, and we can group them together. Requiring all of Redactor's assets on a page now requires just this line of code
+Now, with the Asset, AssetGroup and AssetList classes found in the \Concrete\Core\Asset namespace, we can register these assets, including whether to minify or combine them on the fly, their versions and paths, and we can group them together.
+Requiring all of Redactor's assets on a page now requires just this line of code
 
 [source,php]
 ----
@@ -27,9 +30,11 @@ $this->requireAsset('redactor');
 
 from within a block controller.
 
-==== Theme Assets
+== Theme Assets
 
-Sometimes themes provide assets. For example, this theme is bootstrap3 based, meaning it already includes bootstrap's CSS and JavaScript by default. That also means it takes care of certain block and core formatting by default, since the core blocks use bootstrap styles.
+Sometimes themes provide assets.
+For example, this theme is bootstrap3 based, meaning it already includes bootstrap's CSS and JavaScript by default.
+That also means it takes care of certain block and core formatting by default, since the core blocks use bootstrap styles.
 
 In order to remove the duplicate bootstrap assets from this theme and fix conflicts that are keeping it from functioning fully, we add code to our PageTheme class to mark that these bootstrap assets are provided by the theme.
 
@@ -44,17 +49,3 @@ public function registerAssets()
     $this->requireAsset('javascript', 'jquery');
 }
 ----
-
-<<designing-for-concrete5_advanced-css-and-javascript-usage_adding-custom-css-classes-to-blocks-areas-and-the-editor>>[Adding Custom CSS Classes to Blocks, Areas and the Editor »]
-
-<<designing-for-concrete5_advanced-css-and-javascript-usage_overriding-or-providing-core-javascript-or-css-in-a-theme>>[« Overriding or Providing Core JavaScript or CSS in a Theme]
-
-=== Comments:
-
-image:/files/avatars/none.gif[image]
-
-Posted by link:/profile/-/97058/[goldhat] on Mar 19th, 2015
-
-For package development, in the package controller on_start() function you can use Concrete\Core\Page\Theme\Theme and call requireAsset() in order to have your asset provided sitewide.
-
-You must be link:/login/[logged in] to leave a reply.
