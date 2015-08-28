@@ -4,3 +4,34 @@ In this repository we'll have the source of two books for concrete5 5.7:
 
 - Editor's Guide (currently available at link:http://www.concrete5.org/documentation/using-concrete5-7/[www.concrete5.org/documentation/using-concrete5-7/])
 - Developer Documentation (currently available at link:http://www.concrete5.org/documentation/developers/5.7/[www.concrete5.org/documentation/developers/5.7/])
+
+== Installation
+
+=== Ruby
+
+Check that you have Ruby installed:
+
+[source]
+----
+ruby --version
+----
+
+In case it's not installed: please link:https://www.ruby-lang.org/en/documentation/installation/[install it].
+
+=== Bundler
+
+Check that you have Bundler installed:
+
+[source]
+----
+bundler --version
+----
+
+=== Gems
+
+Install the required gems by running
+
+[source]
+----
+bundler install
+----
