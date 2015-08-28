@@ -18,13 +18,13 @@ ruby --version
 
 In case it's not installed: please link:https://www.ruby-lang.org/en/documentation/installation/[install it].
 
-=== Bundler
+=== Bundle
 
-Check that you have Bundler installed:
+Check that you have Bundle installed:
 
 [source]
 ----
-bundler --version
+bundle --version
 ----
 
 === Gems
@@ -33,5 +33,5 @@ Install the required gems by running
 
 [source]
 ----
-bundler install
+bundle install
 ----
