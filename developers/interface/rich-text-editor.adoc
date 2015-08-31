@@ -1,0 +1,10 @@
+[[interface_rich-text-editor]]
+= Rich Text Editor
+
+:leveloffset: +1
+
+include::rich-text-editor/embedding.adoc[]
+
+include::rich-text-editor/registering-plugin.adoc[]
+
+:leveloffset: -1

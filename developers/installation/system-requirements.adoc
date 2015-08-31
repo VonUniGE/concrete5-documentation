@@ -1,3 +1,4 @@
+[[installation_system-requirements]]
 = System Requirements
 
 Concrete5 Version 7 requires the following:

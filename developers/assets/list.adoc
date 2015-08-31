@@ -1,0 +1,6 @@
+[[assets_list]]
+= Built-in Asset List
+
+A full list of all assets can be found in the appendix.
+
+<<appendix_assets>>

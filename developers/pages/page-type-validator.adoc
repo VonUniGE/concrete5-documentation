@@ -1,0 +1,103 @@
+[[pages_page-type-validator]]
+= Creating a Custom Page Type Validator
+
+NOTE: This requires concrete5 7.4 or greater
+
+In concrete5 7.4 we introduced the concept of custom page type validators.
+In concrete5 version 7, page types were overhauled and separated completely from the concept of page templates, which handle the form factor of pages.
+Page types are now simply the collection of default attributes, default blocks and composer forms that are relevant for a particular type of page.
+This works really well for strongly typed pages, like the Portfolio Project or Blog Entry page type in the default sample content.
+
+As a developer, you'll frequently use page types to solve certain specific, particular problems.
+In the core, we have a Job Posting custom page type, in order to show off some of the attribute functionality.
+We add custom attributes that are relevant to job postings to the Job Posting composer form - attributes like "Department" and "Location." These are very important to the concept of a Job Posting.
+We also add the concept of a Job Open Date - the date when a job becomes available.
+But what if we wanted to add some custom validation to this page type concept?
+For example, let's say our Employment department won't let us post jobs that are more than 30 days in the future.
+We can't just mark the job open date attribute as required - because any date that's filled in will satisfy that requirement.
+We need to add custom code to check the date, and fail if the date is too far in the future.
+This is where we can employ a custom page type validator.
+
+First, we have to tell concrete5 that our Job Posting page type has a custom validator.
+We do that with this code, which we can place in application/bootstrap/app.php
+
+[source,php]
+----
+$manager = \Core::make('manager/page_type/validator');
+$manager->extend('job_posting', function($app) {
+    return new \Application\Src\Page\Type\Validator\JobPostingValidator();
+});
+----
+
+First, we make an instance of the Page Type Validator Manager service.
+Then, we extend that service with a custom entry for the Job Posting page type.
+The first parameter of the extend method is the page type handle, and the second parameter is a callback that returns a class that implements the http://concrete5.org/api/class-Concrete.Core.Page.Type.Validator.ValidatorInterface.html[\Concrete\Core\Page\Type\Validator\ValidatorInterface]
+
+Now we need to actually create our custom validator.
+Create a src/ directory in the application/src directory, and then create directories all the way down to
+
+----
+application/src/Page/Type/Validator/
+----
+
+Then, create an empty PHP file in this directory, named JobPostingValidator.
+Then, we'll put this code inside it.
+
+[source,php]
+----
+<?php
+
+namespace Application\Src\Page\Type\Validator;
+
+use Concrete\Core\Page\Page;
+use Concrete\Core\Page\Type\Composer\Control\Control;
+use Concrete\Core\Page\Type\Composer\Control\CorePageProperty\DateTimeCorePageProperty;
+use Concrete\Core\Page\Type\Validator\StandardValidator;
+
+class JobPostingValidator extends StandardValidator
+{
+    public function validatePublishDraftRequest(Page $page = null)
+    {
+        $e = parent::validatePublishDraftRequest($page);
+        $controls = Control::getList($this->type);
+        foreach ($controls as $control) {
+            if ($control instanceof DateTimeCorePageProperty) {
+                $property = $control;
+                break;
+            }
+        }
+
+        $property->setPageObject($page);
+        $date = $property->getRequestValue();
+        if (!$date) {
+            $date = $property->getPageTypeComposerControlDraftValue();
+        }
+        if (is_array($date)) {
+            $datetime = strtotime(\Core::make('helper/form/date_time')->translate('date_time', $date));
+        } else {
+            $datetime = strtotime($date);
+        }
+
+        if ($datetime - time() > 2592000) {
+            $e->add(t('A job cannot be posted more than 30 days in the future.'));
+        }
+        return $e;
+    }
+
+}
+----
+
+While this might look complicated at first, it really isn't too bad.
+First, we namespace our class properly - anything in the application/src directory needs to be namespaced Application\Src.
+Next, we extend the StandardValidator class.
+This class itself implements the ValidatorInterface.
+
+NOTE: the StandardValidator takes care of validating all the various properties marked as required in the page type, as well as ensuring the proper templates are selected, etc...
+It's usually a good idea to extend this class - but as long as your class implements the ValidatorInterface it's not strictly required to extend this class.
+
+Next, our validatePublishDraftRequest takes care of our custom logic.
+We grab all the composer controls in the Page Type, and find the core datetime property.
+Next, we grab the value from either the page or - if the composer form is being published - the form itself, and we turn it into a timestamp.
+Finally, we check to see if that timestamp is 30 days from now.
+If it's greater than that, we add another error to our error object, and return the error object.
+And with that our Job Posting page type will keep the standard validation functionality, while adding our own important logic.

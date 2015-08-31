@@ -1,0 +1,47 @@
+[[blocks_create_caching]]
+= Making Blocks Cacheable for Better Performance
+
+By default, any time a block view is rendered in a page, the following takes place:
+
+. The block ID, area name and page ID is retrieved from the Database.
+. Using this data, the information from the block's $btTable is retrieved dynamically.
+. The view() method from the block's controller is run.
+. The view.php or custom template PHP file for that block instance is included.
+
+Some block's require this level of dynamic processing, but many don't.
+For those, it doesn't make sense to run through all these steps every time the block is rendered, on every page.
+Instead, block's can be made cacheable, in various levels.
+
+To make a block cacheable, simply add any of the following protected class variables to your block's controller.
+
+== Variables
+
+`**$btCacheBlockRecord;**` +
+This defaults to true, meaning that it is enabled for block types by default.
+When this is set to true, step 2 in the list above is not necessary.
+Instead, the $btTable record data will be stored with the block record in step 1, and will automatically be cached and retrieved.
+*This can almost always be set to true.*
+
+`**$btCacheBlockOutput**` +
+Defaults to false.
+When block caching is enabled, enabling this boolean means that the output of the block will be saved and delivered without running steps 3 and 4 above.
+*This means view() will not run.*
+
+`**$btCacheBlockOutputLifetime**` +
+Defaults to no time limit (0).
+When block caching is enabled and output caching is enabled for a block, this is the value in seconds that the cache will last before being refreshed.
+
+`**$btCacheBlockOutputOnPost**` +
+Defaults to false.
+This determines whether a block will cache its output on POST.
+Some blocks can cache their output but must serve uncached output on POST in order to show error messages, etc...
+
+`**$btCacheBlockOutputForRegisteredUsers**` +
+Defaults to false.
+Determines whether a block that can cache its output will continue to cache its output even if the current user viewing it is logged in.
+
+== Refresh Note
+
+When changing any of these parameters in your block type, make sure to refresh your block type via Dashboard > Stacks & Blocks > Block Types.
+Click on the block type in the list and click refresh.
+Otherwise the block type record won't be aware that its cache settings have changed.

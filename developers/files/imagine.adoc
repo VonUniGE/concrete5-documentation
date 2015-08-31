@@ -1,0 +1,60 @@
+[[files_imagine]]
+= Using the Imagine Image Library to Work with Images
+
+Concrete5 includes the https://imagine.readthedocs.org/en/latest/[Imagine Image Processing Library] for working with images.
+Imagine is a OOP library for image manipulation built in PHP 5.3 using the latest best practices and thoughtful design.
+Imagine is accessible through the Image class:
+
+[source,php]
+----
+$imagine = \Image::open('/path/to/image.jpg');
+----
+
+That's it.
+Now you have an instance of an object of the \Imagine\Image\ImageInterface interface.
+You can read more about what you can do with this object https://imagine.readthedocs.org/en/latest/usage/introduction.html[in Imagine's documentation].
+
+Using Imagine to work on a Concrete5 File object is easy.
+
+[source,php]
+----
+$file = File::getByID(3);
+$version = $file->getApprovedVersion();
+$resource = $version->getFileResource();
+$image = Image::load($resource->read());
+----
+
+== Example: Take a File object, load a new version, Transform the Image and Save It
+
+Note: this requires 7.5 or greater
+
+[source,php]
+----
+$portrait = File::getByID(10);
+$version = $file->getVersionToModify(true); //forces the retrieval of a new version
+$resource = $version->getFileResource();
+$image = Image::load($resource->read());
+
+// Now let's perform some manipulations to the image.
+$image->effects()->negative()->gamma(1.3);
+
+// Now let's update the image
+$version->updateContents($image->get());
+----
+
+If you're on a version before 5.7.5, the API is a little more cumbersome.
+Instead of simply calling updateContents() (a new method in 5.7.5), you'll have to call this instead:
+
+[source,php]
+----
+// Now let's update the image
+$storage = $version->getFile()->getFileStorageLocationObject();
+$cf = Core::make('helper/concrete/file');
+if (is_object($storage)) {
+    $storage->getFileSystemObject()->write($cf->prefix($version->getPrefix(), $version->getFilename()), $image->get());
+    $version->refreshAttributes();
+}
+----
+
+That's it.
+The contents of the new file version are now the modified image contents.

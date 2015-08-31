@@ -1,0 +1,10 @@
+[[design_packages]]
+= Packaging Your Theme
+
+:leveloffset: +1
+
+include::packages/overview.adoc[]
+
+include::packages/full-content-swap.adoc[]
+
+:leveloffset: -1

@@ -1,0 +1,291 @@
+[[files_image-editor-control-sets-filters]]
+= Creating Control Sets and Filters for the Image Editor
+
+NOTE: this requires concrete5 7.5 or greater
+
+concrete5 version 7 shipped with an exciting, full-featured image editor directly accessible from within the File Manager.
+
+image:image-editor-1.png[alt="Image Editor", title="Image Editor"]
+
+image:image-editor-2.png[alt="Image Editor", title="Image Editor"]
+
+The Image Editor provides simple cropping, rotation and resizing controls, and some simple, fun image filters.
+Extending this functionality is something that developers can do.
+
+== Extension Points
+
+Image editor extensions give you the ability to add html into the image editor sidebar and control the editing image using javascript.
+There are two types of extensions in concrete5, "control" and "filter".
+Controls manage things like resizing and rotating an image while filters just change the imagedata to do things like blur or brighten the active image.
+
+== Adding a control with configuration
+
+Image editor configuration lives under its own group `imageeditor`, to modify this group create and edit `application/config/imageeditor.js`.
+Extensions live underneath the `extensions` item so a proper image editor config file looks something like:
+
+[source,php]
+----
+<?php
+return array(
+    'extensions' => array(
+
+        // Name the item in the extensions array so that we can easily override it
+        'custom_extension' => array(
+
+            // Define the type as ImageEditorExtensionControl
+            'type' => Concrete\Core\ImageEditor\ImageEditor::ImageEditorExtensionControl,
+
+            // Give it a cool display name
+            'name' => 'My Custom Extension',
+
+            // Give it a neat handle
+            'handle' => 'custom_extension',
+
+            // Provide the name of a registered javascript asset
+            'src' => 'my_javascript_asset',
+
+            // Provide the path to a view
+            'view' => 'editor/controls/custom_extension',
+
+            // List the additional assets you want added to the page,
+            // make the key the asset handle and the value an array of types
+            'assets' => array(
+                'my_javascript_asset' => array('css'),
+            ),
+        )
+    )
+);
+----
+
+== Adding a control with code
+
+You can retrieve the editor object by using the `editor/image/core' application binding:
+
+[source,php]
+----
+<?php
+$editor = \Core::make('editor/image/core');
+----
+
+== Using the core extension class
+
+Concrete5 provides an `EditorExtensionInterface` implementation that is easy set up without having to extend any classes
+
+[source,php]
+----
+<?php
+// Create a new extension instance
+$extension = new \Concrete\Core\ImageEditor\Extension();
+
+// Set name and handle
+$extension->setName('My Custom Extension');
+$extension->setHandle('custom_extension');
+
+// Set the view
+$view = new View('path/to/view');
+$extension->setView($view);
+
+// Create a new JavaScript asset
+$asset = new \Concrete\Core\Asset\JavascriptAsset();
+$asset->mapAssetLocation('imageeditor/controls/custom.js');
+$extension->setExtensionAsset($asset);
+
+// Add additional assets
+$asset = new \Concrete\Core\Asset\CssAsset();
+$asset->mapAssetLocation('imageeditor/controls/custom.css');
+$extension->addAsset($asset);
+
+// Add the extension to the editor as a control
+$editor = \Core::make('editor/image/core');
+$editor->addControl($extension);
+
+// If this extension is a filter, you can run `$editor->addFilter`
+// instead of `$editor->addControl`
+----
+
+=== Providing your own implementation
+
+The core image editor expects only implementations of `EditorExtensionInterface` to be added, because it's an interface we can provide a completely custom implementation
+
+[source,php]
+----
+<?php
+
+class CustomExtension implements \Concrete\Core\ImageEditor\EditorExtensionInterface
+{
+
+    protected $view;
+    protected $assets;
+    protected $extensionAsset;
+
+    public function getHandle()
+    {
+        return 'custom_asset';
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'My Custom Extension';
+    }
+
+    /**
+     * @return \Concrete\Core\Asset\AssetInterface
+     */
+    public function getExtensionAsset()
+    {
+        return $this->extensionAsset;
+    }
+
+    /**
+     * @return \Concrete\Core\Asset\AssetInterface[]
+     */
+    public function getAssets()
+    {
+        return $this->assets;
+    }
+
+    /**
+     * @return AbstractView
+     */
+    public function getView()
+    {
+        if (!$this->view) {
+            $this->view = new View('some/view/path);
+        }
+
+        return $this->view;
+    }
+
+}
+----
+
+And then you can register it by running:
+
+[source,php]
+----
+<?php
+
+$extension = new CustomExtension();
+\Core::make('editor/image')->addControl($extension);
+----
+
+== Implementing a Filter
+
+Once you have your filter extension loading, we can worry about the JavaScript that actually does the image processing.
+
+First we need a javascript function that will modify an https://developer.mozilla.org/en-US/docs/Web/API/ImageData[ImageData] object.
+For this example, we will make a filter that shifts an image to red.
+
+[source,javascript]
+----
+// Shift each pixel 50% to red
+var red_filter = function(imageData) {
+  var data = imageData.data, amount = 0.5, len, i;
+
+  for (i = 0, len = data.length; i < len; i += 4) {
+    // Modify only the red channel to be 50% closer to 255
+    data[i] += (255 - data[i]) * amount;
+  }
+};
+----
+
+=== Example image
+
+The next step is to set up our example thumbnail, to do that we listen for an event `filterApplyExample` and fire an event `filterBuiltExample` when we finish applying the filter.
+
+[source,javascript]
+----
+var filter = this;
+filter.im.bind('filterApplyExample', function (e, data) {
+  if (data.namespace === filter.im.namespace) {
+    // Set the filter on the example image
+    data.image.setFilter(red_filter);
+    filter.im.fire('filterBuiltExample', filter, data.elem);
+  }
+});
+----
+
+=== Applying a filter
+
+Now to apply this filter when the user selects it, we listen for an event `filterChange`.
+
+[source,javascript]
+----
+var filter = this;
+filter.im.bind('filterChange', function (e, data) {
+
+  // Ensure that this is our filter being selected
+  if (data.im.namespace == filter.im.namespace) {
+
+      // Set the filter on the active element
+      filter.im.activeElement.setFilter(red_filter);
+
+      // Let everyone know
+      filter.im.fire('filterApplied', filter);
+  }
+});
+----
+
+=== Controls
+
+Some filter like the gaussian blur filter have extra controls that let you alter the filter while it is applied.
+The best way to set up your custom controls is to hook into the `FilterFullyLoaded` event
+
+[source,javascript]
+----
+filter.im.bind('filterFullyLoaded', function (e, data) {
+  if (data.im.namespace === filter.im.namespace) {
+    data.parent.find('.some-control').change(function() {
+      ...
+    });
+  }
+});
+----
+
+=== Full example
+
+So all together, a simple filter's JS will like this:
+
+[source,javascript]
+----
+/**
+ * Red shift filter
+ */
+$(function(filter) {
+  var active = false, input;
+
+  // Shift each pixel 50% to red
+  var red_filter = function(imageData) {
+    var data = imageData.data, amount = 0.5, len, i;
+
+    for (i = 0, len = data.length; i < len; i += 4) {
+      // Modify only the red channel to be 50% closer to 255
+      data[i] += (255 - data[i]) * amount;
+    }
+  };
+
+  filter.im.bind('filterChange', function (e, data) {
+    // Ensure that this is our filter being selected
+    if (data.im.namespace == filter.im.namespace) {
+
+      // Set the filter on the active element
+      filter.im.activeElement.setFilter(red_filter);
+
+      // Let everyone know
+      filter.im.fire('filterApplied', filter);
+    }
+  });
+
+  filter.im.bind('filterApplyExample', function (e, data) {
+    if (data.namespace === filter.im.namespace) {
+      // Set the filter on the example image
+      data.image.setFilter(red_filter);
+      filter.im.fire('filterBuiltExample', filter, data.elem);
+    }
+  });
+
+}(this));
+----

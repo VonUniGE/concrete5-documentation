@@ -1,0 +1,14 @@
+[[background_coding-style]]
+= Coding Style Guidelines
+
+:leveloffset: +1
+
+include::coding-style/php.adoc[]
+
+include::coding-style/javascript.adoc[]
+
+include::coding-style/css-less.adoc[]
+
+include::coding-style/further-discussion.adoc[]
+
+:leveloffset: -1

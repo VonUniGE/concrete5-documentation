@@ -1,0 +1,37 @@
+[[design_themes_including-assets]]
+= Including JavaScript and CSS in Template Files
+
+Since Concrete5 themes are just collections of PHP template files that correspond with page templates, nothing special is required to use CSS and JavaScript within them.
+Simply including CSS and JavaScript with directives like this
+
+[source,php]
+----
+<script type="text/javascript" src="<?=$view->getThemePath()?>/js/library.js"></script>
+----
+
+will work, and will work well.
+
+You can also use some helper methods here.
+
+[source,php]
+----
+<?php
+$html = Core::make('helper/html');
+echo $html->css('path/to/my.css');
+echo $html->javascript('path/to/library.js');
+
+$pkg = Package::getByHandle('my_package');
+echo $html->javascript('path/to/library', $pkg);
+?>
+----
+
+== Including LESS
+
+As mentioned elsewhere, you can also include and parse LESS files by using the getStylesheet method found in in the \Concrete\Core\View\View class.
+
+[source,php]
+----
+echo $html->css($view->getStyleSheet('main.less'));
+----
+
+This will load a LESS file found in your theme's "css/" directory, write it out to a file found in application/files/cache/css/, and include that file in a CSS tag.

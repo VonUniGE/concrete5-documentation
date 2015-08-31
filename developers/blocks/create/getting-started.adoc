@@ -1,0 +1,21 @@
+[[blocks_create_getting-started]]
+= Getting Started
+
+It's easy to get started creating your own block type.
+Read on for more information.
+
+:leveloffset: +1
+
+include::getting-started/overview.adoc[]
+
+include::getting-started/anatomy.adoc[]
+
+include::getting-started/controller.adoc[]
+
+include::getting-started/save.adoc[]
+
+include::getting-started/install.adoc[]
+
+include::getting-started/example.adoc[]
+
+:leveloffset: -1

@@ -1,5 +1,0 @@
-= Further Discussion
-
-These decisions have not been made lightly, and they're probably going to upset some (including some core developers - __gulp__). But hopefully this can lead to a cleaner, more uniform concrete5 source.
-
-For more discussion on this, including any addendums, additions or fixes, please post in the http://www.concrete5.org/community/forums/documentation_efforts/[Documentation Forum].

@@ -1,0 +1,151 @@
+[[pages_single-pages_controllers]]
+= Controllers
+
+If you have a single page, and you want to do more than simply render the contents of that file, you'll want to create a controller.
+A controller is another PHP file that runs behind the scenes of the single page view template.
+The controller can perform processing and send data from that processing into the page template.
+It can also easily perform different actions based on different actions taken by the view.
+Controllers help keep processing code and rendering code separate, which leads to a more easily maintained project.
+
+== Important Bug and Compatibility Note
+
+A core bug in version 5.7.3.1 and earlier of 5.7 may prevent portions of this from working.
+This is fixed in 5.7.4, as well as in packaged single page controllers.
+If you experience difficulty following these instructions, build your single pages into a package.
+
+== Creating a Controller
+
+Say you have a single page at
+
+----
+application/single_pages/media/view.php
+----
+
+This single pas has already been created via the Dashboard single pages interface, and is rendering at
+
+----
+http://www.yoursite.com/index.php/media/
+----
+
+To create a controller bound to this single page, create an empty file at application/controllers/single_page/media.php.
+Next, open this file, and add these lines of code:
+
+[source,php]
+----
+<?php
+
+namespace Application\Controller\SinglePage;
+
+use Concrete\Core\Page\Controller\PageController;
+
+class Media extends PageController
+{
+}
+----
+
+The name space of any single page controller in the root application/ directory begins with Application\Controller\SinglePage and then continues with the camel-cased URL segments down to its page name.
+The class is named the same as the last portion of the segment (but camelcased, with the first segment also capitalized) and it needs to extend the Concrete\Core\Page\Controller\PageController class.
+
+=== Creating a Dashboard Page Controller
+
+You can add a page to the dashboard just as easily.
+So if your page is located at /index.php/dashboard/ticketing/order, your controller be found at application/controllers/single_page/dashboard/ticketing/order.php, and look like this:
+
+[source,php]
+----
+<?php
+
+namespace Application\Controller\SinglePage\Dashboard\Ticketing;
+
+use Concrete\Core\Page\Controller\DashboardPageController;
+
+class Order extends DashboardPageController
+{
+}
+----
+
+**Note**: it is important to extend the dashboard page controller, because this controller interacts with the dashboard theme.
+
+== URL Routing to Single Page controllers
+
+=== URLs to Methods
+
+You can create an empty controller for a single page, but this controller doesn't do anything until you add methods to it.
+The methods you add will correspond to the URLs you want this single page to respond to.
+For example, take our media page:
+
+----
+http://www.yoursite.com/media/
+----
+
+If you want to run custom code when this page is visited, create the following method in the controller:
+
+[source,php]
+----
+public function view()
+{
+}
+----
+
+The view() method is automatically run (if it exists) whenever a single page is browsed to.
+But it gets more interesting when you add additional routes on the single page URL:
+
+----
+http://www.yoursite.com/media/add
+http://www.yoursite.com/media/list
+http://www.yoursite.com/media/album_updated
+----
+
+These URLs will automatically run the add(), list() and album_updated() methods in the media controller when they are visited.
+
+=== Method Parameters
+
+Check this URL
+
+----
+http://www.yoursite.com/media/list/15
+----
+
+It will automatically route to the list() method in the Controller.
+But since there is a segment in the URL after list(), the list() method must either take an optional or required initial parameter
+
+[source,php]
+----
+public function list($albumID = null)
+{
+}
+----
+
+If it doesn't, browsing to this URL (or a URL with any number of parameters after the list() segment) will return a 404 page not found error.
+
+Multiple parameters are just as easy.
+Say you have a search single page added at /search and you want to filter by year, then month:
+
+----
+http://www.yoursite.com/search/2015/02/
+----
+
+Just create this method in your controller
+
+----
+public function view($year = null, $month = null)
+{
+}
+----
+
+And the first two parameters in your URL after the /search endpoint will automatically map to $year and $month within the method.
+
+== Optional Additional Methods
+
+`**on_start()**` +
+If present in a controller, on_start() will be run prior to any URL-based methods.
+
+`**on_before_render()**` +
+If present in a controller, on_before_render() will be run after any URL-based methods, but before the page is delivered for rendering.
+
+NOTE: If defining on_start() or on_before_render() within a dashboard page controller, make sure to call parent::on_start() and parent::on_before_render().
+
+Apart from the bootstrapping process and the automatic loading, Concrete5 controllers are just regular PHP code.
+Anything you can run in the page template can be run in the controller, and vice versa - they're just a nice way of separating code from content.
+This is made possible by the ability to send data from the controller into the page view.
+Read on for more information.

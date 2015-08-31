@@ -1,9 +1,26 @@
+[[concepts_users-groups]]
 = Users, Groups & Authentication
 
-Users are accounts used to edit a Concrete5 site. At its core, a user record in concrete5 consists solely of an ID, a unique username, and an email address. Like pages and files, users may also be joined to any number of **User Attributes**, which allow administrators to specify additional details of information to store and track about accounts. A Concrete5 site must have at least one user account - the admin user. This user (with the user ID of 1) has unlimited permissions to edit and manage Concrete5. A user logs in to Concrete5 using a particular **Authentication Type**. Authentication types are bundles of presentation and backend controller code that are presented and acted on from the standard login page. Examples of authentication types include the built-in Concrete authentication (which logs users in based on their User records in Concrete5), Facebook, Twitter and concrete5.org authentication (which logs users in based on their Facebook, Twitter and concrete5.org accounts, respectively.) Developers can create and enable new authentication types.
+Users are accounts used to edit a Concrete5 site.
+At its core, a user record in concrete5 consists solely of an ID, a unique username, and an email address.
+Like pages and files, users may also be joined to any number of **User Attributes**, which allow administrators to specify additional details of information to store and track about accounts.
+A Concrete5 site must have at least one user account - the admin user.
+This user (with the user ID of 1) has unlimited permissions to edit and manage Concrete5.
+A user logs in to Concrete5 using a particular **Authentication Type**.
+Authentication types are bundles of presentation and backend controller code that are presented and acted on from the standard login page.
+Examples of authentication types include the built-in Concrete authentication (which logs users in based on their User records in Concrete5), Facebook, Twitter and concrete5.org authentication (which logs users in based on their Facebook, Twitter and concrete5.org accounts, respectively.) Developers can create and enable new authentication types.
 
-In addition to Users, Concrete5 contains the concept of **Groups**. Groups are simply a way of combining users for any purpose. Groups are used primarily in Concrete5 permissions, as a given group of users can be allowed read, edit, delete, and administrative access to pages, areas and even individual blocks. Concrete5's advanced permissions allow for *Combination Groups* as well - assigning permissions only to users who exist within two or more specific groups. Additionally, *Group Sets* allow Concrete5 administrators to treat a group of groups in a particular way.
+In addition to Users, Concrete5 contains the concept of **Groups**.
+Groups are simply a way of combining users for any purpose.
+Groups are used primarily in Concrete5 permissions, as a given group of users can be allowed read, edit, delete, and administrative access to pages, areas and even individual blocks.
+Concrete5's advanced permissions allow for *Combination Groups* as well - assigning permissions only to users who exist within two or more specific groups.
+Additionally, *Group Sets* allow Concrete5 administrators to treat a group of groups in a particular way.
 
-Every user account in Concrete5 can access a *My Account* section of the site. This section of the site is a series of single pages wherein a user can change their password, access private messages, and change various user attributes. A user doesn't need administrative or Dashboard access to get to their my account section. Additionally, administrators can enable a public *User Profile* series of single pages that displays public user attributes about any user to other members of the site.
+Every user account in Concrete5 can access a *My Account* section of the site.
+This section of the site is a series of single pages wherein a user can change their password, access private messages, and change various user attributes.
+A user doesn't need administrative or Dashboard access to get to their my account section.
+Additionally, administrators can enable a public *User Profile* series of single pages that displays public user attributes about any user to other members of the site.
 
-The user profile functionality contained within Concrete5 makes it particularly useful for running community websites. Other features that make Concrete5 suited for running communities include *User Points* - a completely optional concept where users can accrue points either manually (assigned by administrators) or through programmatic actions on a site, and *Badges* - which are simply Groups that have special user-visible imagery and optional community points. Badges are listed on user profiles, and automated group entry can make it easy to automatically assign badges based on community activity.
+The user profile functionality contained within Concrete5 makes it particularly useful for running community websites.
+Other features that make Concrete5 suited for running communities include *User Points* - a completely optional concept where users can accrue points either manually (assigned by administrators) or through programmatic actions on a site, and *Badges* - which are simply Groups that have special user-visible imagery and optional community points.
+Badges are listed on user profiles, and automated group entry can make it easy to automatically assign badges based on community activity.

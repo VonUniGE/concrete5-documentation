@@ -1,0 +1,135 @@
+[[pages_single-pages_dashboard-pages]]
+= Dashboard Pages
+
+It's a common task for a Concrete5 developer to create their own Dashboard pages.
+Dashboard pages are just single pages located inside the "single_pages/dashboard" directory.
+Once they're added within that location, they automatically show up in the Dashboard.
+
+== Dashboard Controller
+
+When creating a dashboard page controller, make sure that it extends \Concrete\Core\Page\Controller\DashboardPageController, rather than \Concrete\Core\Page\Controller\PageController.
+Here's an example of a Dashboard page controller for a page that will be located at Dashboard > System & Settings > Game
+
+[source,php]
+----
+<?php
+
+namespace Application\Controller\SinglePage\Dashboard\System;
+
+use Concrete\Core\Page\Controller\DashboardPageController;
+
+class Game extends DashboardPageController
+{
+    public function view()
+    {
+    }
+}
+----
+
+== Error Handling
+
+Any method within your Dashboard page controller has access to a protected $error variable defined within the DashboardPageController class.
+This error object is an instance of the http://concrete5.org/api/class-Concrete.Core.Error.Error.html[\Concrete\Core\Error\Error] object.
+Just add to the error object, and it'll be displayed in the page:
+
+[source,php]
+----
+public function view()
+{
+    if ($foo != '1') {
+        $this->error->add('This is error 1');
+    }
+    if ($foo != '2') {
+        $this->error->add('This is error 2');
+    }
+    if ($this->error->has()) {
+        // continue processing
+    }
+}
+----
+
+image:dashboard-pages-error.png[alt="Dashboard pages - Error", title="Dashboard pages - Error"]
+
+== Success and Info Responses
+
+Similarly, the $message and $success parameters are special variables that, when present in the view template, will be shown automatically in a nice outline.
+
+[source,php]
+----
+public function view()
+{
+    $this->set('message', 'My regular message');
+}
+----
+
+image:dashboard-pages-message.png[alt="Dashboard pages - Message", title="Dashboard pages - Message"]
+
+[source,php]
+----
+public function view()
+{
+    $this->set('success', 'My success message');
+}
+----
+
+image:dashboard-pages-success.png[alt="Dashboard pages - Success", title="Dashboard pages - Success"]
+
+== Design Guidelines
+
+Use success, error and message messages to display to the user whether their actions succeeded or failed.
+The Dashboard loads a subset to http://getbootstrap.com[Bootstrap 3 Styling], so you design your forms and UI elements with this in mind.
+If one or two items are important for interacting with your Dashboard page, place them in the button header.
+Group them with bootstrap button groups:
+
+image:dashboard-pages-buttons-top.png[alt="Dashboard pages - Top buttons", title="Dashboard pages - Top buttons"]
+
+[source,php]
+----
+<form method="post" action="<?php echo $controller->action('submit'); ?>">
+    <div class="ccm-dashboard-header-buttons btn-group">
+        <button class="btn btn-default" type="submit" name="action" value="reload">
+            <?php echo t('Reload Strings'); ?>
+        </button>
+        <button class="btn btn-default" type="submit" name="action" value="export">
+            <?php echo t('Export to .PO'); ?>
+        </button>
+        <button class="btn btn-danger" type="button" data-dialog="reset" value="reset">
+            <?php echo t('Reset All'); ?>
+        </button>
+    </div>
+</form>
+----
+
+The `ccm-dashboard-header-buttons` class will position the buttons at the top of the page, in the header.
+
+If you've got a length form on a particular page, include the button footer within your form for style consistency.
+
+image:dashboard-pages-buttons-bottom.png[alt="Dashboard pages - Bottom buttons", title="Dashboard pages - Bottom buttons"]
+
+[source,php]
+----
+<form method="post" action="<?php echo $view->action('update_sitename'); ?>">
+    <fieldset>
+        <div class="form-group">
+            <label
+                for="SITE"
+                class="launch-tooltip control-label"
+                data-placement="right"
+                title="<?php echo t('Site name is displayed in the browser title bar'); ?>"
+            >
+                <?php echo t('Site Name'); ?>
+            </label>
+            <?php echo $form->text('SITE', $site, array('class' => 'span4')); ?>
+        </div>
+    </fieldset>
+    <div class="ccm-dashboard-form-actions-wrapper">
+        <div class="ccm-dashboard-form-actions">
+            <button class="pull-right btn btn-success" type="submit" >
+                <?php echo t('Save'); ?>
+            </button>
+        </div>
+    </div>
+</form>
+----
+
+The `ccm-dashboard-form-actions-wrapper` and `ccm-dashboard-form-actions` classes position the button at the bottom of the page, in the dark fixed background.

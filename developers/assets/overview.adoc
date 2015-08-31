@@ -1,8 +1,11 @@
+[[assets_overview]]
 = Overview
 
 == Background - Concrete5 through 5.6
 
-When Concrete5 first launched, there was but one way to get JavaScript and CSS into your page and block templates: with script and link tags directly. While this is predictable and easy to maintain in a vacuum, there are numerous problems with this approach. These include.
+When Concrete5 first launched, there was but one way to get JavaScript and CSS into your page and block templates: with script and link tags directly.
+While this is predictable and easy to maintain in a vacuum, there are numerous problems with this approach.
+These include.
 
 * No packaging of assets with block templates.
 * No asset positioning in the page for optimization - a block type's asset would just be printed out wherever that block was rendered.
@@ -15,7 +18,8 @@ As Concrete5 matured, we added better ways for these assets to be included, incl
 
 * Auto-inclusion of view.js and view.css in a block's view template
 * Auto-inclusion of custom template view.js and view.css for blocks
-* View::addHeaderItem() and View::addFooterItem(), for injecting HTML into the header and footer. This could be used to load stylesheets and JavaScripts.
+* View::addHeaderItem() and View::addFooterItem(), for injecting HTML into the header and footer.
+  This could be used to load stylesheets and JavaScripts.
 * Since the above methods couldn't be used with blocks (due to how they rendered), we added BlockController::on_page_view(), to add assets to a page's header or footer whenever that block was used on a page.
 
 Again, there were some good things here:
@@ -30,16 +34,30 @@ But things were far from perfect:
 
 * Header bloat.
 * No asset minification.
-* A proliferation of assets. Add one add-on that requires one asset, add another that requires the same, get two files loaded.
-* All based off brittle filenames. You'd have an add-on load jQuery UI. What happens if we change the location of jQuery UI, or we break jQuery UI into multiple files? It becomes hard for us to reorganize included core assets.
-* With bootstrap this only got worse. Certain themes include bootstrap, others do not. Certain add-ons require it, others do not. Forcing it to be included for all requests bloats requests by hundreds of KB.
+* A proliferation of assets.
+  Add one add-on that requires one asset, add another that requires the same, get two files loaded.
+* All based off brittle filenames.
+  You'd have an add-on load jQuery UI.
+  What happens if we change the location of jQuery UI, or we break jQuery UI into multiple files?
+It becomes hard for us to reorganize included core assets.
+* With bootstrap this only got worse.
+  Certain themes include bootstrap, others do not.
+  Certain add-ons require it, others do not.
+  Forcing it to be included for all requests bloats requests by hundreds of KB.
 
 == Fixing the Problem: The Asset Sub-System in Concrete5 5.7
 
-The Assets Sub-System in Concrete5 5.7 and above aims to fix these problems, and even add some features that we've never had before. It is a central registry for shared assets, including jQuery, Bootstrap and all third party JavaScript and CSS libraries ued by Concrete5. This registery can be added to by packages and custom site code. Each Asset knows about how it works, including whether it should be added to the header or footer, can be minified to save space, or combined with other assets to limit HTTP requests. The assets system lets developers assign handles to an asset or a group of assets, which can be available locally or remotely - rather than worrying about the actual files' names. Themes and packages can mark assets as provided, so they don't get automatically included. Block custom template auto-loaded assets (view.js, view.css) are supported in the system as well.
+The Assets Sub-System in Concrete5 5.7 and above aims to fix these problems, and even add some features that we've never had before.
+It is a central registry for shared assets, including jQuery, Bootstrap and all third party JavaScript and CSS libraries ued by Concrete5.
+This registery can be added to by packages and custom site code.
+Each Asset knows about how it works, including whether it should be added to the header or footer, can be minified to save space, or combined with other assets to limit HTTP requests.
+The assets system lets developers assign handles to an asset or a group of assets, which can be available locally or remotely - rather than worrying about the actual files' names.
+Themes and packages can mark assets as provided, so they don't get automatically included.
+Block custom template auto-loaded assets (view.js, view.css) are supported in the system as well.
 
 == Introduction and Video
 
-This code was around for awhile before it made its way into 5.7. Here's an early presentation about the Asset sub-system I made to the Concrete5 core team in August of 2013:
+This code was around for awhile before it made its way into 5.7.
+Here's an early presentation about the Asset sub-system I made to the Concrete5 core team in August of 2013:
 
 video::kU5Zllx_BB4[youtube, width=560, height=315]

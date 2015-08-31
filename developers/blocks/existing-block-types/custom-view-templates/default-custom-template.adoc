@@ -1,0 +1,52 @@
+[[blocks_existing-block-types_custom-view-templates_default-custom-template]]
+= Default a block to a custom template in a theme
+
+As mentioned before, packaged theme's can include custom block view templates, but they can't override the default view templates of Concrete5 core block types.
+Unfortunately, this means it would be very difficult for me to package the theme demonstrated in link:#[Modifying the Default View Template for a Core Block Type].
+Why?
+Because my custom view template can't override the Image Slider block view template when used in a packaged theme.
+
+Or can it?
+
+While it's true that Concrete5 won't look for an overridden view.php file for a core block type in a packages blocks directory, you *can* get something almost as good.
+You can create your overriding view template as a custom template, and then instruct the theme to use that custom template when adding new versions of that block type.
+That way, you don't have to instruct the users of a theme to use a custom template rather than the default view.
+
+How does it work?
+Let's use the Image Slider customized default view template that we worked with earlier.
+That view template is currently at **application/blocks/image_slider/view.php**.
+Let's say that I want this view template to be used by the Image Slider block any time it is used inside my theme, which is named "Enterprise".
+
+First, create a custom template, packaged in my theme's package directory.
+
+----
+mkdir packages/enterprise/blocks
+mkdir packages/enterprise/blocks/image_slider/
+mkdir packages/enterprise/blocks/image_slider/templates
+mv application/blocks/image_slider/view.php \
+    packages/enterprise/blocks/image_slider/template/enterprise_image_slider.php
+----
+
+At this point, I've created a custom template named "Enterprise Image Slider" that, when used, will display nicely in the Enterprise theme.
+Unfortunately, you have to explain to your users that they need to do this.
+Worse, until they do so, they'll get weird looking image sliders on their pages.
+Thankfully, it's not hard to default the Image Slider block to use this custom template when it is added to the Enterprise theme.
+
+My packaged theme needs to have a PageTheme class.
+If you're unfamiliar with this concept (which is completely new in 5.7) you should check out <<design_grid_enable>>, which describes it fully.
+Basically, a PageTheme class is an additional code file that documents certain capabilities and attributes that a theme has.
+This custom template default is just another one of those attributes.
+In our case, once we've created a PageTheme class for our Enterprise theme, we just add the following code to it:
+
+[source,php]
+----
+public function getThemeDefaultBlockTemplates()
+{
+    return array(
+        'image_slider' => 'enterprise_image_slider',
+    );
+}
+----
+
+And that's it!
+You still have your custom template, but any time the Image Slider block is added to a page using the Enterprise theme, the "Enterprise Image Slider" custom template will be used instead for its view template.

@@ -1,3 +1,4 @@
+[[startOfBook]]
 = concrete5 5.7 Developer Documentation
 :doctype: book
 :source-highlighter: coderay
@@ -18,13 +19,13 @@ include::developers/installation.adoc[]
 
 include::developers/environment.adoc[]
 
-include::developers/designing-for-concrete5.adoc[]
+include::developers/design.adoc[]
 
-include::developers/working-with-blocks.adoc[]
+include::developers/blocks.adoc[]
 
-include::developers/working-with-pages.adoc[]
+include::developers/pages.adoc[]
 
-include::developers/working-with-files-and-the-file-manager.adoc[]
+include::developers/files.adoc[]
 
 include::developers/jobs.adoc[]
 
@@ -32,7 +33,7 @@ include::developers/assets.adoc[]
 
 include::developers/packages.adoc[]
 
-include::developers/interface-customization.adoc[]
+include::developers/interface.adoc[]
 
 include::developers/appendix.adoc[]
 

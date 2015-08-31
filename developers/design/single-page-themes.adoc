@@ -1,0 +1,56 @@
+[[design_single-page-themes]]
+= Applying Your Theme to Single Pages with "Theme Paths"
+
+If you want your theme to apply to some of the system pages (such as /login and /register), here's what you need to do .
+
+Open `application/config/app.php` in your application folder.
+If the file doesn't exist, create it.
+
+Its contents should be a PHP array, likely empty:
+
+[source,php]
+----
+<?php
+
+return array(
+
+);
+----
+
+This Concrete5 configuration file overrides anything found in `concrete/config/app.php`.
+If you look in concrete/config/app.php, you'll see this directive:
+
+[source,php]
+----
+/*
+ * Route themes
+ */
+'theme_paths' => array(
+    '/dashboard'        => 'dashboard',
+    '/dashboard/*'      => 'dashboard',
+    '/account'          => VIEW_CORE_THEME,
+    '/account/*'        => VIEW_CORE_THEME,
+    '/install'          => VIEW_CORE_THEME,
+    '/login'            => VIEW_CORE_THEME,
+    '/register'         => VIEW_CORE_THEME,
+    '/maintenance_mode' => VIEW_CORE_THEME,
+    '/upgrade'          => VIEW_CORE_THEME,
+),
+----
+
+This maps system pages (by path) to the handle of an installed theme.
+If you want your theme to override any of these, just define the specific array key and new value.
+If I wanted to override /login with the Elemental theme, for example, I'd just make this the contents of my `application/config/app.php` file:
+
+[source,php]
+----
+<?php
+
+return array(
+    'theme_paths' => array(
+        '/login' => 'elemental',
+    ),
+);
+----
+
+And that will do it.

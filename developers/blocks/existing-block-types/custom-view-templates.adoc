@@ -1,0 +1,30 @@
+[[blocks_existing-block-types_custom-view-templates]]
+= Creating Additional Custom View Templates
+
+In the previous section we talked about how easy it is to override the default view template for a core block type at the application level.
+This is great, but it does modify the view template for all instances of the block type, everywhere.
+Sometimes that may not be the desired behavior.
+What if you're happy with how the Auto-Nav works in most cases, but you just want some specially marked-up version for the "Site Map" page on a website?
+What if you need to display a special custom attribute next to the name of a page in a page list?
+In these cases it's not a good idea to override the default view template in all cases.
+Instead, create a custom block view template.
+These custom templates can be applied through the CMS, but they don't override the default view.
+Examples of custom templates used in the Sample Content install include:
+
+* The Responsive Header Navigation custom template used by the header navigation block in the global navigation area.
+* The "Hover Description" custom template used by the Feature block on the "Services" page.
+
+Creating a custom template is very similar to modifying the default view template for a core block type.
+Read the following sections to see how to do it.
+
+:leveloffset: +1
+
+include::custom-view-templates/create.adoc[]
+
+include::custom-view-templates/autoregister-assets.adoc[]
+
+include::custom-view-templates/package-custom-template.adoc[]
+
+include::custom-view-templates/default-custom-template.adoc[]
+
+:leveloffset: -1

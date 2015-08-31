@@ -1,10 +1,11 @@
+[[packages_installation]]
 = Installation
 
 :leveloffset: +1
 
 include::installation/overview.adoc[]
 
-include::installation/custom-installation-messaging.adoc[]
+include::installation/messaging.adoc[]
 
 include::installation/full-content-swap.adoc[]
 

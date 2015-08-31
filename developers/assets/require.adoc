@@ -1,0 +1,59 @@
+[[assets_require]]
+= Requiring an Asset
+
+Once you have an asset or an asset group defined, it's simple to request that it be included whenever that page or block is rendered.
+
+== Requiring an Asset Group from within a Page Type Controller or Page Controller.
+
+Make sure this code exists within your page type or single page controller.
+
+[source,php]
+----
+public function view()
+{
+    $this->requireAsset('mediaelement');
+}
+----
+
+== Requiring a Single Asset from within a Controller
+
+Make sure this code exists within your page type or single page controller.
+
+[source,php]
+----
+public function view()
+{
+    $this->requireAsset('javascript', 'jquery');
+}
+----
+
+== Requiring an Asset Group within the "add" interface of a block
+
+Make sure this code exists within your block controller.
+
+[source,php]
+----
+public function add()
+{
+    $this->requireAsset('core/filemanager');
+}
+----
+
+== Requiring an Asset Group when viewing a particular block
+
+Make sure this code exists within your block controller.
+
+[source,php]
+----
+public function registerViewAssets()
+{
+    $this->requireAsset('mediaelement');
+}
+----
+
+== Requiring or Marking an Asset as Provided in a Theme
+
+This information is available in the theme documentation:
+
+* <<design_assets_including>>
+* <<design_assets_override>>

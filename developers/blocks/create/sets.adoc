@@ -1,0 +1,33 @@
+[[blocks_create_sets]]
+= Grouping Block Types into Sets
+
+In Concrete5 5.7 we introduced the concept of Block Type sets.
+Each Block Type can appear in a set, which will group it with similar block types in the add block user interface.
+
+image:block-type-sets.png[alt="Block Type Sets", title="Block Type Sets"]
+
+The following sets are available in 5.7 by default.
+Currently, there is no way to add your own, but that may change in the future.
+
+* Basics
+* Navigation
+* Forms
+* Social Networking
+* Multimedia
+
+To make sure your block type appears in the right set, just add this protected variable to its controller class
+
+[source,php]
+----
+protected $btDefaultSet = 'your_set';
+----
+
+Where your_set is one of the following (to correspond with the list above):
+
+* basic
+* navigation
+* form
+* social
+* multimedia
+
+That's all you have to do! (Note, if you previously installed your block type without a set, you'll have to remove it and reinstall it for the new set to take effect.)

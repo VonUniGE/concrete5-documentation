@@ -1,0 +1,24 @@
+[[background_about]]
+= What is concrete5?
+
+Concrete5 is a content management system written in the PHP programming language.
+Concrete5 began as Concrete CMS in 2003, and was the glue behind many web applications, websites, stores and forums between 2003 and 2008.
+In 2008 Concrete's 5th major version release was rebranded concrete5(tm) and launched fully Open Source under the MIT license.
+Between 2008 and 2014, concrete5 released 7 versions, further refining the interface and adding many additional features, including localization support and support for a full commercial and non-commercial marketplace.
+In 2014, concrete5 version 7 completely overhauled both the interface and the underlying framework for modern PHP.
+
+Concrete5 has allowed individuals involved with websites to easily manage their content and their site structure.
+Above all else, the goal behind concrete5 has always been to make it easy for anyone to run a website.
+
+== concrete5 is a Framework like Symfony or Laravel
+
+Beneath the interface components and site structure of concrete5 sits a powerful framework built from custom components and third party libraries from projects like http://www.laravel.com[Laravel] and http://symfony.com/components[Symfony Components].
+Concrete5 has always provided model-view-controller development, and with version 7 fully embraces domain-driven design as well.
+Many commercial websites require custom extensions, and Concrete5 provides many ways to extend the core code base to support development like this.
+Concrete5 is a member of the http://www.php-fig.org/[PHP Framework Interoperability Group] and fully supports modern PHP standards and code conventions.
+
+== concrete5 is also an Easy to Use Web Builder
+
+We certainly designed concrete5 as a toolbox for agencies to use in building great sites they wanted to put in the hands of clients.
+That being said we've been pleasantly surprised over the years to see many thousands of individuals with little to no technical background have great success building a small site with concrete5 on their own - no coding required.
+Version 7 improves the fluidity, feedback and appearance of the interface significantly, to the point where Concrete5 can compete with incredibly easy to use web builders like Squarespace or Wix - without sacrificing power under the hood.

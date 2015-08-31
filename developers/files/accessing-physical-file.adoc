@@ -1,0 +1,58 @@
+[[files_accessing-physical-file]]
+= Accessing the Physical File from a File Object
+
+The File object gives us access to all the metadata about files, and lets us work the file programmatically in blocks and throughout sites and applications.
+But sometimes we need to access the physical file referenced by the object.
+For example, in the following operations:
+
+* Bundling up a collection of files into a ZIP archive
+* Streaming the file to some external process
+* Forcing the file to download to the browser
+* Moving a file across file systems
+* Loading a file resource into an image editor class (for image processing)
+
+In these situations, we need access to what concrete5 refers to as a file **resource**.
+The file resource gives us access to the actual bytestream of a file.
+Here's how we get the file resource from a File object:
+
+[source,php]
+----
+$file = \File::getByID(3);
+$resource = $file->getFileResource();
+----
+
+This returns an instance of \Concrete\Flysystem\File.
+Once you have this object, you can call the following methods on it:
+
+* read()
+* getTimestamp()
+* getMimetype()
+* getSize()
+* delete()
+
+Similarly, you can directly get the byte contents of a File object using getFileContents().
+You can do a lot with the byte contents of a file.
+
+== Example: Zipping multiple files into a ZIP Archive
+
+[source,php]
+----
+$fileIDs = array(1,2,3);
+$zip = new ZipArchive();
+$res = $zip->open('/path/to/file.zip', ZipArchive::CREATE);
+foreach ($fileIDs as $fID) {
+    $f = File::getByID($fID);
+    $zip->addFromString($f->getFilename(), $f->getFileContents());
+}
+$zip->close();
+Core::make('helper/file')->forceDownload('/path/to/file.zip');
+----
+
+Why do you need to jump through these hoops to work with the physical file?
+Why not just get the absolute path to the file?
+Because in concrete5 there's no guarantee that the File object you're working with actually has a physical file present on the web server.
+Remember, every File object in Concrete5 has its physical file stored in a File StorageLocation object.
+These StorageLocation objects are usually directories on the same web server - but not always.
+They course reference an Amazon S3 storage bucket, for example.
+In this case, there'd be no absolute path on the server to get the file.
+So instead we use the file resource abstraction, and it will ensure that you can always work with a physical file, even if it's not on the same server.

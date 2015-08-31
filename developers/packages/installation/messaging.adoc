@@ -1,0 +1,36 @@
+[[packages_installation_messaging]]
+= Adding Custom Installation Messaging
+
+Normally, installing a package is a one-click process.
+Developers can add an intermediary step, however.
+This can be useful for a number of reasons.
+This could be a warning or introductory message can give additional background or context to a package prior to installation.
+Developers can even implant a form on this page and use the submitted data during the installation process to customize how the installation works.
+
+To display a custom installation message, simply create a file at `packages/package_handle/elements/dashboard/install.php`.
+Anything found in this file will automatically be presented to the user after they choose to install the package, but before they actually confirm that they want to install the package.
+
+== Include a Form
+
+Need to include a form on this page?
+Just add it like you would to any page, and check the post from within the `install()` method.
+
+[source,html]
+----
+<input type="checkbox" name="installSampleContent" value="1" /> Install sample content.
+----
+
+Then, from within the controller.php install() method
+
+[source,php]
+----
+public function install()
+{
+     $pkg = parent::install();
+
+     $r = \Request::getInstance();
+     if ($r->request->get('installSampleContent')) {
+         // install sample content.
+     }
+}
+----

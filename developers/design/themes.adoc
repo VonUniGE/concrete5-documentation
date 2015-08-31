@@ -1,0 +1,16 @@
+[[design_themes]]
+= Building a Concrete5 Theme
+
+:leveloffset: +1
+
+include::themes/convert-html-template.adoc[]
+
+include::themes/reusing-elements.adoc[]
+
+include::themes/including-assets.adoc[]
+
+include::themes/process.adoc[]
+
+include::themes/pitfalls.adoc[]
+
+:leveloffset: -1

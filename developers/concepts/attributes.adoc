@@ -1,9 +1,19 @@
+[[concepts_attributes]]
 = Attributes
 
-We've already spent a bit of time talking about attributes in the context of Pages, Users and Files. Each of these objects can use Attributes - but attributes aren't specific to each object. Instead, Attributes are their own, general system, and Concrete5 registers an *Attribute Category* object for Page, User and File. This tells the attribute system how to join attribute data to the particular target object type.
+We've already spent a bit of time talking about attributes in the context of Pages, Users and Files.
+Each of these objects can use Attributes - but attributes aren't specific to each object.
+Instead, Attributes are their own, general system, and Concrete5 registers an *Attribute Category* object for Page, User and File.
+This tells the attribute system how to join attribute data to the particular target object type.
 
-*Attribute Keys* are the actual items we want to track about a particular target object. Examples of attribute keys include things like a page's "Meta Name" or "Exclude from Nav", or a file's "Width" and "Height." When using the Dashboard to create additional attributes, an administator is creating a new attribute key.
+*Attribute Keys* are the actual items we want to track about a particular target object.
+Examples of attribute keys include things like a page's "Meta Name" or "Exclude from Nav", or a file's "Width" and "Height." When using the Dashboard to create additional attributes, an administator is creating a new attribute key.
 
-Not all attribute keys are alike: "Meta Name" displays its form interface as a text input, while "Exclude from Nav" uses a checkbox. A select list is much more complicated than either. Additionally, these attributes store their data and search their data differently, and have a different programmatic interface. That's because these attribute keys are each of different **Attribute Types**. Attribute types are bundles of presentation and backend controller code that exist in the filesystem and can be registered by an administrator or installed in packages.
+Not all attribute keys are alike: "Meta Name" displays its form interface as a text input, while "Exclude from Nav" uses a checkbox.
+A select list is much more complicated than either.
+Additionally, these attributes store their data and search their data differently, and have a different programmatic interface.
+That's because these attribute keys are each of different **Attribute Types**.
+Attribute types are bundles of presentation and backend controller code that exist in the filesystem and can be registered by an administrator or installed in packages.
 
-Finally, *Attribute Values* are special objects that store a particular join between attribute keys, attribute categories (and their specific target objects) and the value that they store. Each target object of a particular attribute key category will likely contain a method similar to "getAttributeValueObject" which returns this particular data.
+Finally, *Attribute Values* are special objects that store a particular join between attribute keys, attribute categories (and their specific target objects) and the value that they store.
+Each target object of a particular attribute key category will likely contain a method similar to "getAttributeValueObject" which returns this particular data.

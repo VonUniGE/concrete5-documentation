@@ -1,0 +1,16 @@
+[[packages_custom-database-tables_overview]]
+= Overview
+
+While most packages don't require it, if a developer needs custom database tables for any reason, these can easily be created during a package installation.
+
+This can be done in one of three ways.
+
+. Provide the schema of the database in the http://www.concrete5.org/documentation/how-tos/developers/creating-and-working-with-db-xml-files/[AXMLS format].
+  This format has been available in Concrete5 since the very beginning.
+. Provide the schema of the database in the Doctrine XML format.
+  This is a new format, dependent on the new Doctrine Database Access Layer employed in Concrete5 version 7 and above.
+  *This approach requires Concrete5 version 5.7.5 or above*
+. Use http://doctrine-orm.readthedocs.org/en/latest/index.html[PHP Entity Classes and the Doctrine 2 ORM Library] that Concrete5 includes.
+  This requires Concrete5 5.7.4 or above.
+
+Read on for more information.

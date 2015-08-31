@@ -1,0 +1,251 @@
+[[blocks_existing-block-types_customize-default-view-template]]
+= Modifying the Default View Template for a Core Block Type
+
+== Screencast
+
+video::A2YvfUksrHQ[youtube, width=560, height=315]
+
+== Overview
+
+Concrete5 makes it easy to use different HTML than that provided by the core block types in your custom site.
+You'd most likely want to do this if you've been given HTML by a designer or web developer for a particular type of content that doesn't remotely match the HTML produced by the core block type.
+For example, let's say a developer has given you HTML like this, for some content that includes an icon, a title and a description:
+
+[source,html]
+----
+<div class="thumbnailitem">
+    <div class="itemtitle">
+        <span><i class="icon icon-link"></i></span> This is my Item
+    </div>
+    <div class="description">
+        This is the description.
+    </div>
+</div>
+----
+
+Seeing the icon, title and description, you think that using the built-in Feature block type would be good for this type of content.
+Unfortunately, this markup is nothing like the Feature block's standard markup.
+
+[source,html]
+----
+<div class="ccm-block-feature-item">
+    <h4><i class="fa fa-pencil"></i> Easy to Edit</h4>
+    <p>Pellentesque ultricies ligula vel neque dictum, eu mollis tortor adipiscing.
+Etiam congue, est vel tincidunt vestibulum, nunc nunc porta nulla, at adipiscing neque tellus quis urna.</p>
+</div>
+----
+
+You could modify the stylesheet that came with the aforementioned HTML to style Concrete5's elements.
+But it might just be easier to change the output of the feature block to match the output of the HTML in the first example.
+Doing that is simple.
+
+== Example: Image Slider
+
+I'm going to do exactly this, using the Image Slider block on my own site, currently in development.
+The theme on this site is a modified version of Enterprise, found on Themeforest.
+It's a nice theme with a lot of bells and whistles that I look forward to getting into Concrete5.
+It is pretty opinionated in its CSS, however, and I don't really want to try and make its CSS conform to the built-in Concrete5 image slider block's HTML output.
+It'd be easier to just use the Enterprise image slider HTML any time the Concrete5 image slider block is placed in the page.
+
+Before I start, I'll an instance of the Image Slider block into an area in the middle of the page.
+I select my images and put in some text, and... voila!
+
+image::image-slider_broken.png[alt="Broken", title="Broken"] 
+This does not look great.
+Here's how it's supposed to look, according to the HTML that was delivered with the theme.
+
+image::image-slider_good.png[Good]
+
+There's a simple reason for this: the HTML that is styled by the Enterprise CSS isn't present in my image slider.
+Since there's so much going on in this theme, it'll be easier to match the HTML to what the theme is expecting, rather than go through the CSS and change it to match the HTML.
+
+First, let's look at the HTML provided by the Enterprise theme.
+If we open up their HTML, it's pretty easy to find the image slider code:
+
+[source,html]
+----
+<div class="block_slider_type_1 general_not_loaded">
+    <div id="slider" class="slider flexslider">
+        <ul class="slides">
+            <li>
+                <img src="images/pic_slider_1_1.jpg" alt="">
+                <div class="animated_item text_1_1" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">Travel, PHOTOGRAPHY</div>
+                <div class="animated_item text_1_2" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">Mountains in Switzerland</div>
+                <div class="animated_item text_1_3" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown"><a href="#" class="general_button_type_1">Read More</a></div>
+            </li>
+
+            <li>
+                <img src="images/pic_slider_1_2.jpg" alt="">
+                <div class="animated_item text_1_1" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">Travel, PHOTOGRAPHY</div>
+                <div class="animated_item text_1_2" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">My Love - New York</div>
+                <div class="animated_item text_1_3" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown"><a href="#" class="general_button_type_1">Read More</a></div>
+            </li>
+
+            <li>
+                <img src="images/pic_slider_1_3.jpg" alt="">
+                <div class="animated_item text_1_1" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">Life, PHOTOGRAPHY</div>
+                <div class="animated_item text_1_2" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">My Awesome workplace</div>
+                <div class="animated_item text_1_3" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown"><a href="#" class="general_button_type_1">Read More</a></div>
+            </li>
+
+            <li>
+                <img src="images/pic_slider_1_4.jpg" alt="">
+                <div class="animated_item text_1_1" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">Life, PHOTOGRAPHY</div>
+                <div class="animated_item text_1_2" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">Flying over the mountains</div>
+                <div class="animated_item text_1_3" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown"><a href="#" class="general_button_type_1">Read More</a></div>
+            </li>
+
+            <li>
+                <img src="images/pic_slider_1_5.jpg" alt="">
+                <div class="animated_item text_1_1" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">People, Fashion</div>
+                <div class="animated_item text_1_2" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">Young Businessman</div>
+                <div class="animated_item text_1_3" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown"><a href="#" class="general_button_type_1">Read More</a></div>
+            </li>
+
+            <li>
+                <img src="images/pic_slider_1_6.jpg" alt="">
+                <div class="animated_item text_1_1" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">People, Life</div>
+                <div class="animated_item text_1_2" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">The guy on the field</div>
+                <div class="animated_item text_1_3" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown"><a href="#" class="general_button_type_1">Read More</a></div>
+            </li>
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        jQuery(function() {
+            init_slider_1('#slider');
+        });
+    </script>
+</div>
+----
+
+Let's make out Image Slider match this output.
+First, turn off overrides caching via Dashboard > System & Settings > Optimization > Cache & Speed Settings.
+Until this is turned off Concrete5 won't look in the application directory unless it knows it has a file in there.
+
+Next, we create an override directory in *application/blocks* for the image slider block.
+Assuming I'm in my web root directory:
+
+----
+mkdir application/blocks/image_slider
+----
+
+Then, we copy the Image Slider view template into this directory.
+
+----
+cp concrete/blocks/image_slider/view.php application/blocks/image_slider/view.php
+----
+
+If we reload the page, everything is the same.
+But the view template is loaded from the application directory, which means we can now change the PHP provided in the view.php template without forking the core Concrete directory, which is always the best way to proceed.
+Let's open up our Image Slider template and change what Concrete5 provides:
+
+[source,php]
+----
+<script>
+$(document).ready(function(){
+    $(function () {
+        $("#ccm-image-slider-<?php echo $bID; ?>").responsiveSlides({
+            prevText: "",   // String: Text for the "previous" button
+            nextText: "",
+            <?php if ($navigationType == 0) { ?>
+            nav:true
+            <?php } else { ?>
+            pager: true
+            <?php } ?>
+        });
+    });
+});
+</script>
+
+<div class="ccm-image-slider-container ccm-block-image-slider-<?php echo $navigationTypeText; ?>" >
+    <div class="ccm-image-slider">
+        <div class="ccm-image-slider-inner">
+            <?php if (count($rows) > 0) { ?>
+                <ul class="rslides" id="ccm-image-slider-<?php echo $bID; ?>">
+                    <?php foreach ($rows as $row) { ?>
+                        <li>
+                        <?php if ($row['linkURL']) { ?>
+                            <a href="<?php echo $row['linkURL']; ?>" class="mega-link-overlay"></a>
+                        <?php } ?>
+                        <?php
+                        $f = File::getByID($row['fID'])
+                        ?>
+                        <?php if (is_object($f)) {
+                            $tag = Core::make('html/image', array($f, false))->getTag();
+                            $tag->alt($row['title']);
+                            echo $tag;
+                        } ?>
+                        <div class="ccm-image-slider-text">
+                            <h2 class="ccm-image-slider-title"><?php echo $row['title']; ?></h2>
+                            <?php echo $row['description']; ?>
+                        </div>
+                        </li>
+                    <?php } ?>
+                </ul>
+            <?php } else { ?>
+                <div class="ccm-image-slider-placeholder">
+                    <p><?php echo t('No Slides Entered.'); ?></p>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+</div>
+----
+
+To use the Enterprise HTML:
+
+[source,php]
+----
+<script type="text/javascript">
+    jQuery(function() {
+        init_slider_1('#slider<?php echo $bID; ?>');
+    });
+</script>
+
+<div class="block_slider_type_1 general_not_loaded">
+    <div id="slider<?php echo $bID; ?>" class="slider flexslider">
+        <?php if (count($rows) > 0) { ?>
+            <ul class="slides">
+                <?php foreach ($rows as $row) { ?>
+                    <?php
+                    $f = File::getByID($row['fID'])
+                    ?>
+                    <li>
+                        <?php if (is_object($f)) {
+                            $tag = Core::make('html/image', array($f, false))->getTag();
+                            $tag->alt($row['title']);
+                            echo $tag;
+                        } ?>
+                        <div class="animated_item text_1_1" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown">Travel, PHOTOGRAPHY</div>
+                        <div class="animated_item text_1_2" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown"><?php echo $row['title']; ?></div>
+                        <?php if ($row['linkURL']) { ?>
+                            <div class="animated_item text_1_3" data-animation-show="fadeInUp" data-animation-hide="fadeOutDown"><a href="<?php echo $row['linkURL']; ?>" class="general_button_type_1">Read More</a></div>
+                        <? } ?>
+                    </li>
+                <?php } ?>
+            </ul>
+        <?php } ?>
+        </div>
+    </div>
+</div>
+----
+
+(Note: we've omitted some lines of code in these files that aren't directly about this task.
+These lines contain checks to see whether the image slider is in edit mode.)
+
+Important points to note:
+
+. We make sure to keep all the existing variable names injected by the block (the $rows array which corresponds to the images added, their titles, descriptions, links and file IDs.) in place, and retrieve File objects from these variables in the same way.
+  It's really just the HTML around these calls that we're messing with.
+. We don't have access to any additional data in this view template than we would have normally.
+. Since we don't have access to any additional data in this template, the "Travel, PHOTOGRAPHY" categorization text is currently hard coded in the new image slider template.
+  We're either going to have to fork the block to add another piece of data about each slider item, or we can just delete this line of HTML in the updated image slider template.
+. This will change the Image Slider view HTML in all cases where the block is used, unless the block uses a custom template.
+  Make sure that this is the desired effect.
+
+== That's It
+
+That's all you have to do to modify the output layer of a block for use in your custom projects.
+In many cases it's best to use Concrete5 CSS classes and markup in your themes, so that you know the block types will render nicely within them.
+But if you don't have control of your HTML from the beginning, this can often be easier than trying to change your CSS to match Concrete5's HTML.

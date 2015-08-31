@@ -1,0 +1,54 @@
+[[design_assets_screencast]]
+= Assets Screencast
+
+video::FsWc09wR0Pc[youtube, width=640, height=360]
+(Note: the full HD video is available at YouTube.)
+
+Now that we've added a theme and given it a grid, it's time for us to continue exploring 5.7's new theme-focused features.
+This one is asset support.
+
+== What are Assets?
+
+When we talk about Assets, we mean CSS and JavaScript files, which typically are required at the same time, in order to add functionality.
+For example, in order for the Redactor rich text editor to function we need to include
+
+concrete/js/redactor.js concrete/css/redactor.css concrete/js/file-manager.js concrete/css/file-manager.js concrete/js/sitemap.js concrete/css/sitemap.css
+
+and perhaps a few more files.
+
+== addHeaderItem and addFooterItem
+
+We used to specify these with $view->addHeaderItem() and $view->addFooterItem().
+Those methods still exist, but they are brittle, and littering your code with these makes it difficult to ensure the code will still work later when more or different assets are required for the same functionality.
+
+== Asset Framework
+
+Now, with the Asset, AssetGroup and AssetList classes found in the \Concrete\Core\Asset namespace, we can register these assets, including whether to minify or combine them on the fly, their versions and paths, and we can group them together.
+Requiring all of Redactor's assets on a page now requires just this line of code
+
+[source,php]
+----
+$this->requireAsset('redactor');
+----
+
+from within a block controller.
+
+== Theme Assets
+
+Sometimes themes provide assets.
+For example, this theme is bootstrap3 based, meaning it already includes bootstrap's CSS and JavaScript by default.
+That also means it takes care of certain block and core formatting by default, since the core blocks use bootstrap styles.
+
+In order to remove the duplicate bootstrap assets from this theme and fix conflicts that are keeping it from functioning fully, we add code to our PageTheme class to mark that these bootstrap assets are provided by the theme.
+
+[source,php]
+----
+public function registerAssets()
+{
+    $this->providesAsset('javascript', 'bootstrap/*');
+    $this->providesAsset('css', 'bootstrap/*');
+    $this->providesAsset('css', 'blocks/form');
+    $this->providesAsset('css', 'core/frontend/*');
+    $this->requireAsset('javascript', 'jquery');
+}
+----

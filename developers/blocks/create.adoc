@@ -1,0 +1,40 @@
+[[blocks_create]]
+= Creating a New Block Type
+
+:leveloffset: +1
+
+include::create/getting-started.adoc[]
+
+include::create/design.adoc[]
+
+include::create/ajax.adoc[]
+
+include::create/caching.adoc[]
+
+include::create/composer.adoc[]
+
+include::create/edit-mode.adoc[]
+
+include::create/indexes.adoc[]
+
+include::create/help.adoc[]
+
+include::create/audio-player.adoc[]
+
+include::create/register-assets.adoc[]
+
+include::create/sets.adoc[]
+
+include::create/inline-editing.adoc[]
+
+include::create/grid-container.adoc[]
+
+include::create/multiple-database-tables.adoc[]
+
+include::create/interactive.adoc[]
+
+include::create/form-widgets.adoc[]
+
+include::create/packaging.adoc[]
+
+:leveloffset: -1

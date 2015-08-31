@@ -1,0 +1,12 @@
+[[files_existing]]
+= Working with Existing Files
+
+:leveloffset: +1
+
+include::existing/programmatically-access.adoc[]
+
+include::existing/use-file-manager.adoc[]
+
+include::existing/programmatically-work.adoc[]
+
+:leveloffset: -1

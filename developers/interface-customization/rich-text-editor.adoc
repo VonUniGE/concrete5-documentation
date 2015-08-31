@@ -1,9 +1,0 @@
-= Rich Text Editor
-
-:leveloffset: +1
-
-include::rich-text-editor/embedding-rich-text-editor.adoc[]
-
-include::rich-text-editor/registering-rich-text-editor-plugin.adoc[]
-
-:leveloffset: -1

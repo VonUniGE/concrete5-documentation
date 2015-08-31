@@ -1,0 +1,12 @@
+[[design_grid]]
+= Adding Grid Support to Your Theme
+
+:leveloffset: +1
+
+include::grid/enable.adoc[]
+
+include::grid/containers.adoc[]
+
+include::grid/custom-framework.adoc[]
+
+:leveloffset: -1

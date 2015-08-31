@@ -1,0 +1,10 @@
+[[interface_guides]]
+= Help System & Guides
+
+:leveloffset: +1
+
+include::guides/dashboard.adoc[]
+
+include::guides/customization.adoc[]
+
+:leveloffset: -1

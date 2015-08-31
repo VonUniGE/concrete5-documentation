@@ -1,0 +1,69 @@
+[[files_custom-file-type-views]]
+= Creating Custom File Type Views and Edit Interfaces
+
+In addition to working with metadata, concrete5's file manager provides interfaces for viewing and editing files of all different types.
+For example, when clicking on image files, you'll see an option to view the file, with the file itself showing up in a dialog window if you view it.
+
+Like file importer inspectors, this functionality is controlled by the `\Concrete\Core\File\Type\TypeList` class.
+The registrations in this class determine whether a file type has a viewer or an editor.
+Let's take our custom file inspector reference here:
+
+[source,php]
+----
+$list = TypeList::getInstance();
+$list->define(
+    'mp3',
+    t('MP3'),
+    \Concrete\Core\File\Type\Type::T_AUDIO,
+    'audio',
+    'audio',
+    false,
+    'id3_reader'
+);
+----
+
+The fifth and six arguments in this method call ('audio' and false) control whether the file type has a custom viewer and/or a custom editor.
+Since "audio" is specified as a custom viewer, any files of this type will contain a "View" link when clicked on in the file manager.
+When clicking the View link, a dialog window will be opened that will automatically load the contents of
+
+----
+elements/files/view/audio.php
+----
+
+The final filename will match whatever is passed in this argument.
+When loading a custom viewer, if a package handle is passed as the final parameter in the `define()` function, the file will be loaded from the `elements/` directory within the package - unless there's an overriding file in the `application/elements/` directory.
+
+Since we've created a custom mapping for our `ID3_Reader` package, and we're specifying a custom viewer for our audio file, we need to make sure that our package contains an audio viewer.
+Otherwise, we're going to get a file not found error when we click on the the View link that is shown when working with audio files.
+So let's add a file in the proper spot.
+First, create an empty PHP file in `packages/id3_reader/elements/files/view/audio.php`.
+Next, these contents should be sufficient:
+
+[source,php]
+----
+<?php defined('C5_EXECUTE') or die('Access Denied.'); ?> 
+<?php $path = $fv->getURL(); ?>
+<audio controls>
+    <source src="<?php echo $path; ?>" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+----
+
+This pretty easy to understand.
+First, we grab the URL of the file from the `$fv` object.
+We don't have to instantiate the object - it's automatically passed into the element.
+It represents the relevant `\Concrete\Core\File\Version\Version` object for the file.
+Then we have our custom viewer code, which in this case is simply the HTML5 audio tag.
+Here's what the resulting output looks like:
+
+image:custom-audio-viewer.png[alt="Custom Audio Viewer", title="Custom Audio Viewer"]
+
+Editors work the same way.
+Simply pass a string into the sixth argument above, and an element matching the same name of the string will be loading from either `packages/your_package/elements/files/edit/` or `application/elements/files/edit`.
+The $fv object will automatically be available in the local scope of the element.
+
+== Saving the output of Custom Editors
+
+Custom editors usually need to save their contents somewhere.
+This is currently up to you.
+A package that implements a custom editor will likely want to make that editor submit to a custom route, which will then route to a custom controller provided by the package, which will load the file up (by passing the file ID via the POST) and changing its contents with whatever contents are provided by the custom editor.

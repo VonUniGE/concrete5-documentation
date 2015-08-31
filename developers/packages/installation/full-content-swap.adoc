@@ -1,8 +1,7 @@
+[[packages_installation_full-content-swap]]
 = Theme Packages: Enable Full Content Swap
 
 Packages that contain themes can also make it so that those themes offer the user the opportunity to completely replace the front-end content on their site with the content provided by the theme.
 This can the end user experience with the theme much, much nicer.
 
-This information can be found in the themes section.
-
-http://www.concrete5.org/documentation/developers/5.7/designing-for-concrete5/packaging-your-theme/enabling-full-content-swap/[Theme Documentation: Enabling Full Content Swap]
+This information can be found in the themes section: <<design_packages_full-content-swap>>

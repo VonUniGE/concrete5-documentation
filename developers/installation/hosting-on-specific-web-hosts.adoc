@@ -1,5 +1,0 @@
-= Hosting on Specific Web Hosts
-
-Need special instructions for configuration on a certain web hosts? Our how-tos section contains many host-specific how-tos.
-
-link:http://www.concrete5.org/documentation/how-tos?sort=date&search_tag=specifichosting[Search How-Tos]

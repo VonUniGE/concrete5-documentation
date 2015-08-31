@@ -1,5 +1,0 @@
-= Full Screencast
-
-The following screencast walks through the entire process described in this Style Customization section, including enabling customization, advanced customization, working with presets and more.
-
-video::CdePC0rH8p0[youtube, width=560, height=315]

@@ -1,0 +1,10 @@
+[[blocks_create_getting-started_overview]]
+= Overview
+
+As you know, a *block* in Concrete5 is a simple bit of content added to a page.
+A *Block Type* is the template for how those blocks are added, edited, saved, stored and displayed.
+Examples of block types that Concrete5 ships with include Content, File, Auto-Nav, Page List and YouTube video.
+While Concrete5 includes many different block types, it can't possibly include all block types that a developer might want to use for every situation.
+What if a client wants to place a gallery of images from flickr.com on their page, or has a custom data feed that they want to display?
+These are situations in which developers will likely want to create their own custom block type.
+Concrete5 makes that easy to do.

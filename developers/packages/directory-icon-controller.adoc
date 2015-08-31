@@ -1,3 +1,4 @@
+[[packages_directory-icon-controller]]
 = Directory, Icon and Controller
 
 == Directory Name

@@ -1,3 +1,8 @@
+[[concepts_jobs]]
 = Jobs
 
-In Concrete5 a Job is a PHP file that can be run through the Jobs interface in the Dashboard. Jobs can easily be scheduled and run in a third party scheduler (like cron) or run on page load at different intervals via a scheduling interface in the Dashboard. Jobs are meant to be run in the background. Examples of jobs include "Automated Group Entry and Exit", "Reindex Search Engine", "Import Email", etc... Concrete5 also supports **Queueable Jobs**. These extend the regular job class, but can process their data in smaller batches.
+In Concrete5 a Job is a PHP file that can be run through the Jobs interface in the Dashboard.
+Jobs can easily be scheduled and run in a third party scheduler (like cron) or run on page load at different intervals via a scheduling interface in the Dashboard.
+Jobs are meant to be run in the background.
+Examples of jobs include "Automated Group Entry and Exit", "Reindex Search Engine", "Import Email", etc... Concrete5 also supports **Queueable Jobs**.
+These extend the regular job class, but can process their data in smaller batches.

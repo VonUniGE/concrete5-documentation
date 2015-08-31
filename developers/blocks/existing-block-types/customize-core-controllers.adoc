@@ -1,0 +1,74 @@
+[[blocks_existing-block-types_customize-core-controllers]]
+= Using a Custom Controller for a Core Block Type
+
+Like a block's view template, any file in the block's directory can be duplicated in a website's application directory, and will then override that version of the core block.
+This includes the controller.php file.
+For example, say you want to change the behavior of the Search block to search just page titles, instead of all the keyword fields on a particular page.
+Lines 208-210 are the relevant lines of code that will need to be changed:
+
+[source,php]
+----
+if (isset($_REQUEST['query'])) {
+    $ipl->filterByKeywords($_q);
+}
+----
+
+This is within the do_search method.
+Let's override the core search block controller block type, and change this method to filterByName($_q).
+First, turn off overrides caching via Dashboard > System & Settings > Optimization > Cache & Speed Settings.
+Until this is turned off Concrete5 won't look in the application directory unless it knows it has a file in there.
+
+Next, we create an override directory in *application/blocks* for the search block.
+Assuming I'm in my web root directory:
+
+----
+mkdir application/blocks/search
+----
+
+Then, create an empty controller.php in this location.
+So now now we have an empty file at **application/blocks/search/controller.php**.
+
+Next, add the proper namespace.
+Since this is in the Application directory, it looks like this:
+
+[source,php]
+----
+<?php
+
+namespace Application\Block\Search;
+----
+
+Then, we add a reference to the core search block controller, which we will be extending:
+
+[source,php]
+----
+use Concrete\Block\Search\Controller as SearchBlockController;
+----
+
+Then create the class itself, which extends this search block controller:
+
+[source,php]
+----
+class Controller extends SearchBlockController
+{
+}
+----
+
+The entire file now looks like this:
+
+[source,php]
+----
+<?php
+
+namespace Application\Block\Search;
+
+use Concrete\Block\Search\Controller as SearchBlockController;
+
+class Controller extends SearchBlockController
+{
+}
+----
+
+Then, all we have to do is copy the do_search() method from the original core class into this class.
+All other methods will be inherited from the core search class.
+Once the method is copied, you can change anything you like this within the class, without having to worry about the other methods in the original core class.

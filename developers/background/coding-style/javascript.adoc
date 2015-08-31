@@ -1,0 +1,38 @@
+[[background_coding-style_javascript]]
+= JavaScript
+
+== Coding Style
+
+JavaScript should use the https://github.com/airbnb/javascript[Airbnb JavaScript Style Guide], with the following modifications:
+
+* Use four spaces for indention, for tool consistency and consistency with existing core code.
+* When saving a reference to "this," use "my" instead of "_this."
+
+== File Naming and Location
+
+JavaScript file names should be all lowercase, with dashes the only non alphanumeric character allowed in the filenames before the extension.
+
+=== Yes
+
+* js/color-picker.js
+* js/core/jquery-ui.js
+
+=== No
+
+* js/ccm.whatever.js
+* js/MyFile.js
+* js/who_knows.js
+
+JavaScript should go in the standard js/ directories only.
+Unless it is explicitly allowed by the core (e.g. view.js files in blocks.)
+
+== Existing Code
+
+While the style of our JavaScript is improving massively in 5.7, many of our file still need cleanup, and our JS naming definitely doesn't currently support these standards.
+*We will be handling the renaming of files as needed.* But we would love to have help with the style of the code itself.
+
+=== Important Note
+
+Again, if you submit a pull request for this type of cleanup, please keep each request to one or just a few files - for the sake of vetting your pull request.
+Please *do not* run the entire concrete5 source through a cleanup tool and send that to us.
+We could do that ourselves ;-)

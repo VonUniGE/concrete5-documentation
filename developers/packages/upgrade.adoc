@@ -1,0 +1,113 @@
+[[packages_upgrade]]
+= Handling Package Upgrades
+
+While many packages are used to bundle bits of code in a one-time fashion, the format itself is able to handle continuous code deployment over a period of time.
+Using the version number in a package, we can trigger custom code that adds functionality over time.
+For example, let's say we have a package that installs a theme:
+
+[source,php]
+----
+<?php
+
+namespace Concrete\Package\CustomTheme;
+
+use Concrete\Core\Package\Package;
+use Concrete\Core\Page\Theme\Theme;
+
+defined('C5_EXECUTE') or die('Access Denied.');
+
+class Controller extends Package
+{
+
+    protected $pkgHandle = 'custom_theme';
+    protected $appVersionRequired = '5.7.4';
+    protected $pkgVersion = '1.0';
+
+    public function getPackageDescription()
+    {
+        return t('Custom theme description.');
+    }
+
+    public function getPackageName()
+    {
+        return t('Custom theme');
+    }
+
+    public function install()
+    {
+        $pkg = parent::install();
+        Theme::add('custom_theme', $pkg);
+    }
+}
+----
+
+This is version 1.0 of the package.
+It installs a theme found at `packages/custom_theme/themes/custom_theme`.
+Now, let's say we want to add a block type as part of this package.
+Adding this to installation is easy.
+First, we import it into our namespace at the top of our file:
+
+[source,php]
+----
+use Concrete\Core\Block\BlockType\BlockType;
+----
+
+Next, we add a line of code to install the block type at the time of package installation:
+
+[source,php]
+----
+public function install()
+{
+    $pkg = parent::install();
+    Theme::add('custom_theme', $pkg);
+    BlockType::installBlockTypeFromPackage('custom_block_type', $pkg);
+}
+----
+
+We just add the new installBlockTypeFromPackage line.
+However, what about sites that have already installed this package?
+They won't get the new block type unless they uninstall and reinstall the package, and that might lead to data loss.
+These sites need an upgrade to the new package.
+
+First, change the $pkgVersion variable to something higher than the initial value.
+For example, let's make this 1.2
+
+[source,php]
+----
+protected $pkgVersion = '1.2';
+----
+
+Now, create an upgrade method in your package controller.
+
+[source,php]
+----
+public function upgrade()
+{
+    parent::upgrade();
+    $pkg = Package::getByHandle('custom_theme');
+    $bt = BlockType::getByHandle('custom_block_type');
+    if (!is_object($bt)) {
+        $bt = BlockType::installBlockTypeFromPackage('custom_block_type', $pkg);
+    }
+}
+----
+
+Let's break this function down.
+
+First, we run the `parent::upgrade()` method, which takes care of storing our new version number against the package record in the Concrete5 database.
+
+Then, we get a new instance of the current package.
+
+NOTE: the package object is returned by the `install()` method, but it's not returned by the `upgrade()` method, so you'll need to get it explicitly with the `Package::getByHandle()` method.
+
+Next, we retrieve our custom block type by handle, and we check to see if it exists.
+If it doesn't exist, we install it.
+
+That's it!
+Since the 1.2 version number in the controller file is greater than the 1.0 version stored against the package object in the database, Concrete5 will signal administrators that the package has an upgrade available.
+When the package is updated through the dashboard, the `update()` method will be run.
+Why do we check to see if the block type exists, if we know we're updating and it doesn't?
+Well, we *don't* know that it doesn't exist, actually.
+This `upgrade()` method is automatically run any time any upgrade happens, and the code doesn't care what version number it's updating from or to.
+So it's possible that this code might run again in the future after a second upgrade.
+At that point, the block type *will* exist, and we'll want to make sure we don't try to install it a second time.

@@ -1,37 +1,60 @@
+[[concepts_advanced]]
 = Advanced
 
 == Configuration
 
-Configuration in Concrete5.7 can use different locations to store their data. This is done using different Config loaders and savers. Most configuration values are stored and loaded in the filesystem, using the *FileLoader* and **FileSaver**, but a database loader and saver is also available. The *ConfigRepository* object handles getting and saving values - through the use of the generic *Config* facade class.
+Configuration in Concrete5.7 can use different locations to store their data.
+This is done using different Config loaders and savers.
+Most configuration values are stored and loaded in the filesystem, using the *FileLoader* and **FileSaver**, but a database loader and saver is also available.
+The *ConfigRepository* object handles getting and saving values - through the use of the generic *Config* facade class.
 
 == Assets
 
-*Assets* in Concrete5 refer to JavaScript or CSS files required to make something work. Assets can be named and grouped into into **Asset Groups**. Instead of referring to JavaScript or CSS files by path, they can be required by group name, which is less brittle and future-proof. Assets can register their own versions, and the assets subsystem won't include competing or incompatible versions of the same asset on a page. The asset subsystem can also handle minification and combination of separate assets into one file.
+*Assets* in Concrete5 refer to JavaScript or CSS files required to make something work.
+Assets can be named and grouped into into **Asset Groups**.
+Instead of referring to JavaScript or CSS files by path, they can be required by group name, which is less brittle and future-proof.
+Assets can register their own versions, and the assets subsystem won't include competing or incompatible versions of the same asset on a page.
+The asset subsystem can also handle minification and combination of separate assets into one file.
 
 == Events
 
-Concrete5 developers have access to a wide variety of application **Events**. Events in Concrete5 fire at different points, and the Events subsystem lets developers hook into those Events and run their own custom code when the event is fired. Developers can also fire their own events in their own code.
+Concrete5 developers have access to a wide variety of application **Events**.
+Events in Concrete5 fire at different points, and the Events subsystem lets developers hook into those Events and run their own custom code when the event is fired.
+Developers can also fire their own events in their own code.
 
 == Views & Controllers
 
-Much of Concrete5 is built on Model-View-Controller philosophy. As such, many items have their own associated *Controllers* and **Views**. Examples include generic controllers and views (new in 5.7 and used primarily in the core to handle application interface), blocks (which include a controller.php file and view.php file), attributes, single pages, page types and more.
+Much of Concrete5 is built on Model-View-Controller philosophy.
+As such, many items have their own associated *Controllers* and **Views**.
+Examples include generic controllers and views (new in 5.7 and used primarily in the core to handle application interface), blocks (which include a controller.php file and view.php file), attributes, single pages, page types and more.
 
 == Service Providers & Core Classes
 
-Service providers are PHP classes that don't really belong to specific objects in Concrete5. They are registered at startup and can be called easily using Concrete5's "Core::make()" function. They can also be rebound by custom code on the fly. Examples of Service providers include "\Concrete\Core\Mail\Service" (which is used to send mail) and can be instantiated using Core::make('helper/mail');
+Service providers are PHP classes that don't really belong to specific objects in Concrete5.
+They are registered at startup and can be called easily using Concrete5's "Core::make()" function.
+They can also be rebound by custom code on the fly.
+Examples of Service providers include "\Concrete\Core\Mail\Service" (which is used to send mail) and can be instantiated using Core::make('helper/mail');
 
 == Tools
 
-Deprecated in 5.7, tools refer to files in the tools directory. These files are automatically viewable in a web browser at http://www.yoursite.com/index.php/tools/required/whatever - this will automatically load concrete5 and include concrete/tools/whatever.php. Tools are deprecated because routes, views and controllers are a much better and more flexible way to accomplish the same thing.
+Deprecated in 5.7, tools refer to files in the tools directory.
+These files are automatically viewable in a web browser at http://www.yoursite.com/index.php/tools/required/whatever - this will automatically load concrete5 and include concrete/tools/whatever.php.
+Tools are deprecated because routes, views and controllers are a much better and more flexible way to accomplish the same thing.
 
 == Routing
 
-Concrete5 5.7 uses Symfony2's Routing Component to create a wide variety of system routes for the user interface. Routes can be registered by custom code, and then be visited in a web browser. Routes can execute a PHP closure or run a particular Controller method.
+Concrete5 5.7 uses Symfony2's Routing Component to create a wide variety of system routes for the user interface.
+Routes can be registered by custom code, and then be visited in a web browser.
+Routes can execute a PHP closure or run a particular Controller method.
 
 == Database & Database Manager
 
-Concrete5's *DatabaseManager* class keeps track of multiple database *Connection* objects. These can be specified in Configuration and automatically connected to. The global *Database* facade automatically allows access to the current connection using \Database::get();
+Concrete5's *DatabaseManager* class keeps track of multiple database *Connection* objects.
+These can be specified in Configuration and automatically connected to.
+The global *Database* facade automatically allows access to the current connection using \Database::get();
 
 == Facades
 
-Facades are static classes that map to underlying implementations. These underlying implementations can be rebound. Examples of facades in Concrete5 include "Image", "Config", "Database", and more.
+Facades are static classes that map to underlying implementations.
+These underlying implementations can be rebound.
+Examples of facades in Concrete5 include "Image", "Config", "Database", and more.

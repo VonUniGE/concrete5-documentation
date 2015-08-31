@@ -1,0 +1,134 @@
+[[design_packages_overview]]
+= Overview & Full Screencast
+
+The Concrete5 Package format is the format used by the Concrete5 marketplace, as well by any developer who wants to keep certain bits of Concrete5 functionality bundled together, for easy updating or deployment.
+Any developer who wants to distribute a Concrete5 theme should look into making that theme a Package.
+Packages can contain lots of different types of Concrete5 functionality, including themes, blocks, single pages and their controllers, custom code and more - but this focuses just on packaging up a Concrete5 theme.
+
+video::C159nXg17dA[youtube, width=560, height=315]
+
+Now we can install the package and activate the theme.
+It's that easy.
+Packaging blocks are other items is a very similar process.
+
+Here's my blank install.
+You'll notice I've got the Urbanic theme installed, and it's present here in my themes folder.
+If I go to my Themes page in the Dashboard it's present there too.
+Now, I don't want to install the theme yet, because I don't actually want to keep the theme in this location.
+I want to move it into a Package, so it can be installed there.
+
+So let's go to the file system.
+First, I'm going to create a directory for my package.
+This must be unique in the packages directory - and since we're never 100% certain what packages might end up in this directory, it usually pays to be somewhat thoughtful.
+Avoid incredibly generic names.
+Since my theme is named Urbanic and I want this to make sense to someone looking over my packages directory (since packages can install more than just themes) I'm going to choose "theme_urbanic" as my package handle.
+The package handle matches the directory name.
+
+Now I'm going to put two files into this directory.
+The first is going to represent the icon of the package.
+Historically this has always been 97x97 - but in 5.7 the exact pixels aren't that important, it's mostly important that's it a square, ideally with rounded corners.
+Here's the icon I'm going to use.
+Notice, it matches the Urbanic theme but it's not the same as thumbnail.png (which has a different aspect ratio.)
+
+Next, I'm going to add the most important file in a package to the directory.
+This is controller.php.
+This file specifies information about the package, including the current version, its name, its handle again, and it takes care of installing, upgrading and uninstalling the package.
+You don't always need an uninstall routine - since packages are generally pretty good at cleaning up after themselves when they're uninstalled from Concrete5.
+First, I'm going to create the class, what it extends from and its namespace.
+
+[source,php]
+----
+namespace Concrete\Package\ThemeUrbanic;
+
+use Concrete\Core\Package\Package;
+use Concrete\Core\Page\Theme\Theme;
+
+defined('C5_EXECUTE') or die('Access Denied.');
+
+class Controller extends Package
+{
+
+}
+----
+
+Notice the namespace.
+In general, anything that had a namespace prior to going into a Concrete5 package is going to have a new namespace, beginning with
+
+[source,php]
+----
+\Concrete\Package\YourCamelCasedPackageHandle
+----
+
+We'll talk more about this in a second.
+I'm also including a reference to the \Concrete\Core\Page\Theme\Theme method in Concrete5, because I'm going to use this class to install the theme through PHP.
+Now I'm going to add some metadata about the package.
+Add these to the top of your class, inside the class itself.
+
+[source,php]
+----
+protected $pkgHandle = 'theme_urbanic';
+protected $appVersionRequired = '5.7.1';
+protected $pkgVersion = '1.0';
+
+public function getPackageDescription()
+{
+    return t("Adds Urbanic Theme.");
+}
+
+public function getPackageName()
+{
+    return t("Urbanic");
+}
+----
+
+Notice the $pkgHandle parameters matches the directory that we're using.
+Next, we have a minimum version required.
+This package won't be installable on a version below this number.
+Next, we have the version of this package.
+This doesn't matter so much right now, but as we deploy updates, the version number is used to manage upgrading between versions.
+Finally, we have methods that define what the package name and description are.
+These are used in the Dashboard list interface for packages.
+
+Now I'm going to write the installation routine.
+This is very simple.
+
+[source,php]
+----
+public function install()
+{
+    $pkg = parent::install();
+    Theme::add('urbanic', $pkg);
+}
+----
+
+The package install() method is automatically run when a Package is installed.
+First, we get ourselves a $pkg variable by installing the Package itself (using parent::install()).
+Then we add the theme itself, making sure to pass the $pkg variable as the second parameter to the add method. **This is very important**.
+If this variable isn't passed, Concrete5 will think you're trying to install a theme in the application/themes/ directory.
+We need to pass the $pkg variable so it knows where to look for files.
+
+Everything that can be installed via the Package format will have some mechanism to pass this $pkg variable into its add or install methods.
+
+Now let's move the theme from our application/themes/ directory into the package's directory.
+Before we can try to install this package, we need to make one more modification.
+Remember I mentioned namespaces earlier, and how packages change the prefix for namespaces on items that use namespaces?
+We have one such item in our Urbanic theme - the PageTheme class.
+Open packages/theme_urbanic/themes/urbanic/page_theme.php and change this:
+
+[source,php]
+----
+namespace Application\Theme\Urbanic;
+----
+
+to this:
+
+[source,php]
+----
+namespace Concrete\Package\ThemeUrbanic\Theme\Urbanic;
+----
+
+The first "ThemeUrbanic" is present because the package's handle is theme_urbanic.
+If the handle were "urbanic_is_great" the namespace would be \Concrete\Package\UrbanicIsGreat\Theme\Urbanic.
+
+And that's it!
+We have our theme packaged in a format that can be submitted to the marketplace or easily passed around different Concrete5 sites.

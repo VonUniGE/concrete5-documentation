@@ -1,5 +1,0 @@
-= Built-in Asset List
-
-A full list of all assets can be found in the appendix.
-
-<<appendix_asset-list>>[Asset List]

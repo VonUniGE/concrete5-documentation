@@ -1,0 +1,20 @@
+[[pages_single-pages]]
+= Single Pages
+
+:leveloffset: +1
+
+include::single-pages/overview.adoc[]
+
+include::single-pages/controllers.adoc[]
+
+include::single-pages/send-data.adoc[]
+
+include::single-pages/custom-view.adoc[]
+
+include::single-pages/dashboard-pages.adoc[]
+
+include::single-pages/help-for-dashboard.adoc[]
+
+include::single-pages/packaging.adoc[]
+
+:leveloffset: -1

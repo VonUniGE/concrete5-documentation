@@ -1,0 +1,129 @@
+[[assets_register]]
+= Registering an Asset
+
+Before you can reference an asset in your code, you have to register an asset, in order for Concrete5 to know how to include it.
+Registering an asset can be done easily in a short block of PHP.
+Let's say we want to register jQuery as an asset in Concrete5 (note: this is unnecessary, since jQuery ships with Concrete5 it has already been registered.
+A full list of pre-registered assets and their handles link:#[is available here].
+
+[source,php]
+----
+$al = \Concrete\Core\Asset\AssetList::getInstance();
+$al->register('javascript', 'jquery', 'js/jquery.js');
+----
+
+First, we get our Asset List class.
+This class is a singleton - a single asset list class is available in every part of Concrete5, and you can add to or modify it from anywhere.
+We use getInstance() to get that single instance, rather than create a new one.
+Our register() call takes three arguments
+
+* The asset type ('javascript' or 'css')
+* The handle we'd like to refer to this asset by ('jquery' in this case.)
+* The path or URL to the asset
+* An array of options (optional; described later, not pictured here)
+* A \Concrete\Core\Package\Package object or package handle (optional; used if the asset is found in a package, not pictured here.)
+
+== Asset Types
+
+Concrete5 includes three asset types that can be called in register()
+
+* *javascript* for JavaScript files.
+* *css* for CSS style sheets.
+* *javascript-inline* for JavaScript that you would like to output inline into the page.
+
+== Path Details
+
+The path specified in the register() function is relative to one of the following
+
+* The application/ directory
+* The packages/package_handle/ directory (if a package handle is specified as part of the register() method.
+* The concrete/ directory
+
+These three locations are checked in this order.
+So, in our example, first we'll try and load jquery.js from application/js/jquery.js, then from concrete.js.
+
+== Handle Uniqueness
+
+A handle should be unique across type and handle.
+This means that if you're registering an asset with the handle "mysite/calendar", you can register one CSS file and one JavaScript file with both that same handle.
+
+== Calling register()
+
+You can register an asset from anywhere - your application's custom startup file (application/bootstrap/app.php), a package's on_start() method, a block type's on_start() method, etc...
+
+== Registering an asset in a block
+
+Have a custom block that uses some assets?
+Register in your block's on_start() method (which automatically gets run when a block is embedded in a page.) Here's how a block can register the MediaElement.js JavaScript and CSS files.
+
+[source,php]
+----
+public function on_start()
+{
+    $al = \Concrete\Core\Asset\AssetList::getInstance();
+    $al->register(
+        'javascript', 'mediaelement', 'blocks/audio/mediaelement/mediaelement-and-player.min.js'
+    );
+    $al->register(
+        'css', 'mediaelement', 'blocks/audio/mediaelement/mediaelementplayer.min.css'
+    );
+}
+----
+
+== Registering an asset in a package.
+
+Registering an asset in a package is very similar - add it to the package controller's on_start() method.
+Let's say our package handle was "audio_player" and we wanted to register MediaElement.js within it.
+Add this method to the package controller.php file:
+
+[source,php]
+----
+public function on_start()
+{
+    $al = AssetList::getInstance();
+    $al->register(
+        'javascript', 'mediaelement', 'blocks/audio/mediaelement/mediaelement-and-player.min.js', array(), 'audio_player'
+    );
+    $al->register(
+        'css', 'mediaelement', 'blocks/audio/mediaelement/mediaelementplayer.min.css', array(), 'audio_player'
+    );
+}
+----
+
+== register() options
+
+The fourth argument of the register() function is an array of optional parameters.
+Here are the options, as well as their defaults if not specified.
+
+* *position* +
+  either \Concrete\Core\Asset\Asset::ASSET_POSITION_HEADER or \Concrete\Core\Asset\Asset::ASSET_POSITION_FOOTER.
+  If left blank, it will default to the position specified by the asset type.
+  CSS assets are included in the header of the page, JavaScript assets in the footer.
+* *local* +
+  defaults to true.
+  If false, the exact string will be treated as a URL to a non-local asset.
+* *version* +
+  defaults to false.
+  If specified, this version will be stored against the asset as the numerical version of the asset.
+* *combine* +
+  either true (combine this asset with other assets if asset caching is enabled) or false (do *not* combine this asset with others).
+  Defaults to -1, which uses the default for the Asset type.
+* *minify* +
+  either true (minify this asset before combining, if asset caching is enabled) or false (do *not* minify this asset).
+  Defaults to -1, which uses the default for the Asset type.
+
+== Registering with Options
+
+Let's take a look at what our Mediaelement.js register() method would look like with some more options relevant to the files:
+
+[source,php]
+----
+$al->register(
+    'javascript', 'mediaelement', 'blocks/audio/mediaelement/mediaelement-and-player.min.js',
+    array('version' => '2.16.3', 'minify' => false, 'combine' => true)
+);
+$al->register(
+    'css', 'mediaelement', 'blocks/audio/mediaelement/mediaelementplayer.min.css',
+    array('version' => '2.16.3', 'minify' => false, 'combine' => true)
+);
+----

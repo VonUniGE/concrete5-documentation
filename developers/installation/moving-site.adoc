@@ -1,0 +1,126 @@
+[[installation_moving-site]]
+= Moving a Site
+
+There are five main steps to moving a Concrete5 site:
+
+. Get a copy of the database.
+. Get the Concrete5 root directory (which contains application/, concrete/, updates and more).
+. Put your files in the new environment.
+. Create a new, empty database in the new environment and import the exported database from the first step.
+. Modify your configuration file for the new site.
+
+(Note: This guide assumes that concrete is installed at /home/your_account/public_html/ on a Linux machine.
+The technique is still valid wherever your site is installed.)
+
+== Make A Database Copy
+
+There are a number of ways to get a database copy. http://www.phpmyadmin.net[phpMyAdmin] has an "export" function, if you are unfamiliar with phpMyAdmin, http://www.youtube.com[youtube] actually has some good tutorials.
+
+If you have ssh access or direct terminal access to your server, this command will also give you a backup file:
+
+----
+mysqldump -u db_user -p db_database > database.sql
+----
+
+That will create a file in SQL format.
+You will use this file later, to re-create your site in its new home.
+
+== Get The Files
+
+As you know, Concrete5 has plenty of files.
+Unsurprisingly, you want most of them on your new site.
+Here are the ones you can ignore:
+
+* application/files/cache/
+* updates/
+
+If you cleared your cache beforehand, the cache folders should have nothing or almost nothing in them.
+You definitely do not want old cache on your new site.
+
+Do not delete the updates folder while your current site is still "live".
+Instead, if there is anything in it, check to see if your application/config/ folder contains a file named update.php.
+If it does, that means your site is actually running out of a particular version in the updates folder.
+If update.php exists, **write down the specific name contains in the array in that file**.
+
+To actually create your site archive, the easiest thing to do is to copy your entire public_html/ folder over to something like copied_site/ and then you can remove those two folders from copied site and create your archive. cPanel's File Manager lets you create an archive, and you can also do so from the command line with `tar czfv site_copy.tgz copied_site/`.
+
+Now download the archive to your machine.
+
+== Move The Files
+
+On your new hosting environment, upload, then extract your archive so that the file structure of public_html/ matches the one on your existing site.
+Once that's ok, you may need to modify the permissions of these folders:
+
+* application/files/
+* packages/
+* updates/
+* application/config/
+* sitemap.xml
+
+All of these files will need to be writable by the webserver, just like doing a new install.
+Generally this means making them read / write / execute allowed for owner / group / world.
+This can be done with the command line with `chmod -R a=Xrw files/ packages/ updates/ config/ sitemap.xml` or with cPanel's File Manager.
+
+Make sure the new site has the right version of the core concrete5 software.
+To do this, you can http://www.concrete5.org/download[download] the version of concrete5 listed in your config file and extract it into updates/.
+If your site was not running off of an update, then you can just use the version that is in your concrete/ folder.
+
+Another option is to copy the version of concrete5 that you site is running into the public_html/concrete/ folder for your new site, and deleting the update.php file from application/config/.
+
+== New database
+
+Now you need to create a new, empty database on the new hosting environment for your site to run.
+This can be done through phpMyAdmin.
+
+Once you have the new database in place, you can now import the data either using phpMyAdmin by uploading your database dump from earlier and using phpMyAdmin's import function, or just use this command:
+
+----
+mysql -u db_user -p database_name < old_database.sql
+----
+
+Now you should have all of your files and data in place.
+
+== Update configuration
+
+The last step is to modify your application/config/database.php for your new database credentials.
+This file should contain a PHP array that looks similar to this:
+
+[source,php]
+----
+<?php
+return array(
+    'default-connection' => 'concrete',
+    'connections' => array(
+        'concrete' => array(
+            'driver' => 'c5_pdo_mysql',
+            'server' => 'localhost',
+            'database' => 'mydatabase',
+            'username' => 'myusername',
+            'password' => 'mypassword',
+            'charset' => 'utf8'
+        )
+    )
+);
+----
+
+Change the values for the server, database, username and password array keys to the values appropriate for your new server.
+That should do it!
+
+== Testing
+
+Make sure you can do these tasks before considering this done:
+
+. Clear the cache from the dashboard.
+. Upload a file in the file manager.
+. Run the "Automated Jobs" (search 'jobs' in dashboard search to get the page)
+. Test page edits (make sure you can edit a page, do versions etc)
+
+== Troubleshooting
+
+. *Can't upload files or run jobs.* +
+  Make sure you set the permissions correctly when you moved the files over.
+. *Can't connect to database.* +
+  Incorrect settings in config/site.php, or the database does not exist.
+. *Broken links.* +
+  Did the old site have Pretty URLs enabled?
+  Make sure that your .htaccess file is in place and correct for your hosting environment.

@@ -1,17 +1,18 @@
+[[installation]]
 = Installation
 
 :leveloffset: +1
 
 include::installation/system-requirements.adoc[]
 
-include::installation/installation.adoc[]
+include::installation/steps.adoc[]
 
-include::installation/hosting-on-specific-web-hosts.adoc[]
+include::installation/specific-web-hosts.adoc[]
 
-include::installation/moving-a-site.adoc[]
+include::installation/moving-site.adoc[]
 
-include::installation/addon-installation.adoc[]
+include::installation/addon.adoc[]
 
-include::installation/upgrading-concrete5.adoc[]
+include::installation/upgrade.adoc[]
 
 :leveloffset: -1

@@ -1,0 +1,30 @@
+[[design]]
+= Designing for Concrete5
+
+This is a comprehensive guide to building a great Concrete5 theme.
+
+:leveloffset: +1
+
+include::design/themes.adoc[]
+
+include::design/styles.adoc[]
+
+include::design/grid.adoc[]
+
+include::design/packages.adoc[]
+
+include::design/custom-layout.adoc[]
+
+include::design/assets.adoc[]
+
+include::design/area-operations.adoc[]
+
+include::design/single-page-themes.adoc[]
+
+include::design/cache.adoc[]
+
+include::design/responsive-images.adoc[]
+
+include::design/simplesite.adoc[]
+
+:leveloffset: -1

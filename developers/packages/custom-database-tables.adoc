@@ -1,0 +1,16 @@
+[[packages_custom-database-tables]]
+= Custom Database Tables
+
+NOTE: This is an advanced section
+
+:leveloffset: +1
+
+include::custom-database-tables/overview.adoc[]
+
+include::custom-database-tables/axmls.adoc[]
+
+include::custom-database-tables/doctrine-xml.adoc[]
+
+include::custom-database-tables/doctrine-orm.adoc[]
+
+:leveloffset: -1

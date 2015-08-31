@@ -1,0 +1,14 @@
+[[blocks_existing-block-types]]
+= Working with Existing Block Types
+
+:leveloffset: +1
+
+include::existing-block-types/customize-default-view-template.adoc[]
+
+include::existing-block-types/custom-view-templates.adoc[]
+
+include::existing-block-types/customize-core-controllers.adoc[]
+
+include::existing-block-types/blocks-page-templates.adoc[]
+
+:leveloffset: -1

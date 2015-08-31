@@ -1,0 +1,13 @@
+[[interface]]
+= Interface Customization
+
+There're many ways to customize the concrete5 interface in order to provide custom help, additional rich text editor functionality and more.
+Read on for more information.
+
+:leveloffset: +1
+
+include::interface/rich-text-editor.adoc[]
+
+include::interface/guides.adoc[]
+
+:leveloffset: -1

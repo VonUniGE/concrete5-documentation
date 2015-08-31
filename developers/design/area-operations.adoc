@@ -1,0 +1,84 @@
+[[design_area-operations]]
+= Advanced Area Operations
+
+It's easy to add editable areas to a Concrete5 page template, but there's more that can be done at the area level than simply displaying them or enabling the grid container.
+
+== Checking for Total Blocks in an Area
+
+Sometimes it can be useful to know how many blocks are in an area.
+This code Let's you get that information:
+
+**Regular Area**
+
+[source,php]
+----
+<?php
+$a = new Area('Main');
+echo $a->getTotalBlocksInArea($c);
+?>
+----
+
+**Global Area**
+
+[source,php]
+----
+<?php
+$a = new GlobalArea('Header Nav');
+echo $a->getTotalBlocksInArea();
+?>
+----
+
+This can be especially useful when combined with the current page's "isEditMode()" method, which checks to see if the current page is checked out for editing.
+With this snippet, we can display some content in the page only if there are blocks in an area, or if the page is in edit mode.
+
+[source,php]
+----
+<?php
+$as = new GlobalArea('Header Search');
+$blocks = $as->getTotalBlocksInArea();
+$displayThirdColumn = $blocks > 0 || $c->isEditMode();
+
+if ($displayThirdColumn) {
+    ?>
+    <div class="search-column">
+        <h3>Search</h3>
+        <?php $as->display()?>
+    </div>
+    <?php
+}
+?>
+----
+
+== Setting a Custom Template for Blocks of a Certain Type
+
+*Note: This requires Concrete5 5.7.3.2 or greater*
+
+The following snippet of code sets automatic custom templates based on block type.
+Any image blocks uploaded will automatically have their custom template set to "theme_pic".
+Any content blocks uploaded will be set to "paragraphs":
+
+[source,php]
+----
+<?php
+$a = new Area('Main');
+$a->setCustomTemplate('image', 'theme_pic');
+$a->setCustomTemplate('content', 'paragraphs');
+$a->display($c);
+?>
+----
+
+== Retrieving all Block Objects for an Area
+
+If you want to retrieve the block objects in an area without displaying them (so that you can work with them, check them, manipulate them, etc...) you can do so with Area::getAreaBlocksArray()
+
+[source,php]
+----
+<?php
+$a = new Area('Main');
+$blocks = $a->getAreaBlocksArray($c);
+?>
+----
+
+== Area API
+
+http://concrete5.org/api/class-Concrete.Core.Area.Area.html[API Reference]

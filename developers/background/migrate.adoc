@@ -1,0 +1,202 @@
+[[background_migrate]]
+= A Guide to 5.7 for Existing Concrete5 Developers
+
+Much has changed in Concrete5 version 7.
+This will be most noticed by experienced Concrete5 developers.
+Almost every single method of interaction with the CMS is improved and reworked for the sake of progress and adoption of modern PHP principles and best practices.
+This technical refresh will give Concrete5 the ability to grow and improve in the future, but it can be a little daunting to those used to the old ways.
+Here are some details about some of the biggest ways Concrete5 version 7 is different from version 6.
+
+== Application Directory
+
+In version 6 and earlier, Concrete5's overrides directory was in the root of the web directory.
+The core directory was in concrete/.
+In version 7, the concrete/ directory still houses the core, but there are very few items in the root directory.
+Where did the overrides directories go?
+
+They've been moved into the *application/* directory.
+If you open this directory you'll see the standard empty directories that can be used to override items in the core.
+
+== Core Directory Reorganization
+
+While the *concrete/* directory might look the same in 5.7 at a glance, a closer inspection reveals a number of changes.
+
+=== New Top-Level Directories
+
+There are a number of new top level directories in 5.7, containing familiar items like attribute types (which used to be found in concrete/models/attribute/types), new bits of code like authentication types, and more.
+For a full list of these directories and what they contain, check out the <<environment_directory-structure>>.
+
+=== No More models/, helpers/ or libraries/ Directories
+
+All of Concrete5's classes that aren't specifically related to block types, attribute types, authentication types, menu items or controllers are now contained within the *concrete/src/* directory.
+This directory follows the PSR-4 naming standard (unlike much of the rest of Concrete5, which follows a modified version of this standard.) This code is fully namespaced and in many cases completely new for 5.7.
+
+Many of the existing API methods still work, and legacy classes like Loader still exist for the loading of helpers, but there are better, non-deprecated ways of working with these helpers going forward.
+
+=== Third Party Libraries Delivered by Composer
+
+All third party libraries that Concrete5 relies on are now delivered by the https://getcomposer.org/[Composer Dependency Manager].
+This happens during the build process, prior to deploying a full Concrete5 release, so you shouldn't have to worry about it.
+These libraries are stored in the *concrete/vendor* directory.
+
+== PHP Namespacing
+
+All classes in Concrete5 are now namespaced.
+If the classes reside in the *src/* directory, they will be namespaced according to the PSR-4 standard.
+If they fall outside this directory, they will use a modified version of PSR-4 that uses Concrete5's camelcasing in the namespace segments. You can find more information on the coding style guidelines page of the documentation: see <<background_coding-style>>.
+
+== Theming, Page Type & Page Template Changes
+
+While at first glance Concrete5.7 themes will appear the same as their 5.6 counterparts, there's quite a lot that's new about them.
+For example, a new method is required around your theme page templates' container DIVs
+
+[source,php]
+----
+<div class="<?=$c->getContainerClass()?>">
+----
+
+This isn't the only change.
+Page types are completely different in Concrete5.
+They've been separated from page templates (which are the files that live in a particular theme's directory.) You can create page types that allow or accept multiple page templates.
+Page themes can have an optional class that describes their capabilities, such as whether they support a grid framework (used by the upgraded Layouts engine), custom classes in certain areas, and more.
+
+All of this and more is described in detail in the <<design>> section of the documentation.
+
+== Configuration Changes
+
+Concrete5 no longer uses constants for its configuration options.
+In its place we've adopted the configuration library used by popular open source framework http://laravel.com[Laravel] and its associated syntax for defining configuration.
+There are some very tangiable benefits to this new setup:
+
+. Configuration options are stored in simple PHP arrays.
+. Very few configuration items are stored in the database.
+. All core configuration options can be overridden easily rewriting certain keys in the root configuration directories.
+  No more worries about checking to see if constants have been defined or not.
+. Configuration options can be nested and therefore namespaced.
+. Different configuration files can be loaded based on environment.
+
+While there are some great benefits to this approach, it is completely new and will be foreign to Concrete5 developers.
+*If you are looking for config/site.php - it is gone!*
+Instead, database settings for an installed Concrete5 site can be found in **application/config/database.php**.
+
+== Completely new Application Flow
+
+Concrete5's dispatcher and application flow have been streamlined and rewritten.
+They are commented and should be much easier to understand at a glance.
+
+== Tools Deprecated for Full Routing Component
+
+In legacy Concrete5, tools scripts were simple chromeless Concrete5 scripts, meant for loading a full Concrete5 environment without the overhead of a theme.
+These were typically used for AJAX requests, creating custom external APIs, and for bits of the core application.
+
+In 5.7, tools still exist, but they are officially deprecated.
+In their place is a complete routine library based off of Symfony2.
+We define routes in *concrete/config/app.php* (look for the "routes" key).
+These map to controllers, which can return views.
+These views live in the *concrete/views* directory.
+That means your views can submit to controllers.
+This has helped make Concrete5 a much cleaner code base, and will be very helpful to developers going forward.
+
+== Single Pages & Their Controllers
+
+Single Pages and their controllers are largely unchanged in 5.7.
+Single pages still live in **concrete/single_pages**.
+Their controllers now live in **concrete/controllers/single_page**. (Controllers above the single_page directory map to the controllers used by routes in the section above.
+
+== Class Extension Changes
+
+Class extension has changed a lot in 5.7.
+While block types, attribute types, and most everything else found outside the src/ directory can be extended or overridden by an entry in the *application/* directory, much of *concrete/src* can't be extended, unless its a service and can be rebound (see below).
+
+**Note**: We are actively working on ways to ensure that all the most useful classes can be extended by developers who want to improve them, and would love feedback on this.
+
+On the plus side, Concrete5's core code base is much easier to understand and to navigate, and its API documentation much cleaner, too.
+
+== Alias Classes
+
+While all of Concrete5's code is namespaced, that doesn't mean you have to use full namespaces for every single call you ever make.
+We define class aliases for some of the most commonly used classes in the global scope.
+That means "Page::getByID()" continues to work - as Page is an alias of **\Concrete\Core\Page\Page**.
+You can view all built-in aliases in **concrete/config/app.php**.
+
+== Helpers Deprecated for Service Providers
+
+In legacy Concrete5, helpers were strictly loaded based on path.
+Now things are more flexible than that.
+Service classes are automatically registered by service providers, and those service classes are returned by Core::make().
+
+The legacy Loader::helper() method exists, but it is deprecated.
+Examine the following code:
+
+[source,php]
+----
+$mh = Loader::helper('mail');
+----
+
+This code is the same as calling
+
+[source,php]
+----
+$mh = Core::make('helper/mail');
+----
+
+Loader::helper() is simply a shorthand for running Core::make('helper/$class') where $class is what you've passed in to helper.
+How does 5.7 know what "helper/mail" is?
+It's a service, and it's been registered in **\Concrete\Core\Mail\MailServiceProvider**.
+This file is responsible for running code that looks like this:
+
+[source,php]
+----
+$this->app->bind('helper/mail', 'Concrete\Core\Mail\Service');
+----
+
+How does Concrete5 know to call the register() method within this class that actually does the binding?
+It's a registered service provide found within - you guessed it - **concrete/config/app.php**:
+
+[source,php]
+----
+'providers'           => array(
+    ...
+    'core_mail'         => '\Concrete\Core\Mail\MailServiceProvider',
+    ...
+);
+----
+
+Anything within this key automatically has its register() method run.
+
+Why do we do this?
+Well, any service can easily be rebound.
+This is much more flexible than the old Concrete5 way of overriding classes based on location in the filesystem.
+For example, a package in its on_start() method can rebind 'helper/mail' to a particular class that lives wherever it wants - it just needs to make sure it either extends or otherwise fulfills the duties of \Concrete\Core\Mail\Service.
+
+=== Are these really helpers?
+
+FYI: In the future it's highly likely that, while helper/mail will be maintained in order to facilitate backward compatibility with the Loader::helper() function, the helper/ prefix will be dropped from these various services.
+
+== Database Connectivity
+
+While connecting to a Concrete5 database has changed a lot in 5.7, the actual API for working with connections has nearly 100% backward compatibility.
+We no longer use ADODB.
+Instead, we've migrated to http://www.doctrine-project.org/projects/dbal.html[Doctrine DBAL] for database connectivity.
+However, a custom wrapper class for various classes help keep old ADODB style queries working, in most cases.
+
+== New Components Will Make Your Life Easier
+
+Check out the http://concrete5.org/api/[API Documentation].
+There are so many new components that should help developers doing great stuff with Concrete5.
+Just a few of these include:
+
+* Session
+* Router
+* Events (Based off of Symfony2 EventDispatcher)
+* Cookie
+* URL
+
+== Change
+
+This will likely be a shock to long-time Concrete5 developers.
+We hope you give it a chance and ask questions.
+We've embraced new development models used by popular PHP frameworks, much as we did when we first launched Concrete5 in 2008.
+Please, let us know what you think, as well as what more you'd like to see explained in this document.
+
+Happy Developing! -Andrew.

@@ -1,0 +1,33 @@
+[[files]]
+= Working with Files and the File Manager
+
+
+:leveloffset: +1
+
+include::files/overview.adoc[]
+
+include::files/existing.adoc[]
+
+include::files/import.adoc[]
+
+include::files/accessing-physical-file.adoc[]
+
+include::files/imagine.adoc[]
+
+include::files/thumbnails.adoc[]
+
+include::files/custom-file-type-inspectors.adoc[]
+
+include::files/custom-file-type-views.adoc[]
+
+include::files/sets.adoc[]
+
+include::files/filelist.adoc[]
+
+include::files/core-services.adoc[]
+
+include::files/file-storage-locations.adoc[]
+
+include::files/image-editor-control-sets-filters.adoc[]
+
+:leveloffset: -1

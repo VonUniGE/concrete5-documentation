@@ -1,0 +1,6 @@
+[[blocks_create_getting-started_install]]
+= Installing Your Custom Block Type
+
+When your custom block type is ready, you can simply install it from Dashboard > Stack & Blocks > Block Types.
+
+image:install_custom_block_type.png[alt="Install Custom Block Type", title="Install Custom Block Type"]

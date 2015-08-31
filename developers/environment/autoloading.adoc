@@ -1,15 +1,22 @@
+[[environment_autoloading]]
 = Autoloading
 
-Concrete5 automatically loads its classes based on namespace. For example:
+Concrete5 automatically loads its classes based on namespace.
+For example:
 
 [source,php]
 ----
 $page = \Concrete\Core\Page\Page::getByPath('/about-us');
 ----
 
-How do we know where to find \Concrete\Core\Page\Page? We use a modified autoloader based on the http://www.php-fig.org/psr/psr-4/[PSR-4 format]
+How do we know where to find \Concrete\Core\Page\Page?
+We use a modified autoloader based on the http://www.php-fig.org/psr/psr-4/[PSR-4 format]
 
-PSR-4 basically states that projects can map different namespace prefixes to arbitrary starting directories. That's what we're doing. Within the Concrete5 class loader, we map the concrete/src directory to the \Concrete\Core namespace. That means that any class that exists within the \Concrete\Core namespace must traverse inside the src directory, and from then on, adhere exactly to casing and directory rules. So
+PSR-4 basically states that projects can map different namespace prefixes to arbitrary starting directories.
+That's what we're doing.
+Within the Concrete5 class loader, we map the concrete/src directory to the \Concrete\Core namespace.
+That means that any class that exists within the \Concrete\Core namespace must traverse inside the src directory, and from then on, adhere exactly to casing and directory rules.
+So
 
 [source,php]
 ----
@@ -22,11 +29,15 @@ Can be found at
 concrete/src/Page/Page.php
 ----
 
-*If you are writing code that belongs in a /src directory, you must adhere to PSR-4 as is. Classes must be capitalized, nested properly, etc...*
+*If you are writing code that belongs in a /src directory, you must adhere to PSR-4 as is.
+Classes must be capitalized, nested properly, etc...*
 
-For classes that do not exist within the src/ directory (such as block controllers, attribute controllers, etc...) We ask that you name your controllers with the same capitalization that PSR-4 requires, but you name your files with concrete5's classic lowercase + underscore method. These files will be converted by camelcasing those filenames on the fly.
+For classes that do not exist within the src/ directory (such as block controllers, attribute controllers, etc...) We ask that you name your controllers with the same capitalization that PSR-4 requires, but you name your files with concrete5's classic lowercase + underscore method.
+These files will be converted by camelcasing those filenames on the fly.
 
-What does that mean? The blocks directory and its contents still looks the same as concrete5 before 5.7. For example, the Page List block's controller is still located at
+What does that mean?
+The blocks directory and its contents still looks the same as concrete5 before 5.7.
+For example, the Page List block's controller is still located at
 
 ----
 concrete/blocks/page_list/controller.php
@@ -46,7 +57,8 @@ inside the name space
 \Concrete\Block\page_list
 ----
 
-This is ugly and causes other problems. So instead, when we request the class
+This is ugly and causes other problems.
+So instead, when we request the class
 
 [source,php]
 ----
@@ -61,7 +73,8 @@ concrete/blocks/PageList/Controller.php
 
 exists (since that is the default PSR-4 autoloading behavior.)
 
-If it does not (and it won't, for blocks, attributes, single page controllers, etc...) - then we uncamelcase using our own methods, starting at the item after blocks. Backslashes become directory separators, and camelcasing becomes underscores.
+If it does not (and it won't, for blocks, attributes, single page controllers, etc...) - then we uncamelcase using our own methods, starting at the item after blocks.
+Backslashes become directory separators, and camelcasing becomes underscores.
 
 ----
 concrete/blocks/page_list/controller.php
@@ -119,7 +132,8 @@ The following namespaces automatically map to locations in the concrete/ directo
 
 ==== Package Directory
 
-All of the above applies to Concrete5 packages - just substitute \Concrete\Package\YourPackageHandle (where YourPackageHandle is the camelcased version of the "your_package_handle" package directory found in packages/). For example:
+All of the above applies to Concrete5 packages - just substitute \Concrete\Package\YourPackageHandle (where YourPackageHandle is the camelcased version of the "your_package_handle" package directory found in packages/).
+For example:
 
 * Concrete\Package\FancySlider\Block\FancySlider\Controller -> packages/fancy_slider/blocks/fancy_slider/controller.php
 * Concrete\Package\FileSetTools\Attribute\FileData\Controller -> packages/file_set_tools/attributes/file_data/controller.php
@@ -127,7 +141,8 @@ All of the above applies to Concrete5 packages - just substitute \Concrete\Packa
 
 ==== Application Directory
 
-The application/ directory holds custom code for the current Concrete5 application. It's overrides directory namespaces follow the same pattern as the concrete/ directory - just with Application\ as the first segment of the namespace.
+The application/ directory holds custom code for the current Concrete5 application.
+It's overrides directory namespaces follow the same pattern as the concrete/ directory - just with Application\ as the first segment of the namespace.
 
 * Application\Block\FancySlider\Controller -> application/blocks/fancy_slider/controller.phgp
 * Application\Attribute\FileData\Controller -> application/attributes/file_data/controller.php

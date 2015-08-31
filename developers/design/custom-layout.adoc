@@ -1,0 +1,85 @@
+[[design_custom-layout]]
+= Adding Complex Custom Layout Presets in Your Theme
+
+Note: This requires concrete5 7.5 or Greater
+
+Concrete5 version 7.5 introduces complex layout presets at the theme level.
+By defining a method in the your theme's custom page_theme.php class, you can specify custom layout presets with greater functionality than those that can be added through the UI.
+For example, consider this custom Bootstrap Grid:
+
+[source,php]
+----
+<div class="row">
+    <div class="col-md-6 col-lg-3">Column A</div>
+    <div class="col-md-6 col-lg-3">Column B</div>
+    <div class="col-md-6 col-lg-3">Column C</div>
+    <div class="col-md-6 col-lg-3">Column D</div>
+</div>
+----
+
+In this example, this grid will have one column on extra small devices, two columns on medium devices, and four columns on large devices.
+This isn't something we can do using the Layout controls through the User Interface, because we can't stack multiple grid classes on top of each other for a particular grid column.
+But in version 7.5 we *can* offer this functionality via a custom layout preset.
+
+First, open your custom PageTheme class, which will be found at application/themes/your_theme/page_theme.php or packages/your_package/themes/your_theme/page_theme.php.
+Much like adding custom theme styles or custom responsive image types in a theme, you can specify custom layout presets using an additional, optional method in this class:
+
+[source,php]
+----
+public function getThemeAreaLayoutPresets()
+{
+}
+----
+
+This method returns an array of HTML in a specific format for containers, rows and columns.
+If we wanted to take the custom grid above and make a new preset for it named "Medium Two Large Four" this is what it would look like:
+
+[source,php]
+----
+public function getThemeAreaLayoutPresets()
+{
+    $presets = array(
+        array(
+            'handle' => 'medium_two_large_four',
+            'name' => 'Medium Two Large Four',
+            'container' => '<div class="row"></div>',
+            'columns' => array(
+                '<div class="col-md-6 col-lg-3"></div>',
+                '<div class="col-md-6 col-lg-3"></div>',
+                '<div class="col-md-6 col-lg-3"></div>',
+                '<div class="col-md-6 col-lg-3"></div>'
+            ),
+        )
+    );
+    return $presets;
+}
+----
+
+That's it!
+Now in the Layout dropdown menu you'll see your custom preset, alongside "Free-Form Layout" and any Grid Framework layouts you have available.
+
+== Not Just for Bootstrap
+
+While this example makes use of Bootstrap, and would therefore work nicely in our built-in, Bootstrap-based Elemental theme, this actually has nothing to do with our built-in Grid Framework.
+In fact, if your theme has a custom grid system that doesn't translate well to concrete5's Grid Frameworks, you can still use your custom grid system in layout presets, even if you don't create a full Grid Framework based on it.
+For example, say you want a Left Sidebar preset, but your theme uses odd classes like "one-third" and "two-thirds" to specify its classes.
+This won't translate well concrete5's Grid Framework system, but you can still use it as a preset:
+
+[source,php]
+----
+public function getThemeAreaLayoutPresets()
+{
+    $presets = array(
+        array(
+            'handle' => 'left_sidebar',
+            'name' => 'Left Sidebar',
+            'container' => '<div></div>',
+            'columns' => array(
+                '<div class="one-third"></div>',
+                '<div class="two-thirds"></div>'
+            ),
+        )
+    );
+    return $presets;
+}
+----

@@ -1,0 +1,57 @@
+[[blocks_existing-block-types_custom-view-templates_autoregister-assets]]
+= Automatically including CSS and JavaScript in Custom Templates
+
+So far you've seen how to create a custom view template that can be used in place of the standard view template for an existing block type.
+What if your custom view template relies on some CSS and JavaScript that isn't used by the existing view template?
+You want your custom template to be reasonably decoupled from the theme that it resides in, so you need some way to specify that CSS or JavaScript is included - but only when using this custom template.
+
+Fortunately, there's an easy way to do this within the custom view template system.
+In our previous example, our custom template is found here:
+
+`application/blocks/autonav/templates/site_map_tree.php`
+
+When using this custom template on a page, if we wanted to include some custom CSS and JavaScript in the header and footer, respectively, just do the following:
+
+----
+mkdir application/blocks/autonav/templates/site_map_tree
+mv application/blocks/autonav/templates/site_map_tree.php \
+    application/blocks/autonav/templates/site_map_tree/view.php
+touch application/blocks/autonav/templates/site_map_tree/view.js
+touch application/blocks/autonav/templates/site_map_tree/view.css
+----
+
+We've created a custom template directory, instead of a custom template file.
+This directory can contain a view.php file (which is rendered any time the custom template is used) as well as a view.css and/or view.js file.
+These files are automatically injected into the header and footer, and will be minified or combined with other assets when Asset Caching is enabled within the Dashboard.
+You can add whatever JavaScript or CSS you'd like into these files.
+
+Additionally, if you need more flexibility in your naming, you create a directory named css and a directory named js within the custom template directory.
+Any *.js files found in the js/ directory and any *.css files found in the css/ directory, regardless of their names, will be included in the output of the page. *Note: if you're using this functionality to provide access to a potentially reusable JavaScript library like an image slider library, a gallery plugin, or something of that nature, it might be better use the Concrete5 asset system to register this library, as not doing so might conflict with other add-ons that include the same JavaScript files on the page.*
+
+== Disabling Inclusion of view.js or view.css at the Theme Level
+
+Any time a block view or a block's custom template includes a view.js or view.css file, an asset is created for these behind the scenes.
+While you won't have to require this asset in order for the file to be included in the page, you *can* use the providesAsset() method in a page theme class file to keep it from loading.
+
+For example, the Elemental theme that ships with 5.7 includes CSS that will nicely style many of Concrete5's core blocks, to the point where they shouldn't load their view.js or view.css files (since the theme takes care of the styling.) Elemental's page theme controller keeps those files from loading.
+This code snippet details how the Elemental registerAssets function keeps certain files from loading:
+
+[source,php]
+----
+public function registerAssets()
+{
+    $this->providesAsset('css', 'blocks/form');
+    $this->providesAsset('css', 'blocks/social_links');
+    $this->providesAsset('css', 'blocks/feature');
+    $this->providesAsset('css', 'blocks/feature/templates/hover_description');
+}
+----
+
+In these lines of code, the following files are kept from loading, should their blocks be included on the current page:
+
+* concrete/blocks/form/view.css
+* concrete/blocks/social_links/view.css
+* concrete/blocks/feature/view.css
+* concrete/blocks/feature/templates/hover_description/view.css
+
+It isn't necessary to register these assets - any time a view.js or view.css file is detected in a block or custom template directory, they will automatically be registered.

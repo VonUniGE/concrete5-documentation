@@ -1,9 +1,23 @@
+[[concepts_files]]
 = Files
 
-The term *File* in Concrete5 may refer to PHP code files in the file system, but it's more likely that it's referring to the core Concrete5 *File* object. Files are added to the Concrete5 file manager in the Dashboard's file manager page or through the file manager overlay while editing content on a website. Files are typically media uploaded to the file manager in order to be placed in an image block, linked to in an instance of the rich text editor, placed for download using the file block, etc...
+The term *File* in Concrete5 may refer to PHP code files in the file system, but it's more likely that it's referring to the core Concrete5 *File* object.
+Files are added to the Concrete5 file manager in the Dashboard's file manager page or through the file manager overlay while editing content on a website.
+Files are typically media uploaded to the file manager in order to be placed in an image block, linked to in an instance of the rich text editor, placed for download using the file block, etc...
 
-Each file uploaded to the Concrete5 file manager has a particular *File Type* (JPEG, DOC, MPEG), which itself has a particular *Generic Type* (e.g. "Image," "Audio," etc...) Files may be grouped into *File Sets* for organizational or application purposes. A file may be in multiple sets. Like pages, files have *File Attributes* attached to them ("Width," "Height," "Duration", etc...). Changing attributes or core properties about a File creates a new *Version* of the File.
+Each file uploaded to the Concrete5 file manager has a particular *File Type* (JPEG, DOC, MPEG), which itself has a particular *Generic Type* (e.g. "Image," "Audio," etc...) Files may be grouped into *File Sets* for organizational or application purposes.
+A file may be in multiple sets.
+Like pages, files have *File Attributes* attached to them ("Width," "Height," "Duration", etc...).
+Changing attributes or core properties about a File creates a new *Version* of the File.
 
-The File object is essentially a container object for the active version (which contains attributes). The active version can then return the actual *FileRecord* object, which is what is used to actually access the physical file. This is necessary because files aren't just records of physical files stored on a web server: Concrete5.7 allows multiple *File Storage Locations* to be used. These storage locations may be off-server (e.g. Amazon S3.) The *FileRecord* object of a given file version is what's used to deliver the file to us from wherever it may be stored.
+The File object is essentially a container object for the active version (which contains attributes).
+The active version can then return the actual *FileRecord* object, which is what is used to actually access the physical file.
+This is necessary because files aren't just records of physical files stored on a web server: Concrete5.7 allows multiple *File Storage Locations* to be used.
+These storage locations may be off-server (e.g.
+Amazon S3.) The *FileRecord* object of a given file version is what's used to deliver the file to us from wherever it may be stored.
 
-Any time a file is imported into Concrete5 (which happens through an instance of the File *Importer* class) it may be run through an optional file **Inspector**, which is a PHP class that can perform additional operations on files of a certain type when they're uploaded or rescanned. Inspectors are registered by file type on startup. For example, whenever a file with the generic type of image is uploaded, the image inspector takes care of scanning it for its width and height, setting those file attributes on the uploaded file version, and building file *Thumbnail* objects for the various installed **Thumbnail Image Types**. In Concrete5 5.7, different thumbnail types can be registered in the Dashboard, with associated widths and heights, and when an image is uploaded instances of that image will be saved as special thumbnails. These are used for display in the file manager, and can be used on the front-end for special 2x retina imagery, responsive image thumbnailing, image gallery thumbnails, and more.
+Any time a file is imported into Concrete5 (which happens through an instance of the File *Importer* class) it may be run through an optional file **Inspector**, which is a PHP class that can perform additional operations on files of a certain type when they're uploaded or rescanned.
+Inspectors are registered by file type on startup.
+For example, whenever a file with the generic type of image is uploaded, the image inspector takes care of scanning it for its width and height, setting those file attributes on the uploaded file version, and building file *Thumbnail* objects for the various installed **Thumbnail Image Types**.
+In Concrete5 5.7, different thumbnail types can be registered in the Dashboard, with associated widths and heights, and when an image is uploaded instances of that image will be saved as special thumbnails.
+These are used for display in the file manager, and can be used on the front-end for special 2x retina imagery, responsive image thumbnailing, image gallery thumbnails, and more.

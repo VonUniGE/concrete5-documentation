@@ -1,0 +1,15 @@
+[[blocks_create_indexes]]
+= Enabling Search Indexability
+
+Any time a user uses the Concrete5 search block or the Dashboard Page Search to search pages, that query uses the PageSearchIndex database table.
+This table is also queried every time a developer uses http://concrete5.org/api/class-Concrete.Core.Page.PageList.html[\Concrete\Core\Page\PageList::filterByKeywords].
+It's easy to enable your block's to add their content to the page search index; simply add a method named *getSearchableContent()* to your block's controller file.
+For example, here's how the Feature block implements this method:
+
+[source,php]
+----
+public function getSearchableContent()
+{
+    return $this->title.' '.$this->paragraph;
+}
+----

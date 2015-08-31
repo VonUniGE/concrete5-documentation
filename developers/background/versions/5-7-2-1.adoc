@@ -1,0 +1,81 @@
+[[background_versions_5-7-2-1]]
+= 5.7.2.1 Release Notes
+
+== Feature Updates
+
+* Feature block now can link to pages and external links.
+* Improvements to Grid Framework for use with frameworks that require two class names on columns.
+* Theme Developer Feature Update: Zurb Foundation Grid Framework now available.
+* Improvements to Theme Customizer for developers who don't want to create multiple presets, they just want to make their theme customizable.
+* Members directory has been brought back for sites with public profiles.
+* Added Most Popular to Remote marketplace search results.
+
+== Behavioral Improvements
+
+* Command/Alt-clicking "Visit" on a sitemap page to open it in a new tab no longer reloads the current tab to the new page.
+* Fileinfo is no longer required to run concrete5 5.7.
+* More performance improvements in edit mode.
+* Dragging stacks and clipboard items out of the lefthand panel now closes the panel (and reopens if dropping occurs onto no hotspot.)
+* Page name is now available in the SEO panel.
+* Better feedback on file uploads into the file manager that don't complete.
+* Better file permissions checking.
+  Making file and directory permissions configurable values.
+* Sitemap "View" link now links to pages using their path-based URLs, not their cID based ones.
+* Sitemap now automatically approves changes if users have permission to do so and the concrete.misc.sitemap_approve_immediately config value is set to true (which is the default.)
+* More consistent behavior when interacting with blocks in global areas on a page and then discarding changes.
+* Improved internationalization support (thanks hissy)
+
+== Bug Fixes
+
+* Lots of fixes to user registration, including messaging, the ability to fully validate users through email, and more.
+* Fixed exception error message at the end of changing a user's password.
+* Fixed bug where the "Inspect/Page Templates" page in the themes section of the dashboard was accidentally deleted in a previous upgrade to 5.7.1. 5.7.2.1 restores the page.
+* Fixed (illegal offset type) on rich text editor dashboard page when running concrete5 in a language other than English (thanks Remo).
+* Fixed caching and copying bugs when working with pages that had their own page-level theme customizations.
+* Fixed error with no feedback displaying in change password if user did something wrong.
+* Removed the automatic insertion of composer output control blocks in the Main area, as it was causing problems in page templates that didn't have a Main area.
+* Fixed bug in edit profile where Basic Information is not displayed if there are no member attributes (thanks GutDing)
+* Fixed invalid error "You do not have permission to publish a page in this location" when using composer to publish certain types of pages as a non super user.
+* Fixed weird redirection problems when turning concrete.seo.trailing_slash to true.
+* Got rid of strange file permission reset on cache when loading packages.
+* Fixed duplication of files on certain uploads.
+* Fixed some incorrect redirection when logging in as an administrator when redirect to Dashboard is enabled (thanks TaoS)
+* Made leaving a value out of image size constraint keep the current aspect ratio and resize the provided value.
+* Fixed bug where sample content with lightbox images was broken when installing Elemental.
+* Fixing redirect errors when enabling the trailing slash in URLs.
+* Fix Full Page Cache HTTP Headers Incorrect Output
+* Fixed bug in file set pagination that capped it at 10.
+  May have fixed other pagination bugs.
+* Fixed bug where two databases tables had incorrect database case, leading problems when submitting the form block or working with IPs when migrating from case insensitive file systems to case sensitive file systems.
+* Fixed http://www.concrete5.org/index.php?cID=674327&editmode=
+* Fixed "Class security does not exist" error when attempting to force redirection to base URL.
+* Fixed http://www.concrete5.org/developers/bugs/5-7-2/error-when-moving-block/
+* Fixed bug where external links in sitemap were encoded and linked to incorrectly
+* Uninstall packages with authentication types now properly removes them from the database (Thanks EC-Chris).
+* Fixed zip tooltips not showing when zip not installed during installation.
+* Fixed bug where you couldn't remove a question from a form block.
+* Fixed issues with garbled translation messages (thanks mlocati)
+* Elemental theme h6 text transform now takes proper variable (thanks jordif.)
+* Fixed: Keys for custom attribute categories installed by packages are not currently updated (thanks cpill0789).
+* Fixed SQL bug that could arise when using setAttribute() with a topics attribute type (thanks Raverix)
+* Fixed some HTML escaping issues in the page attribute display block (thanks Mnkras)
+* Fixed "Concrete\Core\Permission\Key\AddBlockBlockTypeKey' does not have a method 'canAddBlock" when working with global areas on pages that didn't have a main area (thanks akodde!)
+* Fixed http://www.concrete5.org/developers/bugs/5-7-2/flakey-behaviour-when-adding-user-to-workflow-access/
+* Fixed http://www.concrete5.org/developers/bugs/5-7-2/changing-rss-handle-andor-deleting-topic-tree-blog-chokes-out-in/ (thanks Mnkras)
+* Fix conversations error when using gravatar as a fallback and rendering comments from anonymous
+* Fix issue with File::delete not deleting the row from the Files table. (thanks Mnkras!)
+* Fixed http://www.concrete5.org/developers/bugs/5-7-2/stack-version-history/
+* JavaScript syntax improvements and some JS bug fixes (thanks EC-Joe)
+* Composer improvements when page types were included in packages.
+* Fixed bug where empty page attribute display block wouldn't display placeholder text on a stack page (thanks infostreams.)
+
+== Developer Improvements
+
+* Added GridFrameworkServiceProvider and GridFrameworkManager.
+  New Manager class will be used going forward.
+  Allows easy binding and registration of driver-based classes.
+* Miscellaneous content importer improvements.
+* Updates to MenuItem classes for more flexibility.
+* Attempting to set time limit to zero when adding packages.
+* New LinkAbstractor class now contains methods used to abstract links and import content (instead of being included in the content block controller) (thanks jordanlev)
+* Miscellaneous fixes to content importer and content swap.

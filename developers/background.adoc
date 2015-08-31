@@ -1,15 +1,16 @@
+[[background]]
 = Background
 
 :leveloffset: +1
 
-include::background/what-is-concrete5.adoc[]
+include::background/about.adoc[]
 
 include::background/license.adoc[]
 
-include::background/version-history.adoc[]
+include::background/versions.adoc[]
 
-include::background/coding-style-guidelines.adoc[]
+include::background/coding-style.adoc[]
 
-include::background/migrating-to-5-7.adoc[]
+include::background/migrate.adoc[]
 
 :leveloffset: -1

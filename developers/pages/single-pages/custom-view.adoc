@@ -1,0 +1,58 @@
+[[pages_single-pages_custom-view]]
+= Rendering Custom Views from a Single Page Controller
+
+== The Easy Way
+
+The easy way to render a different view based on a single page controller is to simply not do it at all; instead, just use an if statement or a switch() statement within the view based on the active controller method.
+Consider this code, found in application/single_pages/media/view.php
+
+[source,php]
+----
+<?php
+if ($view->controller->getTask() == 'view_album') {
+    echo t('The selected album is %s', $albumID);
+} else {
+    ?>
+    <ul>
+    <?php foreach ($albums as $album) { ?>
+        <li><a href="<?php echo URL::to('/media', 'view_album', $album->getAlbumID()); ?>">
+            <?php echo $album->getAlbumName()?>
+        </a></li>
+    <?php } ?>
+    </ul>
+<?php
+}
+?>
+----
+
+If the active controller method is view_album, the top half of the if statement will be run.
+If not, the bottom list will be rendered.
+
+== The More Elegant Way
+
+Instead of using an if statement, move the view that had been within the "view_album" task into a completely separate page view template found at single_pages/media/albums.php.
+
+Then, at the bottom of the view_album() method in the controller, add a render() statement switching the page view to the newly created albums.php
+
+[source,php]
+----
+public function view_album($albumID = null)
+{
+    $selectedAlbum = \Foo\Media\Album::getByID($albumID);
+    $this->set('albumID', $albumID);
+    $this->set('album', $selectedAlbum);
+    $this->render('/media/albums');
+}
+----
+
+Albums does NOT have to be a valid and installed single page for this to work.
+
+WARNING: This works in versions of Concrete5 5.7.4 and higher.
+
+=== Replace vs. Render
+
+In the example above, the page view from the single page is swapped from view.php to albums.php.
+The items set in the controller by view_album() are retained, and any on_before_render() from the current controller will still be run.
+Only the underlying page template rendered is changed.
+
+If instead of calling render() you call replace(), then the current controller method will be aborted, and the controller and view from the updated path will be used instead.

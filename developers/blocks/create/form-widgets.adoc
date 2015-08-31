@@ -1,0 +1,6 @@
+[[blocks_create_form-widgets]]
+= Including Complex Form Widgets
+
+Check out the Form Widget appendix for a full list of Concrete5 service objects that can help you embed rich editing widgets like the file selector, page selector, user selector and more.
+
+<<appendix_form-widget>>

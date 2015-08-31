@@ -1,0 +1,115 @@
+[[packages_custom-database-tables_doctrine-xml]]
+= db.xml in the Doctrine XML Format
+
+NOTE: this requires Concrete5.7.5 or above
+
+Concrete5 5.7.5 includes a new XML format for `db.xml` files.
+This format is based off of http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/introduction.html[Doctrine DBAL], the database abstraction layer we use in Concrete5 version 7, and its http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/types.html[types and nomenclature].
+For example, no more do you have to remember that a varchar columns is `C` (as in AXMLS); instead, the documentation on Doctrine's types page refers to it as a `string` - and you can use `string` in the type field instead.
+
+Doctrine XML has other benefits.
+
+. You can use Doctrine XML in other projects.
+  Need an XML representation of a database and an associated parser, and you're using Doctrine DBAL?
+  Include Doctrine XML in your project using composer.
+. Doctrine XML has support for foreign keys, comments and other functionality that AXMLS didn't support as nicely.
+
+== Doctrine XML Github Repository
+
+Since Doctrine XML is its own self-contained third party library, it can be found on GitHub here in a specific spot:
+
+http://github.com/concrete5/doctrine-xml
+
+== Example
+
+Here's an example of creating the Users table in Doctrine XML.
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<schema
+  xmlns="http://www.concrete5.org/doctrine-xml/0.5"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.concrete5.org/doctrine-xml/0.5 http://concrete5.github.io/doctrine-xml/doctrine-xml-0.5.xsd">
+
+  <table name="Users">
+    <field name="uID" type="integer" size="10">
+      <unsigned/>
+      <autoincrement/>
+      <key/>
+    </field>
+    <field name="uName" type="string" size="64">
+      <notnull/>
+    </field>
+    <field name="uEmail" type="string" size="254">
+      <notnull/>
+    </field>
+    <field name="uPassword" type="string" size="255">
+      <notnull/>
+    </field>
+    <field name="uIsActive" type="string" size="1">
+      <default value="0"/>
+      <notnull/>
+    </field>
+    <field name="uIsValidated" type="boolean">
+      <default value="-1"/>
+      <notnull/>
+    </field>
+    <field name="uIsFullRecord" type="boolean">
+      <default value="1"/>
+      <notnull/>
+    </field>
+    <field name="uDateAdded" type="datetime">
+      <default value="0000-00-00 00:00:00"/>
+      <notnull/>
+    </field>
+    <field name="uLastPasswordChange" type="datetime">
+      <default value="0000-00-00 00:00:00"/>
+      <notnull/>
+    </field>
+    <field name="uHasAvatar" type="boolean">
+      <default value="0"/>
+      <notnull/>
+    </field>
+    <field name="uLastOnline" type="integer" size="10">
+      <unsigned/>
+      <default value="0"/>
+      <notnull/>
+    </field>
+    <field name="uLastLogin" type="integer" size="10">
+      <unsigned/>
+      <default value="0"/>
+      <notnull/>
+    </field>
+    <field name="uLastIP" type="blob" size="32"/>
+    <field name="uPreviousLogin" type="integer" size="10">
+      <unsigned/>
+      <default value="0"/>
+    </field>
+    <field name="uNumLogins" type="integer" size="10">
+      <unsigned/>
+      <default value="0"/>
+      <notnull/>
+    </field>
+    <field name="uLastAuthTypeID" type="integer" size="10">
+      <unsigned/>
+      <default value="0"/>
+      <notnull/>
+    </field>
+    <field name="uTimezone" type="string" size="255"/>
+    <field name="uDefaultLanguage" type="string" size="32"/>
+    <index name="uName">
+      <unique/>
+      <col>uName</col>
+    </index>
+    <index name="uEmail">
+      <col>uEmail</col>
+    </index>
+  </table>
+
+</schema>
+----
+
+== Auto-Detection
+
+Doctrine XML is automatically detected and its parser used for any XML schema block of the namespace `http://www.concrete5.org/doctrine-xml/0.5`.

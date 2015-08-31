@@ -1,3 +1,4 @@
+[[concepts_conversations]]
 = Conversations
 
 In Concrete5 version 7 we've introduced a new series of objects centered around conversations and discussion. *Conversation* are general objects that automatically get created for each new instance of the conversation block on a page. (Note: this is different than 5.6's Guestbook block, which bound messages directly to an instance of the block.).
@@ -6,8 +7,11 @@ In Concrete5 version 7 we've introduced a new series of objects centered around 
 
 *Discussion* objects can group Conversation objects.
 
-Conversation *RatingType* objects can be installed and allow developers to influence a message's score. RatingType examples include "up_vote" and "down_vote."
+Conversation *RatingType* objects can be installed and allow developers to influence a message's score.
+RatingType examples include "up_vote" and "down_vote."
 
-Conversation *Editors* are different ways to present message posting to users. Examples of editors include the "Redactor Rich Text Editor", "Plain Text", "BBCode", "Markdown" and more.
+Conversation *Editors* are different ways to present message posting to users.
+Examples of editors include the "Redactor Rich Text Editor", "Plain Text", "BBCode", "Markdown" and more.
 
-Conversation *FlagType* objects are similar to RatingType objects, but handle flagging messages for moderation or removal. An example of a flag type is "spam".
+Conversation *FlagType* objects are similar to RatingType objects, but handle flagging messages for moderation or removal.
+An example of a flag type is "spam".

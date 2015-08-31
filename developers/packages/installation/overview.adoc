@@ -1,3 +1,4 @@
+[[packages_installation_overview]]
 = Overview
 
 The `install()` method from a Package controller is automatically run when the package is installed.

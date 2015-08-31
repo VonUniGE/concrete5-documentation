@@ -1,0 +1,205 @@
+[[files_custom-file-type-inspectors]]
+= Automatically Set Attributes and More With Custom File Type Inspectors
+
+NOTE: This requires version 5.7.5 or greater.
+
+Concrete5 uses attributes for a lot of things.
+Usually, these attributes are set by administrators for business purposes (e.g. if someone wants to exclude a page from a navigation, they'll set the "Exclude from Nav" page attribute to true.).
+Files are an interesting case, though - many times you might have a file attribute that ought to be populated from the file itself in some way, rather than by an admin.
+If that's the case, you need a custom file type inspector.
+
+== File Type Inspectors
+
+A File Type Inspector is a bit of custom code that runs every time a file of a certain type is uploaded or rescanned through the Dashboard File Manager.
+This code can do anything, including set custom attributes.
+Concrete5 ships with two inspectors, an Image inspector and an FLV (Flash video) inspector (the latter being more of a proof of concept.) Here's what the Image inspector (found at concrete/src/File/Type/Inspector/ImageInspector.php) looks like:
+
+[source,php]
+----
+<?php
+
+namespace Concrete\Core\File\Type\Inspector;
+
+use Concrete\Core\File\Version;
+use Image;
+use FileAttributeKey;
+use Core;
+
+class ImageInspector extends Inspector
+{
+    public function inspect(Version $fv)
+    {
+        $fr = $fv->getFileResource();
+        $image = Image::load($fr->read());
+        $data = $image->getSize();
+
+        // sets an attribute - these file attribute keys should be added
+        // by the system and "reserved"
+        $at1 = FileAttributeKey::getByHandle('width');
+        $at2 = FileAttributeKey::getByHandle('height');
+        $fv->setAttribute($at1, $data->getWidth());
+        $fv->setAttribute($at2, $data->getHeight());
+    }
+}
+----
+
+This code is pretty self-explanatory: the only method that an inspector needss to provide is an inspect() method (which takes a \Concrete\Core\File\Version) object as its only argument.
+The inspector then operates on the object (including perhaps getting the physical file to work with) and uses that to set attributes or do other work.
+In this example we use the Imagine Image library to load the file resource data, and then set the width and height attributes on the Version object.
+
+== Creating Your Own File Type Inspector
+
+Creating a file type inspector is easy.
+For example, let's say we're uploading a lot of MP3 files to our website, and we want to create custom attributes to store the artist and title as found in the MP3 files' ID3 tags.
+Let's create a package for this. (Note: this assumes you're quite familiar with creating packages in concrete5, see <<packages_overview>>).
+
+=== Create Attributes
+
+First, we'll create the attributes we want to use to store the data.
+Create a text file attribute attribute with the handle "audio_artist" and one with the handle "audio_title".
+
+image:custom-audio-attributes.png[alt="Custom audio attributes", title="Custom audio attributes"]
+
+== Start the Package
+
+We're going to create a package that installs a custom file type inspector for MP3 files, and reads the MP3 files' ID3 tags.
+So let's call the package "id3_reader".
+Create a directory named "id3_reader" in the packages/ directory.
+
+=== Install a Third Party ID3 Reader Library in the Package Directory
+
+It looks like https://github.com/shubhamjain/PHP-ID3[PHP-ID3] is a nice PHP class for parsing ID3 tags.
+It's available via http://getcomposer.org[Composer], a PHP packaging tool.
+In order to install this in our class, we add the composer.json file as directed in the PHP-ID3 documentation, and run "composer install" in our package's directory.
+This gets us a directory that looks like this.
+
+image:php-id3-directory-structure.png[alt="PHP-ID3 directory structure", title="PHP-ID3 directory structure"]
+
+=== Create a Package Controller
+
+We'll create a pretty standard package controller for our package.
+
+[source,php]
+----
+<?php
+
+namespace Concrete\Package\Id3Reader;
+
+use \Concrete\Core\Package\Package;
+
+defined('C5_EXECUTE') or die('Access Denied.');
+
+class Controller extends Package
+{
+    protected $pkgHandle = 'id3_reader';
+    protected $appVersionRequired = '5.7.5RC1';
+    protected $pkgVersion = '1.0';
+
+    public function getPackageDescription()
+    {
+        return t('Adds the ability to store ID3 Data in File Attributes.');
+    }
+
+    public function getPackageName()
+    {
+        return t('ID3 Reader');
+    }
+}
+----
+
+There's nothing special about this package yet - no custom code that registers our custom inspector.
+
+=== Register Our Custom Inspector
+
+Let's register our custom inspector now.
+To do this, we're going to add a method named on_start() to our package.
+If a package includes an on_start method that method will automatically be run early in the concrete5 startup routine, for every package that's installed.
+Here's our on_start method:
+
+[source,php]
+----
+public function on_start()
+{
+    require('vendor/autoload.php');
+    $list = TypeList::getInstance();
+    $list->define(
+        'mp3',
+        t('MP3'),
+        \Concrete\Core\File\Type\Type::T_AUDIO,
+        'audio',
+        'audio',
+        false,
+        'id3_reader'
+    );
+}
+----
+
+First, we include all the libraries for our ID3 reader class.
+These are found in the vendor library, delivered by Composer.
+This is done by simply including the autoload.php file in the vendor/ directory.
+Next, we get our single instance of the TypeList class.
+The TypeList class is an instance of `\Concrete\Core\File\Type\TypeList`.
+Finally, we redefine the MP3 definition in the global file type list.
+The first argument is the file extension that this redefinition applies.
+Next, we set the text name of this file type, and the generic type with the class constant.
+The next parameter is the most important one: this is the custom inspector that this file type now uses.
+We've chosen "audio" (make a note of this.) Next, we have a custom view layer for files of this type.
+We don't have a custom editor for a file of this type, so we pass false for the next parameter, and we pass a package handle to the last parameter.
+This will tell the Inspector class where to load our custom inspector.
+
+By default, custom file type inspectors are loaded from `packages/your_package/src/File/Type/Inspector/CustomInspector.php`, where "Custom" is the camelcased version of the fourth parameter above.
+So in our case we'd be loading from `packages/id3_reader/src/File/Type/Inspector/AudioInspector.php`, with a namespace of `\Concrete\Package\Id3Reader\Src\File\Type\Inspector\AudioInspector`.
+However, if we want to remove the `\Src` from the namespace and make things a little bit nicer, we can add this line of code to our class.
+
+[source,php]
+----
+protected $pkgAutoloaderMapCoreExtensions = true;
+----
+
+Now, our class's name will be `Concrete\Package\Id3Reader\File\Type\Inspector\AudioInspector`, and it will load from `packages/id3_reader/src/Concrete/File/Type/Inspector/AudioInspector.php`.
+
+=== Create the Custom Inspector Class
+
+Finally, in the `AudioInspector.php` file, we create our inspector class:
+
+[source,php]
+----
+<?php
+
+namespace Concrete\Package\Id3Reader\File\Type\Inspector;
+
+use Concrete\Core\Attribute\Key\FileKey;
+use Concrete\Core\File\Type\Inspector\Inspector;
+use Concrete\Core\File\Version;
+use PhpId3\Id3TagsReader;
+
+class AudioInspector extends Inspector
+{
+    public function inspect(Version $fv)
+    {
+        $fr = $fv->getFileResource();
+        $fs = $fv->getFile()->getFileStorageLocationObject()->getFileSystemObject();
+        $stream = $fs->readStream($fr->getPath());
+
+        $id3 = new Id3TagsReader($stream);
+        $id3->readAllTags();
+
+        $artist = FileKey::getByHandle('audio_artist');
+        $title = FileKey::getByHandle('audio_title');
+        $data = $id3->getId3Array();
+        if (isset($data['TIT2']) && is_array($data['TIT2'])) {
+            $fv->setAttribute($title, $data['TIT2']['body']);
+        }
+        if (isset($data['TPE1']) && is_array($data['TPE1'])) {
+            $fv->setAttribute($artist, $data['TPE1']['body']);
+        }
+    }
+}
+----
+
+This is pretty self-explanatory: we load the bytestream of the audio file into our `Id3TagsReader` class, which is part of the third party library we installed.
+We use that custom logic to grab the data from the MP3 file, and set the attributes based on that.
+
+That's it!
+We've created a custom audio inspector.
+Any time an MP3 file is uploaded or rescanned, the data will be pulled using our custom library and saved against those attributes.

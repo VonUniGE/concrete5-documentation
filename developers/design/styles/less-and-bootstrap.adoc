@@ -1,0 +1,18 @@
+[[design_styles_less-and-bootstrap]]
+= Advanced LESS Usage & Bootstrap
+
+We've only scratched the surface of what's possible here.
+Concrete5 ships with a full and complete LESS parser, meaning anything that LESS can do, Concrete5's style customizer can do.
+You don't even have to use Concrete5's Style Customizer to make use of the LESS parser.
+
+Here are some things you can try:
+
+* You can use built-in Bootstrap mixins in your Concrete5 theme LESS files.
+* Use Concrete5 Style Customizer variables as part of these mixins (e.g. make a gradient mixin configurable through the Concrete5 style customizer)
+* Use Concrete5 customizable styles as part of built-in LESS mixins like lighten().
+* Use LESS Expressions and Variables
+* Use Bootstrap variables as the basis for Concrete5 variables.
+
+NOTE: You can't use Bootstrap variables as Concrete5 customizer variables out of the box, since Concrete5 customizer have specific naming suffixes.*
+
+The 5.7 style customizer is one of the most useful *and* powerful things to come to Concrete5 theming ever, and we can't wait to see what you do with it.

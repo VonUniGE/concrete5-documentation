@@ -1,3 +1,4 @@
+[[api]]
 = Full API Documentation
 
 link:http://concrete5.org/api/[View Full API]
