@@ -31,8 +31,10 @@ def process(which)
             f = File.open(fromPath, "rb")
             contents = f.read
             f.close
+            # Specify output file name, add link to edit on GitHub
             contents.gsub!(/^(= .*?\n)/, "\\1++++\n<?dbhtml filename=\"" + relPathHtml + "\"?>\n++++\n\n++++\n<simpara role=\"c5-edit-this-page\"><link xlink:href=\"https://github.com/concrete5/concrete5-documentation/tree/master/" + which + "/" + relPathAdoc + "\">Edit on GitHub</link></simpara>\n++++\n\n")
-            
+            # Fix images URL
+            contents.gsub!(/^(image:+)/, '\1https://raw.githubusercontent.com/concrete5/concrete5-documentation/master/images/developers/')
             f = File.open(toPath, "wb")
             f.write(contents)
             f.close
