@@ -29,11 +29,13 @@ def process(which)
       else
         if step == 2
           if /\.adoc$/ =~ toPath
-            relPathHtml = fromPath.gsub($rootDir + "/" + which + "/", "").gsub(/\.adoc$/, '.html')
+            relPathAdoc = fromPath.gsub($rootDir + "/" + which + "/", "")
+            relPathHtml = relPathAdoc.gsub(/\.adoc$/, '.html')
             f = File.open(fromPath, "rb")
             contents = f.read
             f.close
-            contents.gsub!(/^(= .*?\n)/, "\\1++++\n<?dbhtml filename=\"" + relPathHtml + "\"?>\n++++\n")
+            contents.gsub!(/^(= .*?\n)/, "\\1++++\n<?dbhtml filename=\"" + relPathHtml + "\"?>\n++++\n\n++++\n<simpara role=\"c5-edit-this-page\"><link xlink:href=\"https://github.com/concrete5/concrete5-documentation/tree/master/" + which + "/" + relPathAdoc + "\">Edit on GitHub</link></simpara>\n++++\n\n")
+            
             f = File.open(toPath, "wb")
             f.write(contents)
             f.close
@@ -54,6 +56,7 @@ def process(which)
   print "done.\n"
 
   print "  - Generating chunked html... "
+  FileUtils.rm_rf($rootDir + "/output/" + which)
   Dir.mkdir($rootDir + "/output/" + which) unless Dir.exists?($rootDir + "/output/" + which)
   if system("xsltproc --output " + $rootDir + "/output/" + which + "/index.html " + $rootDir + "/lib/html-chunked-parameters.xsl " + $rootDir + "/tmp/" + which + "-docbook.xml") == false
     raise "xsltproc failed!"
