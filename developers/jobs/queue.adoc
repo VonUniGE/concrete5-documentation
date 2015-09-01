@@ -8,7 +8,7 @@ If portions of a job can be broken down into discreet bits of functionality, Que
 == Creating a Queueable Job
 
 A Queueable Job is basically a job that extends a difference class, and implements a couple different methods.
-It also has to make use of the concrete5 \Concrete\Core\Foundation\Queue class.
+It also has to make use of the concrete5 `\Concrete\Core\Foundation\Queue` class.
 
 === Extending the Proper Class
 
@@ -43,14 +43,14 @@ class TestJob extends \Concrete\Core\Job\Job
 }
 ----
 
-This job has one purpose: to loop through every page on your site (without checking permissions, since jobs frequently run in a non-authenticated process anyway) and set the content of the attribute with the handle "test_attribute" to "Test!").
+This job has one purpose: to loop through every page on your site (without checking permissions, since jobs frequently run in a non-authenticated process anyway) and set the content of the attribute with the handle `test_attribute` to `Test!`).
 Obviously, a proof of concept.
 We then return a string with the number of pages processed.
 
 But what if our site has thousands of pages?
 This job could pretty easily time out, so it's a perfect opportunity to become Queueable.
 
-First, instead of extending \Concrete\Core\Job\Job, make the Job extend the QueueableJob class.
+First, instead of extending `\Concrete\Core\Job\Job`, make the Job extend the `QueueableJob` class.
 
 [source,php]
 ----
@@ -67,7 +67,7 @@ abstract public function processQueueItem(\ZendQueue\Message $msg);
 ----
 
 These methods all work with the Queue class from the Zend Framework.
-We're going to be created a start method, which will take care of seeding our queue with messages, a finish class that will take care of cleaning up when our Job is finished, and a processQueueItem method, which will be run for every single item that's in our queue.
+We're going to be created a start method, which will take care of seeding our queue with messages, a finish class that will take care of cleaning up when our Job is finished, and a `processQueueItem` method, which will be run for every single item that's in our queue.
 Let's do the start method first:
 
 [source,php]
@@ -86,13 +86,13 @@ public function start(\ZendQueue\Queue $q)
 The first part of this method should look familiar.
 We create a PageList instance and ignore permissions on it.
 But what's going on in the second part of the method?
-Instead of getting all page objects (which is the standard behavior of the PageList getResults() method, we use the executeGetResults() method, which executes the query, but doesn't actually return any objects.
+Instead of getting all page objects (which is the standard behavior of the `PageList` `getResults()` method, we use the `executeGetResults()` method, which executes the query, but doesn't actually return any objects.
 Instead, it just returns raw query data from the database.
 This is perfect, because we want the start method to be as lightweight as possible, since it has to run in its entirety in order to get all the data into the queue.
 So we run our query, we retrieves a list of all page IDs in the system.
 We then loop through all these page IDs and send them into the queue.
 
-Next, let's implement processQueueItem.
+Next, let's implement `processQueueItem`.
 
 [source,php]
 ----
@@ -105,13 +105,13 @@ public function processQueueItem(\ZendQueue\Message $msg)
 
 This should be pretty straightforward.
 For every item in the queue (represented by the $msg object), we loop through and retrieve the full body of the Message object.
-Whatever you send into the queue in the start() method using $q->send() will automatically populate the $msg->body property that's accessible through processQueueItem.
+Whatever you send into the queue in the `start()` method using `$q->send()` will automatically populate the `$msg->body` property that's accessible through `processQueueItem`.
 This is a serialized object in the database, meaning you can store more than simple scalar values.
 However, since all we have to do is store page IDs as part of this operation, we can get away with sending the page ID as the full message data.
-We build a page object from the page ID in the $msg object, and we set the attribute on the page.
+We build a page object from the page ID in the `$msg` object, and we set the attribute on the page.
 
-Finally, we implement our finish() method.
-Since the finish() method doesn't necessarily know anything about the queue, sometimes it can be a little difficult to get real data about how many items were processed - but many times you don't need to pass this data back anyway.
+Finally, we implement our `finish()` method.
+Since the `finish()` method doesn't necessarily know anything about the queue, sometimes it can be a little difficult to get real data about how many items were processed - but many times you don't need to pass this data back anyway.
 
 [source,php]
 ----
@@ -122,7 +122,7 @@ public function start(\ZendQueue\Queue $q)
 ----
 
 That's it!
-We've turned our potentially problematic Job into a QueueableJob that can scale from 50 pages to 5000.
+We've turned our potentially problematic Job into a `QueueableJob` that can scale from 50 pages to 5000.
 
 == Scheduling a Queueable Job
 
@@ -136,7 +136,7 @@ http://www.yoursite.com/index.php/ccm/system/jobs?auth=authenticationHash&jID=1
 Where authenticatioHash is equal to the authentication hash displayed in the Dashboard Jobs user interface.
 Typically something like wget or curl would be used to hit this URL periodically, running the job in the background of a site.
 
-If this is done with a QueueableJob, the entire Job will be run all at once.
+If this is done with a `QueueableJob`, the entire Job will be run all at once.
 This is for backward compatibility, and so that we never have a situation where someone thinks they're running a job and it isn't running.
 But what if you want to schedule a Queueable Job to run periodically, but still have it operate in batches like it does from the concrete5 Jobs interface?
 This requires a different approach.

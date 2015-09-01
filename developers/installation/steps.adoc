@@ -10,16 +10,17 @@ You can also do local development with Concrete5 by installing the various requi
 . Move or upload that zip file to your web server or your web environment.
   You'll want to unzip the file in a web-accessible folder in your webspace.
   Usually this folder is public_html.
-  If you want to run Concrete5 in a subdirectory, you can create a new folder like "new-site" and unzip your Concrete5 files in there.
+  If you want to run Concrete5 in a subdirectory, you can create a new folder like `new-site` and unzip your Concrete5 files in there.
 . After you unzip the file, it will add some new folders and an index.php.
-. The folders application/files/, application/config/, packages/ and updates/ will need to be writable by the web server process.
+. The folders `application/files/`, `application/config/`, `packages/` and `updates/` will need to be writable by the web server process.
   This can mean that the folders will need to be "world writable", depending on your hosting environment.
   If your server supports running as suexec/phpsuexec, the files should be owned by your user account, and set as 755 on all of them.
-  That means that your web server process can do anything it likes to them, but nothing else can (although everyone can view them, which is expected.) If this isn't possible, another good option is to set the apache user (either "apache" or "nobody") as having full rights to these file.
-  If neither are possible, chmod 777 to files/ and all items within (e.g. chmod -R 777 file/*)
+  That means that your web server process can do anything it likes to them, but nothing else can (although everyone can view them, which is expected).
+  If this isn't possible, another good option is to set the apache user (either "apache" or "nobody") as having full rights to these file.
+  If neither are possible, chmod 777 to `files/` and all items within (e.g. `chmod -R 777 file/*`)
 . Create a new MySQL database and a MySQL user account with full permissions on the database.
-  Make a note of your database server (usually "localhost") as well as the database name, and the name and password for the database user that has access to that database.
-. Visit your site, "http://example.com", or "http://example.com/new-site/" if you extracted the concrete5 zip into a folder called "new-site".
+  Make a note of your database server (usually `localhost`) as well as the database name, and the name and password for the database user that has access to that database.
+. Visit your site, `http://example.com`, or `http://example.com/new-site/` if you extracted the concrete5 zip into a folder called `new-site`.
   You will see a helpful install screen like this:
 
 image:install_language.png[alt="Install Language", title="Install Language"]

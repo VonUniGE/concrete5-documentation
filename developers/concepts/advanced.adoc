@@ -26,7 +26,7 @@ Developers can also fire their own events in their own code.
 
 Much of Concrete5 is built on Model-View-Controller philosophy.
 As such, many items have their own associated *Controllers* and **Views**.
-Examples include generic controllers and views (new in 5.7 and used primarily in the core to handle application interface), blocks (which include a controller.php file and view.php file), attributes, single pages, page types and more.
+Examples include generic controllers and views (new in 5.7 and used primarily in the core to handle application interface), blocks (which include a `controller.php` file and `view.php` file), attributes, single pages, page types and more.
 
 == Service Providers & Core Classes
 
@@ -38,7 +38,7 @@ Examples of Service providers include "\Concrete\Core\Mail\Service" (which is us
 == Tools
 
 Deprecated in 5.7, tools refer to files in the tools directory.
-These files are automatically viewable in a web browser at http://www.yoursite.com/index.php/tools/required/whatever - this will automatically load concrete5 and include concrete/tools/whatever.php.
+These files are automatically viewable in a web browser at `http://www.yoursite.com/index.php/tools/required/whatever` - this will automatically load concrete5 and include `concrete/tools/whatever.php`.
 Tools are deprecated because routes, views and controllers are a much better and more flexible way to accomplish the same thing.
 
 == Routing
@@ -51,10 +51,10 @@ Routes can execute a PHP closure or run a particular Controller method.
 
 Concrete5's *DatabaseManager* class keeps track of multiple database *Connection* objects.
 These can be specified in Configuration and automatically connected to.
-The global *Database* facade automatically allows access to the current connection using \Database::get();
+The global *Database* facade automatically allows access to the current connection using `\Database::get()`;
 
 == Facades
 
 Facades are static classes that map to underlying implementations.
 These underlying implementations can be rebound.
-Examples of facades in Concrete5 include "Image", "Config", "Database", and more.
+Examples of facades in Concrete5 include `Image`, `Config`, `Database`, and more.

@@ -29,11 +29,13 @@ http://www.yoursite.com/index.php/media/
 
 We've already decided that this should be a single page because this page is very custom, and will have multiple pages pointing to it at its address.
 To add this single page, create an empty PHP page within the application/single_pages/ directory at the root of your site.
-Name it "media.php." Whatever you name this page will be its path in the URL (e.g. "media.php" = http://www.yoursite.com/media").
-Typically Concrete5 naming conventions should be used here, so if you want to name something with separators in it, using underscores (e.g. "my_profile.php").
+Name it `media.php`.
+Whatever you name this page will be its path in the URL (e.g. `media.php` = `http://www.yoursite.com/media`).
+Typically Concrete5 naming conventions should be used here, so if you want to name something with separators in it, using underscores (e.g. `my_profile.php`).
 
 Sign in to the Concrete5 dashboard, and go to Pages & Themes > Single Pages.
-Find the "Add a Single Page" form at the top of the list, and enter "media" at the bottom (or whatever the name of your single page.) Do not include ".php" in the field.
+Find the "Add a Single Page" form at the top of the list, and enter "media" at the bottom (or whatever the name of your single page).
+Do not include `.php` in the field.
 
 If all goes as planned, the page should refresh, and your single page will now be added at the root of your site.
 You can change its name, permissions and attributes all through the CMS.
@@ -46,10 +48,10 @@ You'll need to add content to your single page view template (the media.php page
 
 == Adding Content to the Single Page View Template
 
-Single pages are wrapped by the "view.php" template for the current theme.
+Single pages are wrapped by the `view.php` template for the current theme.
 This means you don't need to include header or footer information within your single page - it is already present.
 
-In a stock concrete5 site, try opening concrete/themes/elemental/view.php.
+In a stock concrete5 site, try opening `concrete/themes/elemental/view.php`.
 This is the wrapper for all the single pages within the Elemental theme.
 Notice the line?
 That's where all the single page content will be inserted within this template.
@@ -58,7 +60,7 @@ Want to change this?
 You can.
 If you need more flexible control over a single page within a particular theme, just include a file with the same name as your single page within the theme itself.
 That entirely file will be used as the single pages template, including the header, footer, etc...
-It can completely override the single page, too. (So, in our example above, once we have "media" added as a single page, add "media.php" to your active theme).
+It can completely override the single page, too. (So, in our example above, once we have `media` added as a single page, add `media.php` to your active theme).
 This template will then be used instead of the single page.
 
 == Single Pages and Paths
@@ -77,7 +79,7 @@ Create this:
 ----
 
 And add the single page in the same way above.
-Your single page will still be viewable at /media, but you'll be able to add other pages beneath that path over time
+Your single page will still be viewable at `/media`, but you'll be able to add other pages beneath that path over time
 
 ----
 application/single_pages/media/add.php
