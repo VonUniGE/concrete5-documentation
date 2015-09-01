@@ -58,7 +58,7 @@ def process(which)
   print "  - Generating chunked html... "
   FileUtils.rm_rf($rootDir + "/output/" + which)
   Dir.mkdir($rootDir + "/output/" + which) unless Dir.exists?($rootDir + "/output/" + which)
-  if system("xsltproc --output " + $rootDir + "/output/" + which + "/index.html " + $rootDir + "/lib/html-chunked-parameters.xsl " + $rootDir + "/tmp/" + which + "-docbook.xml") == false
+  if system("xsltproc --stringparam base.dir " + $rootDir + "/output/" + which + "/ " + $rootDir + "/lib/html-chunked-parameters.xsl " + $rootDir + "/tmp/" + which + "-docbook.xml") == false
     raise "xsltproc failed!"
   end
   print "done.\n"
