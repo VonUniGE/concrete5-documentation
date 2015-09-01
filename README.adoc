@@ -35,3 +35,8 @@ Install the required gems by running
 ----
 bundle install
 ----
+
+=== xsltproc
+
+You need a command-line command called xsltproc. +
+link:http://www.sagehill.net/docbookxsl/InstallingAProcessor.html#InstallXsltproc[See here] to know how to install it.
