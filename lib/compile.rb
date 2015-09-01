@@ -1,26 +1,24 @@
 require "fileutils"
 require "asciidoctor"
 
-$rootDir = File.expand_path(File.dirname(File.dirname(__FILE__)))
-
 def process(which)
   print "Processing " + which + ":\n"
 
   print "  - Complete HTML... "
-  adoc = Asciidoctor.convert_file($rootDir + "/" + which + ".adoc", :to_file => false, :header_footer => true, :safe => Asciidoctor::SafeMode::UNSAFE, :attributes => {"numbered" => true})
+  adoc = Asciidoctor.convert_file(which + ".adoc", :to_file => false, :header_footer => true, :safe => Asciidoctor::SafeMode::UNSAFE, :attributes => {"numbered" => true})
   adoc.gsub!('src="//www.youtube.com/', 'src="https://www.youtube.com/')
-  f = File.open($rootDir + "/output/" + which + ".html", "wb")
+  f = File.open("output/" + which + ".html", "wb")
   f.write(adoc)
   f.close
   print "done.\n"
 
   print "  - Preparing files for DocBook... "
-  Dir.mkdir($rootDir + "/tmp/adoc") unless Dir.exists?($rootDir + "/tmp/adoc")
-  FileUtils.cp($rootDir + "/" + which + ".adoc", $rootDir + "/tmp/adoc/" + which + ".adoc")
-  FileUtils.rm_rf($rootDir + "/tmp/adoc/" + which)
+  Dir.mkdir("tmp/adoc") unless Dir.exists?("tmp/adoc")
+  FileUtils.cp(which + ".adoc", "tmp/adoc/" + which + ".adoc")
+  FileUtils.rm_rf("tmp/adoc/" + which)
   for step in 1..2
-    Dir.glob($rootDir + "/" + which + "/**/*").each do |fromPath|
-      toPath = fromPath.gsub($rootDir + "/" + which, $rootDir + "/tmp/adoc/" + which)
+    Dir.glob(which + "/**/*").each do |fromPath|
+      toPath = fromPath.sub(which + "/", "tmp/adoc/" + which + "/")
       if File.directory?(fromPath)
         if step == 1
           FileUtils.mkdir_p(toPath) unless Dir.exists?(toPath)
@@ -28,8 +26,8 @@ def process(which)
       else
         if step == 2
           if /\.adoc$/ =~ toPath
-            relPathAdoc = fromPath.gsub($rootDir + "/" + which + "/", "")
-            relPathHtml = relPathAdoc.gsub(/\.adoc$/, '.html')
+            relPathAdoc = fromPath.sub(which + "/", "")
+            relPathHtml = relPathAdoc.sub(/\.adoc$/, '.html')
             f = File.open(fromPath, "rb")
             contents = f.read
             f.close
@@ -48,25 +46,35 @@ def process(which)
   print "done.\n"
 
   print "  - Generating DocBook... "
-  docbook = Asciidoctor.convert_file($rootDir + "/tmp/adoc/" + which + ".adoc", :to_file => false, :header_footer => true, :safe => Asciidoctor::SafeMode::UNSAFE, :backend => "docbook", :attributes => {"numbered" => true})
-  f = File.open($rootDir + "/tmp/" + which + "-docbook.xml", "wb")
+  docbook = Asciidoctor.convert_file("tmp/adoc/" + which + ".adoc", :to_file => false, :header_footer => true, :safe => Asciidoctor::SafeMode::UNSAFE, :backend => "docbook", :attributes => {"numbered" => true})
+  f = File.open("tmp/" + which + "-docbook.xml", "wb")
   f.write(docbook)
   f.close
   print "done.\n"
 
   print "  - Generating chunked html... "
-  FileUtils.rm_rf($rootDir + "/output/" + which)
-  Dir.mkdir($rootDir + "/output/" + which) unless Dir.exists?($rootDir + "/output/" + which)
-  if system("xsltproc --stringparam base.dir " + $rootDir + "/output/" + which + "/ " + $rootDir + "/lib/html-chunked-parameters.xsl " + $rootDir + "/tmp/" + which + "-docbook.xml") == false
+  FileUtils.rm_rf("output/" + which)
+  Dir.mkdir("output/" + which) unless Dir.exists?("output/" + which)
+  if system("xsltproc --stringparam base.dir output/" + which + " lib/html-chunked-parameters.xsl tmp/" + which + "-docbook.xml") == false
     raise "xsltproc failed!"
   end
   print "done.\n"
 end
 
-$stdout.sync = true
 
-Dir.mkdir($rootDir + "/tmp") unless Dir.exists?($rootDir + "/tmp")
-Dir.mkdir($rootDir + "/output") unless Dir.exists?($rootDir + "/output")
+def main
+  initialDir = Dir.pwd
+  rootDir = File.expand_path(File.dirname(File.dirname(__FILE__)))
+  Dir.chdir(rootDir)
+  begin
+    $stdout.sync = true
+    Dir.mkdir("tmp") unless Dir.exists?("tmp")
+    Dir.mkdir("output") unless Dir.exists?("output")
+    process("developers")
+    #process("editors")
+  ensure
+    Dir.chdir(initialDir)
+  end
+end
 
-process("developers")
-# process("editors")
+main
