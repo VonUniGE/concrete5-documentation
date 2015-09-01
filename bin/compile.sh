@@ -9,6 +9,6 @@ done
 cd "`dirname "${SCRIPT_PATH}"`" > /dev/null
 
 export TZ=UTC
-ruby ../lib/generate-html.rb
+ruby ../lib/compile.rb
 
 popd  > /dev/null
