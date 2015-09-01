@@ -3,7 +3,6 @@ require "asciidoctor"
 
 $rootDir = File.expand_path(File.dirname(File.dirname(__FILE__)))
 
-
 def process(which)
   print "Processing " + which + ":\n"
 
@@ -16,9 +15,9 @@ def process(which)
   print "done.\n"
 
   print "  - Preparing files for DocBook... "
-  FileUtils.rm_rf($rootDir + "/tmp/adoc")
-  Dir.mkdir($rootDir + "/tmp/adoc")
+  Dir.mkdir($rootDir + "/tmp/adoc") unless Dir.exists?($rootDir + "/tmp/adoc")
   FileUtils.cp($rootDir + "/" + which + ".adoc", $rootDir + "/tmp/adoc/" + which + ".adoc")
+  FileUtils.rm_rf($rootDir + "/tmp/adoc/" + which)
   for step in 1..2
     Dir.glob($rootDir + "/" + which + "/**/*").each do |fromPath|
       toPath = fromPath.gsub($rootDir + "/" + which, $rootDir + "/tmp/adoc/" + which)
@@ -66,8 +65,7 @@ end
 
 $stdout.sync = true
 
-FileUtils.rm_rf($rootDir + "/tmp")
-Dir.mkdir($rootDir + "/tmp")
+Dir.mkdir($rootDir + "/tmp") unless Dir.exists?($rootDir + "/tmp")
 Dir.mkdir($rootDir + "/output") unless Dir.exists?($rootDir + "/output")
 
 process("developers")
