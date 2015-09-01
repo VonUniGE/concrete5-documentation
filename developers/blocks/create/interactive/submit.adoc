@@ -1,3 +1,4 @@
+[[blocks_create_interactive_submit]]
 = Example: Handling a Form Submission from a Block's View Layer
 
 The survey block presents the user with a form that, when submitted, tallies the result against a particular option.

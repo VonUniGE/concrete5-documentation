@@ -1,3 +1,4 @@
+[[blocks_create_interactive_passing-data]]
 = Example: Passing Data from a custom URL into a Block's View Layer
 
 A block can react to URL parameters without using $view->action().
