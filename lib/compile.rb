@@ -35,9 +35,41 @@ def process(which)
   print "Processing " + which + ":\n"
 
   print "  - PDF (this takes a while)... "
+  File.delete("output/" + which + ".pdf") if File.exist?("output/" + which + ".pdf")
   Asciidoctor.convert_file(which + ".adoc", :to_file => "output/" + which + ".pdf", :header_footer => true, :safe => Asciidoctor::SafeMode::UNSAFE, :backend => "pdf", :attributes => {"numbered" => true})
-  File.delete("output/" + which + ".pdfmarks") if File.exist?("output/" + which + ".pdfmarks")
   print "done.\n"
+
+  print "  - Optimizing PDF... "
+  File.delete("output/" + which + "-optimized.pdf") if File.exist?("output/" + which + "-optimized.pdf")
+  gs = nil
+  for checkGS in ['gs', 'gswin64c.exe', 'gswin32c.exe']
+    begin
+      rc = `#{checkGS} --version`
+    rescue
+      rc = nil
+    end
+    if !rc.nil?
+      gs = checkGS
+      break
+    end
+  end
+  if gs.nil?
+    print "SKIPPED (GhostScript executable not found)\n"
+  else
+    sizeFrom = File.size("output/" + which + ".pdf")
+    begin
+      rc = `#{gs} -q -dNOPAUSE -dBATCH -dSAFER -dNOOUTERSAVE -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -dCannotEmbedFontPolicy=/Warning -dDownsampleColorImages=true -dColorImageResolution=300 -dDownsampleGrayImages=true -dGrayImageResolution=300 -dDownsampleMonoImages=true -dMonoImageResolution=300 -sOutputFile=output/#{which}-optimized.pdf output/#{which}.pdf output/#{which}.pdfmarks`
+    end
+    if !File.exist?("output/" + which + "-optimized.pdf")
+      print "GhostScript FAILED\n"
+    else
+      sizeTo = File.size("output/" + which + "-optimized.pdf")
+      File.delete("output/" + which + ".pdf")
+      File.rename("output/" + which + "-optimized.pdf", "output/" + which + ".pdf")
+      print "done (size changed from #{format("%.1f", sizeFrom / 1024.0)} to #{format("%.1f", sizeTo / 1024.0)} KB).\n"
+    end
+  end
+  File.delete("output/" + which + ".pdfmarks") if File.exist?("output/" + which + ".pdfmarks")
 
   print "  - EPUB... "
   stdOutString = StringIO.new
