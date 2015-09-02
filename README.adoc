@@ -11,7 +11,6 @@ In this repository we'll have the source of two books for concrete5 5.7:
 
 Check that you have Ruby installed:
 
-[source]
 ----
 ruby --version
 ----
@@ -22,16 +21,20 @@ In case it's not installed: please link:https://www.ruby-lang.org/en/documentati
 
 Check that you have Bundle installed:
 
-[source]
 ----
 bundle --version
+----
+
+In case it's not installed, run this command:
+
+----
+gem install bundle
 ----
 
 === Gems
 
 Install the required gems by running
 
-[source]
 ----
 bundle install
 ----
@@ -39,6 +42,7 @@ bundle install
 === Java
 
 Check that you have Java installed:
+
 ----
 java -version
 ----
