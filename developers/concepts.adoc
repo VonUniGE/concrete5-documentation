@@ -4,13 +4,9 @@
 While easy for end users to understand, Concrete5 is a powerful and complex application.
 Before diving in to development with Concrete5, one should understand the main concepts and vocabulary of a Concrete5 site.
 
-== Overview Video
-
-If you want a quick summary before diving in, this video's less than four minutes, and should acquaint you with many of Concrete5's core concepts:
-
-video::vcIIM5ZgzP8[youtube, width=560, height=315]
-
 :leveloffset: +1
+
+include::concepts/overview.adoc[]
 
 include::concepts/front-end-content.adoc[]
 

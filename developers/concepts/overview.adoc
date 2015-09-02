@@ -1,0 +1,6 @@
+[[concepts_overview]]
+= Overview Video
+
+If you want a quick summary before diving in, this video's less than four minutes, and should acquaint you with many of Concrete5's core concepts:
+
+video::vcIIM5ZgzP8[youtube, width=560, height=315]
