@@ -1,6 +1,8 @@
 require "fileutils"
 require "asciidoctor"
 
+$rootDir = File.expand_path(File.dirname(File.dirname(__FILE__)))
+
 def process(which)
   print "Processing " + which + ":\n"
 
@@ -92,7 +94,7 @@ def process(which)
   print "  - Generating chunked html... "
   FileUtils.rm_rf("output/" + which)
   Dir.mkdir("output/" + which) unless Dir.exists?("output/" + which)
-  rc=system("java com.icl.saxon.StyleSheet tmp/" + which + "-docbook.xml lib/html-chunked-parameters.xsl base.dir=output/" + which)
+  rc=system("java com.icl.saxon.StyleSheet tmp/" + which + "-docbook.xml lib/html-chunked-parameters.xsl base.dir=output/" + which + " highlight.xslthl.config=file:///" + $rootDir + "/lib/xslthl/highlighters/xslthl-config.xml")
   if rc.nil?
     raise "saxon failed (be sure to have Java)!"
   end
@@ -105,8 +107,7 @@ end
 
 def main
   initialDir = Dir.pwd
-  rootDir = File.expand_path(File.dirname(File.dirname(__FILE__)))
-  Dir.chdir(rootDir)
+  Dir.chdir($rootDir)
   begin
     $stdout.sync = true
     Dir.mkdir("tmp") unless Dir.exists?("tmp")

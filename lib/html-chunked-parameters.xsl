@@ -1,12 +1,12 @@
 <?xml version='1.0'?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:import href="docbook-xsl/html/chunk.xsl" />
+  <xsl:import href="docbook-xsl/html/highlight.xsl" />
   <!-- See http://docbook.sourceforge.net/release/xsl/1.78.1/doc/html/index.html -->
   <xsl:param name="chunker.output.encoding" select="'UTF-8'" />
   <xsl:param name="generate.css.header" select="1" />
   <xsl:param name="custom.css.source" select="'./../lib/html-chunked-css.xml'" />
   <xsl:param name="highlight.source" select="1" />
-  <xsl:param name="highlight.xslthl.config" select="'./../lib/xslthl/highlighters/xslthl-config.xml'" />
   <xsl:param name="generate.toc" select="'
 appendix          nop
 article           nop
