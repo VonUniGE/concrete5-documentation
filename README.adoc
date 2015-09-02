@@ -36,7 +36,11 @@ Install the required gems by running
 bundle install
 ----
 
-=== xsltproc
+=== Java
 
-You need a command-line command called xsltproc. +
-link:http://www.sagehill.net/docbookxsl/InstallingAProcessor.html#InstallXsltproc[See here] to know how to install it.
+Check that you have Java installed:
+----
+java -version
+----
+
+In case it's not installed: please link:https://www.java.com/[install it].

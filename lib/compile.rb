@@ -92,8 +92,12 @@ def process(which)
   print "  - Generating chunked html... "
   FileUtils.rm_rf("output/" + which)
   Dir.mkdir("output/" + which) unless Dir.exists?("output/" + which)
-  if system("xsltproc --stringparam base.dir output/" + which + " lib/html-chunked-parameters.xsl tmp/" + which + "-docbook.xml") == false
-    raise "xsltproc failed!"
+  rc=system("java com.icl.saxon.StyleSheet tmp/" + which + "-docbook.xml lib/html-chunked-parameters.xsl base.dir=output/" + which)
+  if rc.nil?
+    raise "saxon failed (be sure to have Java)!"
+  end
+  if rc == false
+    raise "saxon failed!"
   end
   print "done.\n"
 end
