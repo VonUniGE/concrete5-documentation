@@ -1,16 +1,30 @@
 require "fileutils"
 require "asciidoctor"
+require "asciidoctor-pdf"
 require "asciidoctor-epub3"
 
 # Implement our custom render of YouTube videos (asciidoctor-epub3 simply strips them out)
 module Asciidoctor
   module Epub3
     class ContentConverter
-        def video(node)
-            videoID = node.attr 'target'
-            url = "https://www.youtube.com/watch?v=" + videoID
-            %(<p><a href="#{url}">Watch video on YouTube at #{url}</a></p>)
-        end
+      def video(node)
+        videoID = node.attr 'target'
+        url = "https://www.youtube.com/watch?v=" + videoID
+        %(<p><a href="#{url}">Watch video on YouTube at #{url}</a></p>)
+      end
+    end
+  end
+end
+
+# Implement our custom render of YouTube videos (asciidoctor-pdf simply strips them out)
+module Asciidoctor
+  module Pdf
+    class Converter
+      def convert_video(node)
+        videoID = node.attr 'target'
+        url = "https://www.youtube.com/watch?v=" + videoID
+        layout_prose 'Watch video on YouTube at <a href="' + url + '">' + url + '</a>';
+      end
     end
   end
 end
@@ -19,6 +33,11 @@ $rootDir = File.expand_path(File.dirname(File.dirname(__FILE__)))
 
 def process(which)
   print "Processing " + which + ":\n"
+
+  print "  - PDF (this takes a while)... "
+  Asciidoctor.convert_file(which + ".adoc", :to_file => "output/" + which + ".pdf", :header_footer => true, :safe => Asciidoctor::SafeMode::UNSAFE, :backend => "pdf", :attributes => {"numbered" => true})
+  File.delete("output/" + which + ".pdfmarks") if File.exist?("output/" + which + ".pdfmarks")
+  print "done.\n"
 
   print "  - EPUB... "
   stdOutString = StringIO.new
