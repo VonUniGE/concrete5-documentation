@@ -7,13 +7,13 @@ A good block is usually fairly self-explanatory, with its fields well-named and 
 But sometimes additional help information (including off-site links) is necessary, and a developer would rather not crowd the dedicated dialog interface with this information.
 Fortunately, its easy to add on-demand to help to a block dialog.
 
-image:custom-blocks_adding-help-1.png[alt="Example of Block Help", title="Example of Block Help"]
+image::custom-blocks_adding-help-1.png[alt="Example of Block Help", title="Example of Block Help"]
 
 This is what Auto-Nav's built-in help.
 Let's add something like this to our custom block type.
 Here's a Plain Text Block in edit mode.
 
-image:custom-blocks_adding-help-2.png[alt="Add some sample content to the new block", title="Add some sample content to the new block"]
+image::custom-blocks_adding-help-2.png[alt="Add some sample content to the new block", title="Add some sample content to the new block"]
 
 == Help Method in the Controller
 
@@ -32,7 +32,7 @@ That's it!
 In add and edit mode now your block dialog will now have the help interface available.
 Clicking on it will show this paragraph.
 
-image:custom-blocks_adding-help-3.png[alt="Result of implementing getBlockTypeHelp", title="Result of implementing getBlockTypeHelp"]
+image::custom-blocks_adding-help-3.png[alt="Result of implementing getBlockTypeHelp", title="Result of implementing getBlockTypeHelp"]
 
 == Centralized Help Registry
 
@@ -49,7 +49,7 @@ Want to add inline tooltips to certain form labels that your block uses?
 This is easy with a combination of http://getbootstrap.com[Bootstrap] and http://fortawesome.github.io/Font-Awesome/[Font Awesome], both of which concrete5 ships with and enables in edit mode.
 Let's add some explanation to the "Last Name" label.
 
-image:custom-blocks_adding-help-4.png[alt="Without inline tooltips", title="Without inline tooltips"]
+image::custom-blocks_adding-help-4.png[alt="Without inline tooltips", title="Without inline tooltips"]
 
 Here's the markup in the block edit template:
 
@@ -87,7 +87,7 @@ I usually like *fa-question-circle*
 
 The results:
 
-image:custom-blocks_adding-help-5.png[alt="With inline tooltips - Not working", title="With inline tooltips - Not working"]
+image::custom-blocks_adding-help-5.png[alt="With inline tooltips - Not working", title="With inline tooltips - Not working"]
 
 This looks great - but it doesn't actually do anything yet.
 By adding a "title" attribute and a special CSS class, we'll enable Twitter Bootstrap tooltips.
@@ -105,6 +105,6 @@ By adding a "title" attribute and a special CSS class, we'll enable Twitter Boot
 
 Much better:
 
-image:custom-blocks_adding-help-6.png[alt="With inline tooltips - Working", title="With inline tooltips - Working"]
+image::custom-blocks_adding-help-6.png[alt="With inline tooltips - Working", title="With inline tooltips - Working"]
 
 Judicious use of tooltips and block-level help goes a long way toward making a block easy to use and understand.

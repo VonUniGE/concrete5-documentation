@@ -3,7 +3,7 @@
 
 Jobs are simple, self-contained scripts that can be run from within the Optimization sections of the System & Settings area of the Dashboard.
 
-image:job-list.png[alt="Job List", title="Job List"]
+image::job-list.png[alt="Job List", title="Job List"]
 
 Each one of these item is an installed Job.
 Clicking the play button runs the job.

@@ -25,7 +25,7 @@ Here's what the template might look like.
 
 The form looks like this when rendered in the block.
 
-image:file-manager-add-for-blocks.png[alt="Rendered form", title="Rendered form"]
+image::file-manager-add-for-blocks.png[alt="Rendered form", title="Rendered form"]
 
 but we want to add a photo as well.
 Rather than adding a URL, or rolling our own, we just add this to the HTML.
@@ -50,7 +50,7 @@ The third parameter stores the text shown to the user within the form element.
 That's it.
 Now the block form looks like this:
 
-image:file-manager-add-for-blocks-added.png[alt="Form with file selector", title="Form with file selector"]
+image::file-manager-add-for-blocks-added.png[alt="Form with file selector", title="Form with file selector"]
 
 Clicking on this form element will automatically launch the file manager, providing the user a searchable list of files.
 Full searching is available.

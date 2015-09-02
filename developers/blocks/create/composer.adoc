@@ -5,11 +5,11 @@ Any block type can be included in Concrete5's Page Type composer interface.
 
 == Block Appearing in the Page Type Edit Interface
 
-image:block-type-enable-composer-editing-1.png[alt="Listing the block in the page type edit interface.", title="Listing the block in the page type edit interface."]
+image::block-type-enable-composer-editing-1.png[alt="Listing the block in the page type edit interface.", title="Listing the block in the page type edit interface."]
 
 == HTML Block as It Appears in Composer
 
-image:block-type-enable-composer-editing-2.png[alt="The HTML block in the composer interface", title="The HTML block in the composer interface"]
+image::block-type-enable-composer-editing-2.png[alt="The HTML block in the composer interface", title="The HTML block in the composer interface"]
 
 == Composer Template File
 

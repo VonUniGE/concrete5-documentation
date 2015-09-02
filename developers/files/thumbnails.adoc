@@ -58,7 +58,7 @@ If you upload an image and the thumbnailer cuts someone's head off, you can't re
 Fortunately, concrete5 version 7 provies a much better way to solve this problem.
 First, in the Dashboard, create a custom thumbnail type for your gallery, and set it to a fixed 100 pixels by 100 pixels:
 
-image:create-thumbnail-type.png[alt="Create a new thumbnail type in dashboard", title="Create a new thumbnail type in dashboard"]
+image::create-thumbnail-type.png[alt="Create a new thumbnail type in dashboard", title="Create a new thumbnail type in dashboard"]
 
 Next, go through the File Manager and rescan every image you have.
 This will regenerate thumbnails for your images, including the new thumbnail type that you added.

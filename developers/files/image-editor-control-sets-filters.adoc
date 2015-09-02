@@ -5,9 +5,9 @@ NOTE: this requires concrete5 7.5 or greater
 
 concrete5 version 7 shipped with an exciting, full-featured image editor directly accessible from within the File Manager.
 
-image:image-editor-1.png[alt="Image Editor", title="Image Editor"]
+image::image-editor-1.png[alt="Image Editor", title="Image Editor"]
 
-image:image-editor-2.png[alt="Image Editor", title="Image Editor"]
+image::image-editor-2.png[alt="Image Editor", title="Image Editor"]
 
 The Image Editor provides simple cropping, rotation and resizing controls, and some simple, fun image filters.
 Extending this functionality is something that developers can do.

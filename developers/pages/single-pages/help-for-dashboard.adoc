@@ -5,18 +5,18 @@ NOTE: This requires concrete5 7.4 or greater.
 
 A common component of most core Dashboard pages is the Help Launcher.
 
-image:dashboard-pages-guide-icon.png[alt="Help Launcher", title="Help Launcher"]
+image::dashboard-pages-guide-icon.png[alt="Help Launcher", title="Help Launcher"]
 
 Click on this icon, and it expands to give you helpful information about the current page.
 
-image:dashboard-pages-guide-shown.png[alt="Help shown", title="Help shown"]
+image::dashboard-pages-guide-shown.png[alt="Help shown", title="Help shown"]
 
 The help description can even contain a button to launch a __Guide__.
 Guides can give us a detailed walkthrough about certain elements on the page.
 
-image:dashboard-pages-guide-shown-button.png[alt="Help with button", title="Help with button"]
+image::dashboard-pages-guide-shown-button.png[alt="Help with button", title="Help with button"]
 
-image:dashboard-pages-guide-shown-steps.png[alt="Help with steps", title="Help with steps"]
+image::dashboard-pages-guide-shown-steps.png[alt="Help with steps", title="Help with steps"]
 
 Adding a help launcher and a help description to your Dashboard pages is easy.
 Adding guides takes a little more work, but isn't too difficult if you're familiar with JavaScript.
@@ -35,7 +35,7 @@ Core::make('help')->display(t('This is my help text.'));
 That's it!
 Your previously help-less Dashboard page will now display the help launcher, and your help text when clicked.
 
-image:dashboard-pages-guide-custom.png[alt="Custom help", title="Custom help"]
+image::dashboard-pages-guide-custom.png[alt="Custom help", title="Custom help"]
 
 == Centralized Help Registry
 

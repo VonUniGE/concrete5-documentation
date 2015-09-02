@@ -5,7 +5,7 @@ Concrete5 5.7 introduces the concept of inline editing for blocks.
 Prior to 5.7, all block types were rendered in a dialog box.
 Now, block types can inject their add and edit interfaces directly into the page:
 
-image:inline-editing.png[alt="Inline Editing", title="Inline Editing"]
+image::inline-editing.png[alt="Inline Editing", title="Inline Editing"]
 
 Marking your block as capable of inline editing is as easy as adding the following parameters to your block type's controller.php class.
 

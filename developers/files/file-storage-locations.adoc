@@ -17,24 +17,24 @@ In concrete5 version 7, that has changed.
 File storage locations are now a fully extensible object.
 You can define multiple file storage locations in the Dashboard, and their type determines options about them.
 
-image:filestoragelocation-list-default.png[alt="Dashboard list of File Storage Locations", title="Dashboard list of File Storage Locations"]
+image::filestoragelocation-list-default.png[alt="Dashboard list of File Storage Locations", title="Dashboard list of File Storage Locations"]
 
-image:filestoragelocation-create.png[alt="Define a new File Storage Location", title="Define a new File Storage Location"]
+image::filestoragelocation-create.png[alt="Define a new File Storage Location", title="Define a new File Storage Location"]
 
 In these two screenshots, we're showing the list of file storage locations, and adding a new one.
 The only type of file storage location installed by default is the "Local" file storage location, which is simply a directory on the same server. (Note: this directory can be within the web root, but doesn't have to be.) You add new file storage location functionality to your site by installing new file storage location types, which come bundled in packages.
 For example, here's what the Amazon S3 File Storage Location type looks like when you add a new location of that type.
 You choose the type, and then set the relevant options for it.
 
-image:filestoragelocation-created.png[alt="New File Storage Location defined", title="New File Storage Location defined"]
+image::filestoragelocation-created.png[alt="New File Storage Location defined", title="New File Storage Location defined"]
 
-image:filestoragelocation-create-s3.png[alt="Define a new File Storage Location for Amazon S3", title="Define a new File Storage Location for Amazon S3"]
+image::filestoragelocation-create-s3.png[alt="Define a new File Storage Location for Amazon S3", title="Define a new File Storage Location for Amazon S3"]
 
 Any file storage location that's registered in the system can be the default storage location.
 Any file added to the file manager goes into this storage location by default.
 You can also choose which storage location a file uses on a file-by-file basis, using the Permissions dialog in the File Manager
 
-image:filestoragelocation-file-specific.png[alt="Specify File Storage Location for a file", title="Specify File Storage Location for a file"]
+image::filestoragelocation-file-specific.png[alt="Specify File Storage Location for a file", title="Specify File Storage Location for a file"]
 
 == Creating a File Storage Location Type
 

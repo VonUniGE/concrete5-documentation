@@ -5,7 +5,7 @@ In Concrete5 5.7, theme's can enable a grid layout, which lets site editors brea
 The grid container can also automatically be applied around blocks to keep them within this container, allowing *some* of those block types to "bust out" of the container and go full width on the page.
 Take a look at this image
 
-image:grid-container.png[alt="Grid Container", title="Grid Container"]
+image::grid-container.png[alt="Grid Container", title="Grid Container"]
 
 The bottom three images are in a three column layout.
 Notice how they're set in from the edge of the page?

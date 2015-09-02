@@ -58,7 +58,7 @@ Let's create a package for this. (Note: this assumes you're quite familiar with 
 First, we'll create the attributes we want to use to store the data.
 Create a text file attribute attribute with the handle "audio_artist" and one with the handle "audio_title".
 
-image:custom-audio-attributes.png[alt="Custom audio attributes", title="Custom audio attributes"]
+image::custom-audio-attributes.png[alt="Custom audio attributes", title="Custom audio attributes"]
 
 == Start the Package
 
@@ -73,7 +73,7 @@ It's available via http://getcomposer.org[Composer], a PHP packaging tool.
 In order to install this in our class, we add the composer.json file as directed in the PHP-ID3 documentation, and run "composer install" in our package's directory.
 This gets us a directory that looks like this.
 
-image:php-id3-directory-structure.png[alt="PHP-ID3 directory structure", title="PHP-ID3 directory structure"]
+image::php-id3-directory-structure.png[alt="PHP-ID3 directory structure", title="PHP-ID3 directory structure"]
 
 === Create a Package Controller
 

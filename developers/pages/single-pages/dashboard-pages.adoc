@@ -48,7 +48,7 @@ public function view()
 }
 ----
 
-image:dashboard-pages-error.png[alt="Dashboard pages - Error", title="Dashboard pages - Error"]
+image::dashboard-pages-error.png[alt="Dashboard pages - Error", title="Dashboard pages - Error"]
 
 == Success and Info Responses
 
@@ -62,7 +62,7 @@ public function view()
 }
 ----
 
-image:dashboard-pages-message.png[alt="Dashboard pages - Message", title="Dashboard pages - Message"]
+image::dashboard-pages-message.png[alt="Dashboard pages - Message", title="Dashboard pages - Message"]
 
 [source,php]
 ----
@@ -72,7 +72,7 @@ public function view()
 }
 ----
 
-image:dashboard-pages-success.png[alt="Dashboard pages - Success", title="Dashboard pages - Success"]
+image::dashboard-pages-success.png[alt="Dashboard pages - Success", title="Dashboard pages - Success"]
 
 == Design Guidelines
 
@@ -81,7 +81,7 @@ The Dashboard loads a subset to http://getbootstrap.com[Bootstrap 3 Styling], so
 If one or two items are important for interacting with your Dashboard page, place them in the button header.
 Group them with bootstrap button groups:
 
-image:dashboard-pages-buttons-top.png[alt="Dashboard pages - Top buttons", title="Dashboard pages - Top buttons"]
+image::dashboard-pages-buttons-top.png[alt="Dashboard pages - Top buttons", title="Dashboard pages - Top buttons"]
 
 [source,php]
 ----
@@ -104,7 +104,7 @@ The `ccm-dashboard-header-buttons` class will position the buttons at the top of
 
 If you've got a length form on a particular page, include the button footer within your form for style consistency.
 
-image:dashboard-pages-buttons-bottom.png[alt="Dashboard pages - Bottom buttons", title="Dashboard pages - Bottom buttons"]
+image::dashboard-pages-buttons-bottom.png[alt="Dashboard pages - Bottom buttons", title="Dashboard pages - Bottom buttons"]
 
 [source,php]
 ----

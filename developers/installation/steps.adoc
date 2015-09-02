@@ -23,10 +23,10 @@ You can also do local development with Concrete5 by installing the various requi
 . Visit your site, `http://example.com`, or `http://example.com/new-site/` if you extracted the concrete5 zip into a folder called `new-site`.
   You will see a helpful install screen like this:
 
-image:install_language.png[alt="Install Language", title="Install Language"]
+image::install_language.png[alt="Install Language", title="Install Language"]
 
 This means things are working.
 Click through the installation process, which should check your requirements, and then through to a page where you can specify details about your site, and database access information.
 Finally, installation should proceed through a number of steps as parts of Concrete5 are installed, and finish on this message:
 
-image:install_complete.png[alt="Install Complete", title="Install Complete"]
+image::install_complete.png[alt="Install Complete", title="Install Complete"]

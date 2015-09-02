@@ -3,7 +3,7 @@
 
 A Concrete5 theme that provides style customization is one that defines some of its CSS properties in such a way that they can be overridden through the Design panel:
 
-image:style-customization_design-panel.png[alt="Design Panel", title="Design Panel"]
+image::style-customization_design-panel.png[alt="Design Panel", title="Design Panel"]
 
 This functionality has been in Concrete5 since version 5.3. - but it's been overhauled and improved substantially in 5.7.
 Here's how you add this functionality to your Concrete5 themes.

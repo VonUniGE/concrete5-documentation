@@ -28,7 +28,7 @@ $this->app['help/dashboard']->registerMessageString(
 This will keep the current text (since its the first parameter of the array), with the second parameter being the string identifier of a JavaScript Guide on the page.
 This will also enable the button in the Help overlay:
 
-image:add-guide-to-dashboard-with-button.png[alt="Help overlay with button", title="Help overlay with button"]
+image::add-guide-to-dashboard-with-button.png[alt="Help overlay with button", title="Help overlay with button"]
 
 Clicking the button will result in a JavaScript error.
 That's because we haven't added any JavaScript to the page to handle our guide.
@@ -77,7 +77,7 @@ Finally, we register this tour object to `add-widget` - which is the name of the
 And that's it!
 Clicking the button launches our guide:
 
-image:dashboard-guide-at-work.png[alt="Dashboard guide is up and running!", title="Dashboard guide is up and running!"]
+image::dashboard-guide-at-work.png[alt="Dashboard guide is up and running!", title="Dashboard guide is up and running!"]
 
 The Tourist documentation goes into great detail on how to customize these guide steps.
 We chose Tourist because it was both attractive and flexible: if you're comfortable with JavaScript you have a lot of control over how these tours work and interact with the page.

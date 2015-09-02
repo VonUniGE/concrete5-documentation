@@ -9,7 +9,7 @@ The controller.php specifies the version of the package, defines an installation
 In general, the filesystem of a particular package's contents will match the filesystem of those contents in the concrete/ directory, if they were to be installed by the core.
 If, for example, your package contains a theme, two custom block types and a dashboard single page and controller, it might look like this in the file system:
 
-image:packages-directory-structure.png[alt="Directory structure of a package", title="Directory structure of a package"]
+image::packages-directory-structure.png[alt="Directory structure of a package", title="Directory structure of a package"]
 
 In general, when building a package, you'll start by building your item of functionality (block type, theme, etc...) in your application/ folder, and installing it manually through the Concrete5 dashboard.
 When it's done and ready to go, you move it into a package folder.

@@ -121,7 +121,7 @@ Now, delete your current Concrete5 application/config/database.php file, and cle
 When complete, install your package in the Dashboard.
 You should see something similar to this:
 
-image:confirm-sample-content-swap.png[alt="Confirm Sample Content Swap", title="Confirm Sample Content Swap"]
+image::confirm-sample-content-swap.png[alt="Confirm Sample Content Swap", title="Confirm Sample Content Swap"]
 
 Confirm the choice and click through. *This first time will likely fail!* Don't get discouraged.
 You may have to continually uninstall and reinstall your package, tweaking the content.xml file as you do so.

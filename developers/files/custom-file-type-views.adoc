@@ -56,7 +56,7 @@ It represents the relevant `\Concrete\Core\File\Version\Version` object for the 
 Then we have our custom viewer code, which in this case is simply the HTML5 audio tag.
 Here's what the resulting output looks like:
 
-image:custom-audio-viewer.png[alt="Custom Audio Viewer", title="Custom Audio Viewer"]
+image::custom-audio-viewer.png[alt="Custom Audio Viewer", title="Custom Audio Viewer"]
 
 Editors work the same way.
 Simply pass a string into the sixth argument above, and an element matching the same name of the string will be loading from either `packages/your_package/elements/files/edit/` or `application/elements/files/edit`.

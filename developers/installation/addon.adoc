@@ -16,7 +16,7 @@ If your webserver is properly configured, you should be able to automatically in
 Click Dashboard in the upper right of your concrete5 toolbar, then at the bottom of the Dashboard, click the link titled **Extend concrete5**.
 You should see a page like this:
 
-image:howto-install.png[alt="How to install", title="How to install", width=455, height=242]
+image::howto-install.png[alt="How to install", title="How to install", width=455, height=242]
 
 You should see a green button labeled "Connect to Community".
 Click that and use the account you made on _this_ site to make a project page for your site.

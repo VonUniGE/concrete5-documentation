@@ -53,7 +53,7 @@ $('input[name=fromPages]').select2({
 This snippet gets us this: a nicely styled select2 box that, when typed in, will send its request to the server and look for a response.
 It'll then store that data in a hidden variable, which will be submitted when we save the block.
 
-image:custom-blocks-ajax-1.png[alt="Ajax with Custom Blocks", title="Ajax with Custom Blocks"]
+image::custom-blocks-ajax-1.png[alt="Ajax with Custom Blocks", title="Ajax with Custom Blocks"]
 
 This select2 snippet is documented well at the select2 documentation linked above.
 Basically, the moment someone starts typing, a server-side request will be made to /path/to/serverside/script?q=keywords (where keywords is whatever is typed in the box.)
@@ -151,6 +151,6 @@ We tweak that data to get it into a format that select2 can work with, and send 
 And that's it!
 We have AJAXified our select2 box!
 
-image:custom-blocks-ajax-2.png[alt="Ajax with Custom Blocks", title="Ajax with Custom Blocks"]
+image::custom-blocks-ajax-2.png[alt="Ajax with Custom Blocks", title="Ajax with Custom Blocks"]
 
 Obviously, there's more to do to make this work in the context of a block - but if you ever find yourself wanting some server-side processing while working in a block's add or edit template, 5.7.5 will make your life much, much easier.
