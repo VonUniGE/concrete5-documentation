@@ -2,6 +2,7 @@ require "fileutils"
 require "asciidoctor"
 require "asciidoctor-pdf"
 require "asciidoctor-epub3"
+require "nokogiri"
 
 # Implement our custom render of YouTube videos (asciidoctor-epub3 simply strips them out)
 module Asciidoctor
@@ -167,15 +168,76 @@ def process(which)
   f.close
   print "done.\n"
 
-  print "  - Generating chunked html... "
-  FileUtils.rm_rf("output/" + which)
-  Dir.mkdir("output/" + which) unless Dir.exists?("output/" + which)
-  rc=system("java com.icl.saxon.StyleSheet tmp/" + which + "-docbook.xml lib/html-chunked-parameters.xsl base.dir=output/" + which + " highlight.xslthl.config=file:///" + $rootDir + "/lib/xslthl/highlighters/xslthl-config.xml")
+  print "  - Generating dirty chunked html... "
+  now = DateTime.now.strftime("%F %T %z")
+  FileUtils.rm_rf("tmp/html/" + which)
+  Dir.mkdir("tmp/html") unless Dir.exists?("tmp/html")
+  Dir.mkdir("tmp/html/" + which)
+  rc=system("java com.icl.saxon.StyleSheet tmp/" + which + "-docbook.xml lib/html-chunked-parameters.xsl base.dir=tmp/html/" + which + " highlight.xslthl.config=file:///" + $rootDir + "/lib/xslthl/highlighters/xslthl-config.xml")
   if rc.nil?
     raise "saxon failed (be sure to have Java)!"
   end
   if rc == false
     raise "saxon failed!"
+  end
+  print "done.\n"
+
+  print "  - Generating wonderful chunked html... "
+  templates = {}
+  FileUtils.rm_rf("output/" + which)
+  Dir.mkdir("output/" + which)
+  f = File.open("tmp/html/" + which + "/bk01-toc.html", "rb")
+  contents = f.read
+  f.close
+  toc = Nokogiri::HTML(contents).css("div.toc")[0].inner_html
+  subLen = ("tmp/html/" + which + "/").length
+  Dir["tmp/html/" + which + "/**/*.html"].each do |fromPath|
+    relName = fromPath[subLen..-1]
+    templateKey = 'default.html'
+    if File.exist?("lib/html_chunked/" + relName)
+      templateKey = relName
+    end
+    if templates[templateKey].nil?
+      f = File.open("lib/html_chunked/" + templateKey)
+      templates[templateKey] = f.read
+      f.close
+    end
+    if relName == "bk01-toc.html"
+      next
+    end
+    toPath = "output/" + which + "/" + relName
+    subDirs = relName.split("/")[0..-1]
+    subDirs.pop
+    if subDirs.length == 0
+      thisToc = toc
+    else
+      dirName = "output/" + which
+      subDirs.each do |subDir|
+        dirName << "/" + subDir
+        Dir.mkdir(dirName) unless Dir.exists?(dirName)
+      end
+      depthPath = ''
+      (1..subDirs.length).each do |i|
+        depthPath << '../'
+      end
+      thisToc = toc.gsub(' href="', ' href="' + depthPath)
+    end
+    f = File.open("tmp/html/" + which + "/" + relName, "rb")
+    contents = f.read
+    f.close
+    doc = Nokogiri::HTML(contents)
+    docTitle = doc.css("title")[0].inner_html.gsub("&nbsp;", " ")
+    bodyHTML = ''
+    doc.css("body")[0].children.each do |node|
+      if node.type == Nokogiri::XML::Node::ELEMENT_NODE && node.name == 'div' && (node['class'] == 'navheader' || node['class'] == 'navfooter')
+        next
+      end
+      bodyHTML << node.to_html
+    end
+    wonderfulHTML = templates[templateKey].gsub('[[TITLE]]', docTitle).gsub!('[[TOC]]', thisToc).gsub!('[[BODY]]', bodyHTML).gsub!('[[DATETIME]]', now)
+    f = File.open("output/" + which + "/" + relName, "wb")
+    f.write(wonderfulHTML)
+    f.close
   end
   print "done.\n"
 end
