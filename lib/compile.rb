@@ -35,6 +35,41 @@ def process(which)
             contents.gsub!(/^(= .*?\n)/, "\\1++++\n<?dbhtml filename=\"" + relPathHtml + "\"?>\n++++\n\n++++\n<simpara role=\"c5-edit-this-page\"><link xlink:href=\"https://github.com/concrete5/concrete5-documentation/tree/master/" + which + "/" + relPathAdoc + "\">Edit on GitHub</link></simpara>\n++++\n\n")
             # Fix images URL
             contents.gsub!(/^(image:+)/, '\1https://raw.githubusercontent.com/concrete5/concrete5-documentation/master/images/developers/')
+            # Fix YouTube videos
+            while true do
+              rxMatch = /^video::?(?<id>[\w\-]+)\s*\[\s*youtube\b(?<params>[^\]]*)\]\s*$/i.match(contents)
+              if rxMatch.nil?
+                break
+              end
+              search = rxMatch[0]
+              videoID = rxMatch['id']
+              videoParams = rxMatch['params']
+              videoWidth = nil
+              rxMatch = /,\s*width\s*=\s*(?<num>\d+)/i.match(videoParams);
+              if !rxMatch.nil?
+                videoWidth = rxMatch['num']
+              end
+              videoHeight = nil
+              rxMatch = /,\s*height\s*=\s*(?<num>\d+)/i.match(videoParams);
+              if !rxMatch.nil?
+                videoHeight = rxMatch['num']
+              end
+              replace = "++++\n"
+              replace << "<mediaobject>\n"
+              replace << "\t<videoobject>\n"
+              replace << "\t\t<videodata fileref=\"https://www.youtube.com/embed/" + videoID + "\""
+              if !videoWidth.nil?
+                replace << " width=\"" + videoWidth + "\" contentwidth=\"" + videoWidth + "\""
+              end
+              if !videoHeight.nil?
+                replace << " depth=\"" + videoHeight + "\" contentdepth=\"" + videoHeight + "\""
+              end
+              replace << " />\n"
+              replace << "\t</videoobject>\n"
+              replace << "</mediaobject>\n"
+              replace << "++++\n"
+              contents.gsub!(search, replace)
+            end
             f = File.open(toPath, "wb")
             f.write(contents)
             f.close

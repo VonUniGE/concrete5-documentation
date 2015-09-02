@@ -403,4 +403,11 @@ p.c5-edit-this-page {
 	margin-top: -35px;
 	font-size: smaller;
 }
+div.mediaobject table {
+	border: 0;
+}
+div.mediaobject td {
+	margin: 0;
+	padding: 0;
+}
 </style>
