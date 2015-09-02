@@ -1,10 +1,35 @@
 require "fileutils"
 require "asciidoctor"
+require "asciidoctor-epub3"
+
+# Implement our custom render of YouTube videos (asciidoctor-epub3 simply strips them out)
+module Asciidoctor
+  module Epub3
+    class ContentConverter
+        def video(node)
+            videoID = node.attr 'target'
+            url = "https://www.youtube.com/watch?v=" + videoID
+            %(<p><a href="#{url}">Watch video on YouTube at #{url}</a></p>)
+        end
+    end
+  end
+end
 
 $rootDir = File.expand_path(File.dirname(File.dirname(__FILE__)))
 
 def process(which)
   print "Processing " + which + ":\n"
+
+  print "  - EPUB... "
+  stdOutString = StringIO.new
+  stdOutOriginal = $stdout
+  $stdout = stdOutString
+  begin
+    Asciidoctor.convert_file(which + ".adoc", :to_file => "output/" + which + ".epub", :header_footer => true, :safe => Asciidoctor::SafeMode::UNSAFE, :backend => "epub3", :attributes => {"numbered" => true})
+  ensure
+    $stdout = stdOutOriginal
+  end
+  print "done.\n"
 
   print "  - Complete HTML... "
   adoc = Asciidoctor.convert_file(which + ".adoc", :to_file => false, :header_footer => true, :safe => Asciidoctor::SafeMode::UNSAFE, :attributes => {"numbered" => true})
