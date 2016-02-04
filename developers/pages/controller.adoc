@@ -24,7 +24,7 @@ The controller class should have the StudlyCapsed version of your page type hand
 
 namespace Application\Controller\PageType;
 
-use Concrete\Core\Page\Controller\PageTypeController
+use Concrete\Core\Page\Controller\PageTypeController;
 
 class BlogEntry extends PageTypeController
 {
